@@ -1,0 +1,51 @@
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:background="@color/white"
+    android:orientation="horizontal"
+    android:padding="10dp"
+    app:cardCornerRadius="10dp">
+
+    <RelativeLayout
+        android:id="@+id/mainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_line"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/selectedServiceTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:textColor="@android:color/black" />
+
+        <EditText
+            android:id="@+id/selectServiceQtyEt"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/background_line"
+            android:inputType="number"
+            android:hint="Qty"
+            android:singleLine="true"
+            android:text="122"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:padding="5dp" />
+
+        <ImageView
+            android:id="@+id/crossImage"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_marginLeft="285dp"
+            android:paddingLeft="10dp"
+            android:visibility="gone" />
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

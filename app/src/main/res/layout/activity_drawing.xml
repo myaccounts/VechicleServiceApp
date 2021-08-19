@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <com.myaccounts.vechicleserviceapp.Utils.DrawPadView
+        android:id="@+id/drawPadView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="#ffffffff" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+
+    <Button
+        android:id="@+id/savebtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/savebtn"
+        android:text="Save"
+        android:padding="5sp"
+        android:layout_marginRight="5sp"
+        android:layout_weight="1"
+        android:background="#0088b2"
+        android:textColor="#ffffff"
+        android:visibility="visible" />
+
+    <Button
+        android:id="@+id/clearbtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/savebtn"
+        android:text="Clear"
+        android:padding="5sp"
+        android:layout_weight="1"
+        android:layout_marginRight="5sp"
+        android:background="#0088b2"
+        android:textColor="#ffffff"
+        android:visibility="visible" />
+        <Button
+            android:id="@+id/cancelbtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/savebtn"
+            android:text="Cancel"
+            android:padding="5sp"
+            android:layout_weight="1"
+            android:background="#0088b2"
+            android:textColor="#ffffff"
+            android:visibility="visible" />
+    </LinearLayout>
+</RelativeLayout>

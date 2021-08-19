@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_custom_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="2dp"
+    android:background="@color/white"
+    >
+    <LinearLayout
+        android:id="@+id/l1"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Select Action"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:layout_weight="1.8"/>
+
+        <ImageButton
+            android:id="@+id/ib_close"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/close"
+            android:layout_weight="0.2"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="@null" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_reasons"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="10sp"
+        android:layout_marginTop="40dp"
+        android:gravity="center">
+
+        <LinearLayout
+            android:weightSum="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_weight="0.7"
+                android:textColor="@color/colorPrimary"
+                android:textSize="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CancelBy : "/>
+
+            <TextView
+                android:layout_weight="0.3"
+                android:id="@+id/cancel_by"
+                android:layout_marginLeft="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CancelBy"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:weightSum="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_weight="0.7"
+                android:textColor="@color/colorPrimary"
+                android:textSize="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CancelDate : "/>
+
+            <TextView
+                android:layout_weight="0.3"
+                android:id="@+id/cancel_date"
+                android:layout_marginLeft="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CancelDate"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:weightSum="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_weight="0.7"
+                android:textColor="@color/colorPrimary"
+                android:textSize="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CancelFrom : "/>
+
+            <TextView
+                android:layout_weight="0.3"
+                android:id="@+id/cancel_from"
+                android:layout_marginLeft="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CancelFrom"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:weightSum="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_weight="0.7"
+                android:textColor="@color/colorPrimary"
+                android:textSize="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CancelTime : "/>
+
+            <TextView
+                android:layout_weight="0.3"
+                android:id="@+id/cancel_time"
+                android:layout_marginLeft="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CancelTime"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:weightSum="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_weight="0.7"
+                android:textColor="@color/colorPrimary"
+                android:textSize="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ReasonforCancel : "/>
+
+            <TextView
+                android:layout_weight="0.3"
+                android:id="@+id/cancel_reasons"
+                android:layout_marginLeft="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ReasonforCancel"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_options"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="40dp"
+        android:gravity="center">
+
+        <LinearLayout
+            android:id="@+id/remarks_layout"
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="100dp"
+            android:padding="5sp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/dialog_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:text="Remarks"
+                android:layout_gravity="center"
+                android:textSize="10sp"/>
+
+            <EditText
+                android:focusable="false"
+                android:clickable="false"
+                android:padding="10dp"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:fontFamily="monospace"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/remarks_in_dialog"/>
+
+        </LinearLayout>
+
+
+
+        <Button
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="100dp"
+            android:layout_marginTop="20dp"
+            android:id="@+id/btn_edit_jobcard"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:background="@drawable/dialog_background"
+            android:gravity="center"
+            android:padding="5sp"
+            android:text="Edit JobCard"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/dialogtextSize">
+
+        </Button>
+
+        <Button
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="100dp"
+            android:id="@+id/btn_edit_service_status"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/dialog_background"
+            android:gravity="center"
+            android:padding="5sp"
+            android:text="Services Status"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/dialogtextSize">
+
+        </Button>
+
+        <Button
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="100dp"
+            android:id="@+id/btn_edit_spare_status"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/dialog_background"
+            android:gravity="center"
+            android:padding="5sp"
+            android:text="Spare Parts Status"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/dialogtextSize">
+
+        </Button>
+
+        <Button
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="100dp"
+            android:id="@+id/btn_cancel_jobcard"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/dialog_background"
+            android:gravity="center"
+            android:padding="5sp"
+            android:text="Cancel JobCard"
+            android:visibility="gone"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/dialogtextSize"
+            android:layout_marginBottom="10dp">
+
+        </Button>
+
+        <Button
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="100dp"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/btn_cancellation_reason"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/dialog_background"
+            android:gravity="center"
+            android:padding="5sp"
+            android:text="Reason For Cancellation"
+            android:visibility="visible"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/dialogtextSize">
+
+        </Button>
+
+    </LinearLayout>
+
+</RelativeLayout>

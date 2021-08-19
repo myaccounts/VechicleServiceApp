@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/newcontainer">
+
+    <LinearLayout
+        android:id="@+id/LinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="5sp"
+        android:layout_marginBottom="5sp">
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:focusableInTouchMode="true"
+            android:focusable="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2">
+
+                <EditText
+                    android:id="@+id/inputSearchEdt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawableLeft="@android:drawable/ic_menu_search"
+                    android:hint="Search a vehicle"
+                    android:singleLine="true"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_weight="0.25"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btnoutlinebackground">
+
+                <Spinner
+                    android:id="@+id/SpnStatusSelection"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:entries="@array/StatusList">
+
+                </Spinner>
+
+            </RelativeLayout>
+
+            <!--<RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_weight="0.25"
+                android:background="@drawable/btnoutlinebackground"
+                android:padding="5dp">
+
+                <Spinner
+                    android:id="@+id/SpnStatusSelection"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:entries="@array/StatusList">
+
+                </Spinner>
+
+            </RelativeLayout>-->
+
+            <RelativeLayout
+                android:id="@+id/newJobFormLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="0.25"
+                android:background="@drawable/btnoutlinebackground">
+
+                <TextView
+                    android:layout_centerInParent="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:text="New"
+                    android:textColor="@color/black" />
+
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/refreshmain"
+                android:padding="10dp"
+                android:layout_weight="0.3"
+                android:src="@drawable/refresh"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/LinearLayout"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:gravity="center_horizontal"
+                android:padding="2sp"
+                android:text="SNo"
+                android:textColor="@color/white"
+                android:textSize="@dimen/mediumTextSizeSize" />
+
+            <View
+                android:layout_width="0.01dp"
+                android:layout_height="match_parent"
+                android:background="@color/white" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1.10"
+                android:gravity="center_horizontal"
+                android:padding="2sp"
+                android:text="Vehicle Model Name"
+                android:textColor="@color/white"
+                android:textSize="@dimen/mediumTextSizeSize" />
+
+            <View
+                android:layout_width="0.01dp"
+                android:layout_height="match_parent"
+                android:background="@color/white" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1.10"
+                android:gravity="center_horizontal"
+                android:padding="2sp"
+                android:text="VehicleNo"
+                android:textColor="@color/white"
+                android:textSize="@dimen/mediumTextSizeSize" />
+
+            <View
+                android:layout_width="0.01dp"
+                android:layout_height="match_parent"
+                android:background="@color/white" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1.10"
+                android:gravity="center_horizontal"
+                android:padding="2sp">
+
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Name"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/mediumTextSizeSize" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/name"
+                    android:text="MobileNo"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/mediumTextSizeSize" />
+
+
+            </RelativeLayout>
+
+
+            <View
+                android:layout_width="0.01dp"
+                android:layout_height="match_parent"
+                android:background="@color/white" />
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.8"
+                android:gravity="center_horizontal"
+                android:padding="2sp"
+                android:text="Status"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textSize"
+                android:visibility="visible" />
+        </LinearLayout>
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="0dp">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/IdJobCardRecyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+            </android.support.v7.widget.RecyclerView>
+        </android.support.v4.widget.SwipeRefreshLayout>
+    </LinearLayout>
+</RelativeLayout>

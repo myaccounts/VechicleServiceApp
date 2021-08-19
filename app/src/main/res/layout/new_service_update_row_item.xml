@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30sp"
+                android:layout_gravity="center"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="0dp">
+
+                <TextView
+                    android:id="@+id/SnoTv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:gravity="center"
+                    android:text="SNo"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/textSizeNine"
+                    android:textStyle="normal" />
+
+                <View
+                    android:layout_width="0.1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/viewcolour" />
+
+                <TextView
+                    android:id="@+id/ServicetNameTv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:gravity="left|center_vertical"
+                    android:layout_weight="1.3"
+                    android:text="Service Name"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/textSizeNine"
+                    android:visibility="gone"
+                    android:textStyle="normal" />
+
+                <View
+                    android:layout_width="0.1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/viewcolour" />
+
+                <TextView
+                    android:id="@+id/JobItemTypeTv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Job/Item Type"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/textSizeNine"
+                    android:textStyle="normal" />
+
+                <View
+                    android:layout_width="0.1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/viewcolour" />
+
+
+                <TextView
+                    android:id="@+id/ServiceQtyTv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left"
+                    android:layout_weight="0.7"
+                    android:gravity="center"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/textSizeforreports"
+                    android:textStyle="normal"
+                    android:text="QTY"/>
+
+                <!--<View
+                    android:layout_width="0.1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/viewcolour" />
+
+
+                <TextView
+                    android:id="@+id/ServiceAvlQtyTv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left"
+                    android:layout_weight="0.7"
+                    android:gravity="center"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/textSizeforreports"
+                    android:textStyle="normal"
+                    android:text="AVL.QTY"/>-->
+
+
+                <!--                <View-->
+                <!--                    android:layout_width="0.1dp"-->
+                <!--                    android:layout_height="match_parent"-->
+                <!--                    android:background="@color/viewcolour" />-->
+
+                <!--                <TextView-->
+                <!--                    android:id="@+id/RemarksTv"-->
+                <!--                    android:layout_width="0dp"-->
+                <!--                    android:layout_height="match_parent"-->
+                <!--                    android:layout_gravity="left"-->
+                <!--                    android:layout_weight="1"-->
+                <!--                    android:gravity="center"-->
+                <!--                    android:text="Remarks"-->
+                <!--                    android:textAllCaps="true"-->
+                <!--                    android:textColor="@color/black"-->
+                <!--                    android:textSize="@dimen/textSizeforreports"-->
+                <!--                    android:textStyle="normal" />-->
+
+
+                <View
+                    android:layout_width="0.1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/viewcolour" />
+
+                <Spinner
+                    android:id="@+id/ServiceIssueTypeTv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textStyle="normal"
+                    android:clickable="false"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/ServiceIssueTv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left"
+                    android:layout_weight="0.7"
+                    android:gravity="center"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/textSizeforreports"
+                    android:textStyle="normal"
+                    android:text="Issue"/>
+
+                <View
+                    android:layout_width="0.1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/viewcolour" />
+
+                <!--                <ImageButton-->
+                <!--                    android:id="@+id/IdEditIconImg"-->
+                <!--                    android:layout_width="0dp"-->
+                <!--                    android:layout_height="match_parent"-->
+                <!--                    android:layout_weight="0.5"-->
+                <!--                    android:background="@android:color/transparent"-->
+                <!--                    android:src="@drawable/editblue"-->
+                <!--                    android:visibility="invisible" />-->
+                <ImageButton
+                    android:id="@+id/IdEditIconImg"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.4"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/editblue"
+                    android:visibility="gone"/>
+
+                <ImageButton
+                    android:id="@+id/IdDeleteIconImg"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.4"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/delete_icon"
+                    android:visibility="gone"/>
+
+                <CheckBox
+                    android:id="@+id/chk_service_update"
+                    android:layout_width="0dp"
+                    android:layout_gravity="center"
+                    android:layout_height="match_parent"
+                   android:layout_weight="0.8">
+
+                </CheckBox>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

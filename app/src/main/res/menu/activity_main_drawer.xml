@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/jobcard48"
+            android:visible="false"
+            android:title="@string/menu_mrf"
+            />
+       <item
+            android:id="@+id/nav_jobcarddetails"
+            android:icon="@drawable/jobcarddetails48"
+            android:title="@string/menu_jobcarddetails" />
+        <item
+            android:id="@+id/nav_usermaster"
+            android:icon="@drawable/usermaster"
+            android:title="@string/menu_userwise"
+            android:visible="false"/>
+        <item
+            android:id="@+id/nav_sparepartmaster"
+            android:icon="@drawable/sparepartsissue"
+            android:title="@string/menu_SparePart"
+            android:visible="false"/>
+        <item
+            android:id="@+id/nav_sparepartissue"
+            android:icon="@drawable/sparepartissue48"
+            android:title="@string/menu_SparePartissue" />
+
+        <item
+            android:id="@+id/nav_sparepartagstjobcard"
+            android:icon="@drawable/sparepartestimation48"
+            android:title="@string/menu_sparepartagstjobcard" />
+        <item
+            android:id="@+id/nav_reports"
+            android:icon="@drawable/reports48"
+            android:title="@string/menu_reports" />
+        <!--<item
+            android:id="@+id/nav_mrf"
+            android:icon="@drawable/jobcard48"
+            android:title="@string/menu_home"
+            android:visible="false"
+             />-->
+        <item
+           android:id="@+id/nav_chnagepwd"
+           android:icon="@drawable/chnagepwd48"
+           android:title="@string/menu_chnagepassword"
+            android:visible="false"
+          />
+
+    </group>
+
+   <!-- <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="@string/menu_share" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/menu_send" />
+        </menu>
+    </item>-->
+
+</menu>

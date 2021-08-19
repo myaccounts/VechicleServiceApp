@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        tools:ignore="MissingConstraints"
+        android:weightSum="1">
+        <CheckBox
+            android:id="@+id/ServiceNameCheckBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:button="@drawable/check_box_selector"
+            android:gravity="top|left"
+            android:layoutDirection="ltr"
+            android:text="Tyre Fitment"
+            android:textSize="20sp"
+            android:theme="@style/MyCheckBox" />
+        <CheckBox
+            android:id="@+id/ServiceShortNameCheckBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:gravity="left|center"
+            android:layoutDirection="rtl"
+            android:text="ShortName"
+            android:theme="@style/MyCheckBox"
+            android:visibility="gone"/>
+        <TextView
+            android:id="@+id/selectedSericeListTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:gravity="center"
+            android:visibility="gone"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

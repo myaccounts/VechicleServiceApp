@@ -1,0 +1,157 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="350dp"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".Activity.PrinterActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <Button
+            android:id="@+id/btnDiscovery"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/conct_epson_txt"
+            android:drawableLeft="@drawable/epson_printer"
+            android:visibility="visible"
+            />
+
+        <Button
+            android:id="@+id/btnEpsonM30"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/conct_epson_M30_txt"
+            android:drawableLeft="@drawable/epson_printer"
+            />
+
+        <Button
+            android:id="@+id/btnMaestros"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/conct_maestos_txt"
+            android:drawablePadding="6dp"
+            android:drawableLeft="@drawable/maestros_printer"
+            android:visibility="gone"/>
+        <Button
+            android:id="@+id/btnScantech"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawablePadding="6dp"
+            android:text="@string/conct_scantech_txt"
+            android:drawableLeft="@drawable/epson_printer"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/btnSunmi29"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawablePadding="6dp"
+            android:text="@string/conct_sunmi29_txt"
+            android:drawableLeft="@drawable/epson_printer"
+            android:visibility="gone"/>
+        <Button
+            android:id="@+id/btnSunmi43"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawablePadding="6dp"
+            android:text="@string/conct_sunmi43_txt"
+            android:drawableLeft="@drawable/epson_printer"
+            android:visibility="gone"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:text="@string/title_target"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#000000"
+            android:visibility="gone" />
+        <EditText
+            android:id="@+id/edtTarget"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="@string/default_target"
+            android:visibility="gone" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_printerseries"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#000000"
+            android:visibility="gone" />
+        <Spinner
+            android:id="@+id/spnModel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:gravity="left"
+            android:visibility="gone" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_lang"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#000000"
+            android:visibility="gone" />
+
+        <Spinner
+            android:id="@+id/spnLang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:gravity="left"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btnSampleReceipt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="@string/btn_samplereceipt"
+            android:visibility="gone" />
+        <Button
+            android:id="@+id/btnSampleCoupon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_samplecoupon"
+            android:visibility="gone" />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_warnings"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#000000"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/edtWarnings"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:enabled="false"
+            android:text="MyAccounts"
+            android:focusable="false"
+            android:inputType="text"
+            android:visibility="gone" />
+        <Button
+            android:id="@+id/printbtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:text="Print"
+            android:textAllCaps="true"
+            android:visibility="gone"
+            android:textColor="@color/white"
+            android:padding="10sp"/>
+
+    </LinearLayout>
+
+</ScrollView>

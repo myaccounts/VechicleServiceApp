@@ -1,0 +1,208 @@
+<resources>
+    <string name="app_name">GO WHEELS</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">Myaccounts.in</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="please_wait_txt">Please Wait.....</string>
+    <string name="menu_home">Job Card (MRF)</string>
+    <string name="menu_jobcarddetails">JobCard Details</string>
+    <string name="menu_SparePart">Spare Parts</string>
+    <string name="menu_userwise">Services Assign To Users</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
+    <string name="vehiclemakemodel">Make</string>
+    <string name="vehiclemodel">Model*</string>
+    <string name="regnno">Regn No</string>
+    <string name="odometer_reading">Odometer Reading</string>
+    <string name="avg_kms">Avg Kms/day</string>
+    <string name="active_label">Active</string>
+    <string name="inactive_label">In Active</string>
+    <string name="staus_label">Status :</string>
+    <string name="generalmaster">General Master</string>
+    <string name="refmaster">Ref. Master</string>
+    <string name="remarks">Remarks</string>
+    <string name="qty">QTY*</string>
+    <string name="mrp">MRP</string>
+    <string name="cancel">Cancel</string>
+    <string name="clear">Clear</string>
+    <string name="logout">Logout</string>
+    <string name="changepwd">Change Password</string>
+    <string name="menu_SparePartissue">Spare Part Issue</string>
+    <string name="menu_reports">Reports</string>
+    <string name="menu_mrf">Job Card</string>
+    <string name="menu_sparepartegstcustomer">Spare Part Estimation Customer</string>
+    <string name="menu_chnagepassword">Change Password</string>
+    <string name="menu_sparepartagstjobcard">Service Estimation</string>
+    <string name="spinner_title">Users</string>
+    <string name="action_add">Add</string>
+    <string name="textDetails">S->ServiceCharge J.C.No->JOBCardNo,V.No->VehicleNo </string>
+    <string name="SparePartstextDetails">Bal.Qty->BalanceQty</string>
+    <string name="esttextDetails">J.C.No->JOBCardNo</string>
+    <string name="timeoutDate">Out Date</string>
+    <string name="mileage">Next Service Mileage</string>
+    <string name="sparepartDetails">S.Count->Service Count</string>
+    <string name="nav_header_usertitle">username</string>
+    <string name="place">Place</string>
+    <string name="vehicletype">Vehicle Type</string>
+    <string-array name="SpnerList">
+        <item>JOBCARD</item>
+        <item>CUSTOMER</item>
+
+    </string-array>
+    <string-array name="StatusList">
+        <item>All</item>
+        <item>Pending</item>
+        <item>Ready</item>
+        <item>Completed</item>
+        <item>Canceled</item>
+
+    </string-array>
+    <string name="cancel_type1">WHEEL BEARING(S) LH/RH</string>
+    <string name="cancel_type2">BALL JOINTS – STEERING / SUSPENSION</string>
+    <string name="cancel_type3">TIE ROD END(S) LH/RH</string>
+    <string name="cancel_type4">SUSPENSION BUSHES / STEERING RUBBER BOOTS</string>
+    <string name="cancel_type5">IDLER ARM / DROP ARM BUSH(S)</string>
+    <string name="cancel_type6">STEERING WHEEL FREE PLAY</string>
+    <string name="cancel_type7">CHASSIS CORROSION / DISTORSION</string>
+    <string name="cancel_type8">UNEVEN HEIGHT</string>
+    <string name="cancel_type9">TYRES</string>
+    <string name="cancel_type10">HIGH SERVICING PRICE</string>
+    <string name="cancel_type11">LEAVING THIS TOWN TODAY</string>
+    <string name="cancel_type12">GOING TO CATCH THE TRAIN</string>
+    <string name="cancel_type13">NO INTEREST TO DO HERE</string>
+
+    <string-array name="BlockList">
+        <item>Block1</item>
+        <item>Block2</item>
+        <item>Block3</item>
+    </string-array>
+    <string-array name="PeriodList">
+        <item>Time Duration</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+
+    </string-array>
+
+    <!--printer acivity-->
+    <string name="conct_epson_txt" translatable="false">Epson Printer</string>
+    <string name="conct_epson_M30_txt" translatable="false">Epson M30 Printer</string>
+    <string name="conct_maestos_txt" translatable="false">Maestros Printer</string>
+    <string name="conct_scantech_txt" translatable="false">ScanTech Printer</string>
+    <string name="conct_sunmi29_txt" translatable="false">SUNMI 28 Column Printer</string>
+    <string name="conct_sunmi43_txt" translatable="false">SUNMI 42 Column Printer</string>
+    <!-- printer strings-->
+    <string name="title_target">Target</string>
+    <string name="Configururationactivity">Configuration</string>
+    <string name="title_printerseries">Printer Series</string>
+    <string name="title_lang">Lang</string>
+    <string name="btn_samplereceipt">Sample Receipt</string>
+    <string name="btn_samplecoupon">Sample Coupon</string>
+    <string name="btn_restart">Restart Discovery</string>
+    <string name="title_printerlist">Printer List</string>
+    <string name="default_target">TCP:192.168.192.168</string>
+    <string name="title_warnings">Printer Warnings</string>
+    <string name="printerseries_m10">TM-m10 Series</string>
+    <string name="printerseries_m30">TM-m30 Series</string>
+    <string name="printerseries_p20">TM-P20 Series</string>
+    <string name="printerseries_p60">TM-P60 Series</string>
+    <string name="printerseries_p60ii">TM-P60II Series</string>
+    <string name="printerseries_p80">TM-P80 Series</string>
+    <string name="printerseries_t20">TM-T20 Series</string>
+    <string name="printerseries_t70">TM-T70 Series</string>
+    <string name="printerseries_t81">TM-T81 Series</string>
+    <string name="printerseries_t82">TM-T82 Series</string>
+    <string name="printerseries_t83">TM-T83 Series</string>
+    <string name="printerseries_t88">TM-T88 Series</string>
+    <string name="printerseries_t90">TM-T90 Series</string>
+    <string name="printerseries_t90kp">TM-T90KP Series</string>
+    <string name="printerseries_u220">TM-U220 Series</string>
+    <string name="printerseries_u330">TM-U330 Series</string>
+    <string name="printerseries_l90">TM-L90 Series</string>
+    <string name="printerseries_h6000">TM-H6000 Series</string>
+    <string name="lang_ank">ANK</string>
+    <string name="lang_japanese">JAPANESE</string>
+    <string name="lang_chinese">CHINESE</string>
+    <string name="lang_taiwan">TAIWAN</string>
+    <string name="lang_korean">KOREAN</string>
+    <string name="lang_thai">THAI</string>
+    <string name="lang_southasia">SOUTH ASIA</string>
+    <string name="handlingmsg_warn_receipt_near_end">Roll paper is nearly end.\n</string>
+    <string name="handlingmsg_warn_battery_near_end">Battery level of printer is low.\n</string>
+    <string name="handlingmsg_err_no_response">Please check the connection of the printer and the mobile terminal.\nConnection get lost.\n</string>
+    <string name="handlingmsg_err_cover_open">Please close roll paper cover.\n</string>
+    <string name="handlingmsg_err_receipt_end">Please check roll paper.\n</string>
+    <string name="handlingmsg_err_paper_feed">Please release a paper feed switch.\n</string>
+    <string name="handlingmsg_err_autocutter">Please remove jammed paper and close roll paper cover.\nRemove any jammed paper or foreign substances in the printer, and then turn the printer off and turn the printer on again.\n</string>
+    <string name="handlingmsg_err_need_recover">Then, If the printer doesn\'t recover from error, please cycle the power switch.\n</string>
+    <string name="handlingmsg_err_unrecover">Please cycle the power switch of the printer.\nIf same errors occurred even power cycled, the printer may out of order.</string>
+    <string name="handlingmsg_err_overheat">Please wait until error LED of the printer turns off. \n</string>
+    <string name="handlingmsg_err_head">Print head of printer is hot.\n</string>
+    <string name="handlingmsg_err_motor">Motor Driver IC of printer is hot.\n</string>
+    <string name="handlingmsg_err_battery">Battery of printer is hot.\n</string>
+    <string name="handlingmsg_err_wrong_paper">Please set correct roll paper.\n</string>
+    <string name="handlingmsg_err_battery_real_end">Please connect AC adapter or change the battery.\nBattery of printer is almost empty.\n</string>
+    <string name="handlingmsg_err_offline">Printer is offline.\n</string>
+    <string name="title_err_code" translatable="false">Blutooth Printer Is not Connected</string>
+    <string name="title_err_method"></string>
+    <string name="title_msg_result">Result</string>
+    <string name="title_msg_description">Description</string>
+    <string name="select_device">select a device to connect</string>
+    <string name="none_paired">No devices have been paired</string>
+    <string name="none_found">No devices found</string>
+    <string name="scanning">scanning for devices...</string>
+    <string name="toast_success">Successfully</string>
+    <string name="toast_fail">Fail</string>
+    <string name="toast_notconnect">Please connect printer</string>
+    <string name="toast_usbpermit">Please permit app use usb and reclick this button</string>
+    <string name="customer_header">Credit Customer Details</string>
+    <string name="Addcustomer_header">Add The Customer Details</string>
+    <string name="edit_price">Price Edit</string>
+    <string name="printer">Printer</string>
+    <string name="contentdescription"></string>
+    <!--instruction-->
+    <string name="toast_1">Transaction print,use the AIDL mode!</string>
+    <string name="toast_2">The service has been disconnected!</string>
+    <string name="toast_3">Bluetooth device is unavailable</string>
+    <string name="toast_4">Bluetooth device not detected. Please open Bluetooth!</string>
+    <string name="toast_5">Not Found InnterPrinter!</string>
+    <string name="toast_6">Bluetooth connect failed!</string>
+    <string name="toast_7"> Only a single Qr code is printed for the AIDL mode</string>
+    <string name="toast_8">Now QrCode size must be less than 7!</string>
+    <string name="toast_9">BarCode type or conent error!</string>
+    <string name="vehiclenoedt">VehicleNo*</string>
+    <string name="custnameedt">Name*</string>
+    <string name="placeedt">Place*</string>
+    <string name="contactnoedt">Contact No*</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="activitynoedt">Activity no</string>
+</resources>

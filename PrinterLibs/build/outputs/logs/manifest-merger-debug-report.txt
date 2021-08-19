@@ -1,0 +1,49 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\Users\android3\Desktop\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:1:1-15:12
+INJECTED from C:\Users\android3\Desktop\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:1:1-15:12
+INJECTED from C:\Users\android3\Desktop\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:1:1-15:12
+INJECTED from C:\Users\android3\Desktop\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:1:1-15:12
+INJECTED from C:\Users\android3\Desktop\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:1:1-15:12
+INJECTED from C:\Users\android3\Desktop\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:1:1-15:12
+INJECTED from C:\Users\android3\Desktop\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:1:1-15:12
+	package
+		ADDED from C:\Users\android3\Desktop\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:2:5-40
+		INJECTED from C:\Users\android3\Desktop\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\android3\Desktop\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
+	android:versionName
+		ADDED from C:\Users\android3\Desktop\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:4:5-30
+		INJECTED from C:\Users\android3\Desktop\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\android3\Desktop\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\Users\android3\Desktop\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:1:11-69
+	android:versionCode
+		ADDED from C:\Users\android3\Desktop\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:3:5-28
+		INJECTED from C:\Users\android3\Desktop\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\android3\Desktop\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
+uses-permission#android.permission.BLUETOOTH
+ADDED from C:\Users\android3\Desktop\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:8:5-68
+	android:name
+		ADDED from C:\Users\android3\Desktop\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:8:22-65
+uses-permission#android.permission.BLUETOOTH_ADMIN
+ADDED from C:\Users\android3\Desktop\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:9:5-74
+	android:name
+		ADDED from C:\Users\android3\Desktop\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:9:22-71
+application
+ADDED from C:\Users\android3\Desktop\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:11:5-13:19
+	android:allowBackup
+		ADDED from C:\Users\android3\Desktop\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:12:9-35
+uses-sdk
+INJECTED from C:\Users\android3\Desktop\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Users\android3\Desktop\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
+INJECTED from C:\Users\android3\Desktop\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
+INJECTED from C:\Users\android3\Desktop\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
+INJECTED from C:\Users\android3\Desktop\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from C:\Users\android3\Desktop\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
+		ADDED from C:\Users\android3\Desktop\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\android3\Desktop\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\Users\android3\Desktop\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
+		ADDED from C:\Users\android3\Desktop\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\android3\Desktop\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml

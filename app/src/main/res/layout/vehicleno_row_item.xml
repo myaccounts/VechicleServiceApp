@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/IdVehicleNoTv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="0.8"
+            android:gravity="center"
+            android:text="VehicleNo"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textSize"/>
+        <View
+            android:layout_width="0.2dp"
+            android:visibility="gone"
+            android:layout_height="match_parent"
+            android:background="@color/viewcolour" />
+        <TextView
+            android:id="@+id/IdCustomerTv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="CustomerName"
+            android:visibility="gone"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textSize"/>
+
+        <View
+            android:layout_width="0.2dp"
+            android:layout_height="match_parent"
+            android:background="@color/viewcolour"
+            android:visibility="gone"/>
+        <TextView
+            android:id="@+id/IdMobileTv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="0.8"
+            android:gravity="center"
+            android:text="MobileNo"
+            android:visibility="gone"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textSize"/>
+
+
+
+
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

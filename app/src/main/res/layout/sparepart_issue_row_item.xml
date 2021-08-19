@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30sp"
+                android:layout_gravity="center"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="0dp">
+
+                <TextView
+                    android:id="@+id/SnoTv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:gravity="center"
+                    android:paddingLeft="2dp"
+                    android:paddingRight="2dp"
+                    android:text="SNo"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/textSizeforreports"
+                    android:textStyle="normal" />
+
+                <View
+                    android:layout_width="0.1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/viewcolour" />
+
+                <TextView
+                    android:id="@+id/SparePartNameTv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left"
+                    android:layout_weight="1.5"
+                    android:gravity="left|center_vertical"
+                    android:text="SparePartName"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/textSizeforreports"
+                    android:textStyle="normal" />
+
+                <View
+                    android:layout_width="0.1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/viewcolour" />
+
+                <TextView
+                    android:id="@+id/SparePartUomTv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="UOM"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/textSizeforreports"
+                    android:textStyle="normal" />
+
+                <View
+                    android:layout_width="0.1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/viewcolour" />
+                <TextView
+                    android:id="@+id/SparePartQtyTv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="QTY"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/textSizeforreports"
+                    android:textStyle="normal" />
+                <View
+                    android:layout_width="0.1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/viewcolour" />
+                <TextView
+                    android:id="@+id/SparePartAvlQtyTv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="AVL.QTY"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/textSizeforreports"
+                    android:textStyle="normal"
+                    />
+
+                <View
+                    android:layout_width="0.1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/viewcolour" />
+
+
+                <TextView
+                    android:id="@+id/SparePartRateTv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="MRP"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/textSizeforreports"
+                    android:textStyle="normal"
+                    android:visibility="visible" />
+
+
+                <View
+                    android:layout_width="0.1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/viewcolour" />
+
+                <Spinner
+                    android:id="@+id/ServiceIssueTypeTv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:paddingRight="35dp"
+                    android:textStyle="normal"
+                    android:visibility="gone" />
+                <TextView
+                    android:id="@+id/SparePartIssueTv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Issue"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/textSizeforreports"
+                    android:textStyle="normal"
+                    android:visibility="gone"/>
+                <View
+                    android:layout_width="0.1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/viewcolour" />
+
+
+                <!--                <View-->
+                <!--                    android:layout_width="0.1dp"-->
+                <!--                    android:layout_height="match_parent"-->
+                <!--                    android:background="@color/viewcolour" />-->
+
+                <!--                <TextView-->
+                <!--                    android:id="@+id/ActionTv"-->
+                <!--                    android:layout_width="0dp"-->
+                <!--                    android:layout_height="match_parent"-->
+                <!--                    android:layout_gravity="left"-->
+                <!--                    android:layout_weight="1"-->
+                <!--                    android:gravity="center"-->
+                <!--                    android:text="ACTIONS"-->
+                <!--                    android:textAllCaps="true"-->
+                <!--                    android:textColor="@color/black"-->
+                <!--                    android:textSize="@dimen/textSizeforreports"-->
+                <!--                    android:textStyle="normal"-->
+                <!--                    android:visibility="gone" />-->
+
+                <ImageButton
+                    android:id="@+id/IdEditIconImg"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/editblue" />
+
+                <ImageButton
+                    android:id="@+id/IdDeleteIconImg"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/delete_icon" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

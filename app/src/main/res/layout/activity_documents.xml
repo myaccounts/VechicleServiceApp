@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    >
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/inputSearch"
+        android:singleLine="true"
+        android:drawableLeft="@android:drawable/ic_menu_search"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimary"
+        >
+
+        <TextView
+            android:id="@+id/documentName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Document Name"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textSize" />
+
+    </LinearLayout>
+
+
+   <android.support.v7.widget.RecyclerView
+        android:layout_below="@+id/inputSearch"
+        android:id="@+id/documents_listview"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_weight="1"
+        android:divider="#bab9b9"
+        android:dividerHeight="2dp"
+       android:scrollbars="vertical"
+       android:scrollbarSize="5dp"
+        android:cacheColorHint="#aca9a9"
+       android:scrollbarThumbVertical="@color/colorPrimary"
+        android:footerDividersEnabled="true"
+        android:background="@color/white"
+        android:elevation="5dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="bottom"
+        android:layout_marginTop="10sp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10sp"
+            >
+            <Button
+                android:id="@+id/IdClearBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_background"
+                android:text="Clear"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:textAllCaps="true"
+                android:layout_marginRight="5sp"
+                android:textColor="@color/white" />
+            <Button
+                android:id="@+id/IdOkBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_background"
+                android:text="ok"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:textAllCaps="true"
+                android:layout_marginRight="5sp"
+                android:textColor="@color/white" />
+            <Button
+                android:id="@+id/IdCancelBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_background"
+                android:text="Cancel"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:textAllCaps="true"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

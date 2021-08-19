@@ -1,0 +1,45 @@
+package com.myaccounts.vechicleserviceapp.Utils;
+
+public class JSONVariables {
+    public static String JMODIFIEDDATE = "ModifiedDate";
+    public static String JMODIFIEDTIME = "ModifiedTIme";
+    public static String JUserName= "Username";
+    public static String JPasswords = "Password";
+    public static String AndroidId = "AndroidId";
+    public static String JCDate = "JCDate";
+    public static String JCId = "JCId";
+    public static String JobCardId = "JobCardId";
+    public static String JCNo = "JCNo";
+    public static String JC_InTime = "JC_InTime";
+    public static String JC_OutTime = "JC_OutTime";
+    public static String CustomerId = "CustomerId";
+    public static String Vehicle_Id = "Vehicle_Id";
+    public static String OMReading = "OMReading";
+    public static String AvgKMS_RPD = "AvgKMS_RPD";
+    public static String ServiceId = "ServiceId";
+    public static String SubServiceId = "SubServiceId";
+    public static String SUserId = "SUserId";
+    public static String CounterId = "CounterId";
+    public static String ServiceDetails = "ServiceDetails";
+    public static String JCImage = "JCImage";
+    public static String Documents = "Documents";
+    public static String CustName = "CustName";
+    public static String CustEmailId = "CustEmailId";
+    public static String CustMobileNo = "CustMobileNo";
+    public static String JCRemarks = "JCRemarks";
+    public static String JCVehicleNo = "JCVehicleNo";
+    public static String JCMake = "JCMake";
+    public static String JCModel = "JCModel";
+    public static String JCModelId = "JCModelid";
+    public static String JCRegno = "JCRegno";
+    public static String ScreenName = "ScreenName";
+    public static String VehicleType = "VehicleType";
+    public static String Mileage = "Mileage";
+    public static String Place = "Place";
+    public static String SpareId = "SpareId";
+    public static String ItemDetails = "ItemDetails";
+    public static String Block = "Block";
+    public static String TechnicianName = "Technician";
+    public static String Type = "Type";
+    public static String Status = "Status";
+}

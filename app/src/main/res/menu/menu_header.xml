@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_Add"
+        android:orderInCategory="200"
+        android:visible="false"
+        android:title="@string/action_add"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_printer"
+        android:orderInCategory="200"
+        android:visible="false"
+        android:title="Printer"
+        android:icon="@drawable/printer32"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_save"
+        android:orderInCategory="200"
+        android:icon="@drawable/saveicon5"
+        android:visible="true"
+        android:title="@string/action_settings"
+        app:showAsAction="always" />
+
+</menu>

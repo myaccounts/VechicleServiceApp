@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.myaccounts.vechicleserviceapp">
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- <uses-permission android:name="android.permission.CAMERA" /> -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="ANDROID.PERMISSION.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.hardware.camera" />
+    <uses-permission android:name="android.permission.STORAGE" />
+    <uses-permission android:name="android.bluetooth.device.action.ACL_DISCONNECTED" />
+    <uses-permission
+        android:name="android.permission.READ_LOGS"
+        tools:ignore="ProtectedPermissions" />
+
+    <application
+        android:name=".Utils.GoWheelsApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/app_icon"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:roundIcon="@mipmap/app_icon"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        tools:targetApi="m">
+        <activity android:name=".Activity.CancelJobCardDetails"></activity>
+        <activity android:name=".Activity.SpareStatusUpdateActivity" />
+        <activity android:name=".Activity.ServiceStatusUpdateActivity" />
+        <activity android:name=".Activity.PopupActivity" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
+        <activity
+            android:name=".LoginSetUp.SplashScreen"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Activity.MainActivity"
+            android:label="Job Card"
+            android:windowSoftInputMode="stateHidden"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".LoginSetUp.LoginActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:label="Go Wheels" />
+        <activity android:name=".Activity.PayNowActivity2016"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="Select PayMode"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".Activity.GeneralMasterActivity"
+            android:label="GeneralMaster" />
+        <activity
+            android:name=".Activity.ServiceMasterActivity"
+            android:label="ServiceMaster" />
+        <activity
+            android:name=".Activity.SubServiceActivity"
+            android:label="SubService" />
+        <activity
+            android:name=".Activity.VechicleMasterActivity"
+            android:label="VechicleMaster" />
+        <activity
+            android:name=".Activity.SparePartEstAgstCustomerActivity"
+            android:label="@string/menu_sparepartegstcustomer" />
+        <activity
+            android:name=".Activity.SparePartReceiptActivity"
+            android:label="SparePartReceipt" />
+        <activity
+            android:name=".Activity.SparePartIssueActivity"
+            android:label="@string/menu_SparePartissue"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Activity.SparePartMasterActivity"
+            android:label="@string/menu_SparePart" />
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
+        <activity
+            android:name=".Utils.CustomDialogClass"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".Activity.PrinterActivity"
+            android:label="Printer"
+            android:theme="@android:style/Theme.Dialog">
+            <intent-filter>
+                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
+                android:resource="@xml/device_filter" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activity.MainActivity" />
+        </activity>
+        <activity
+            android:name=".Activity.DocumentListActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="Document List"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".Activity.DrawingSignatureActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="Signature"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".Activity.JobCardNoActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".Activity.MakeListActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".Activity.VehicleTypeActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".Activity.ModelListActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".Activity.VehicleNoActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".Activity.ServiceManNamesActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".Activity.SparePartsActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".Activity.CustomerSelectionActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".Activity.GeneralServiceActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".Printernew.DiscoveryActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="Printer"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".Printernew.DeviceListActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".Activity.NewJobCardDetailsMain"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.NewServicesActivityNew"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".Activity.NewServicesActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@android:style/Theme.Dialog" />
+    </application>
+
+</manifest>

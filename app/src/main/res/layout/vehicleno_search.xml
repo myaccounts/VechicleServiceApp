@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="500dp"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+
+    <EditText
+        android:id="@+id/inputSearchfield"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@android:drawable/ic_menu_search"
+        android:hint="Search VehicleNo"
+        android:inputType="text"
+        android:singleLine="true" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/IdVehicleNoTv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="0.8"
+            android:gravity="center"
+            android:text="VehicleNo"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textSize"/>
+        <View
+            android:layout_width="0.2dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:visibility="gone"/>
+        <TextView
+            android:id="@+id/IdCustomerTv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="CustomerName"
+            android:visibility="gone"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textSize"/>
+
+        <View
+            android:layout_width="0.2dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:visibility="gone"/>
+        <TextView
+            android:id="@+id/IdMobileTv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="0.8"
+            android:gravity="center"
+            android:text="MobileNo"
+            android:visibility="gone"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textSize"/>
+
+
+
+
+
+    </LinearLayout>
+
+
+    <ListView
+        android:id="@+id/Id_VehicleNoListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/inputSearch"
+        android:background="@color/white"
+        android:cacheColorHint="#aca9a9"
+        android:divider="#bab9b9"
+        android:dividerHeight="2dp"
+        android:elevation="5dp"
+        android:footerDividersEnabled="true" />
+
+</LinearLayout>

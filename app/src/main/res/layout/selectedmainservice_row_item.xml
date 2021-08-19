@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="3sp"
+            android:weightSum="2">
+
+            <CheckBox
+                android:id="@+id/ServiceNameCheckBox"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:button="@drawable/check_box_selector"
+                android:gravity="left|center"
+                android:text="samplee"
+                android:layoutDirection="ltr"
+                android:textSize="16sp" />
+
+            <CheckBox
+                android:id="@+id/ServiceShortNameCheckBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:gravity="left|center"
+                android:layoutDirection="rtl"
+                android:text="ShortName"
+                android:theme="@style/MyCheckBox"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/selectedSericeListTv"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/viewcolour" />
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

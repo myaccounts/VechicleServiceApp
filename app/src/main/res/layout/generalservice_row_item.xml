@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    >
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:layout_gravity="center"
+    android:background="@color/white"
+    android:orientation="horizontal"
+    android:padding="0dp"
+    tools:ignore="MissingConstraints">
+
+    <TextView
+        android:id="@+id/mSnotv"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:gravity="center"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
+        android:text="SNo"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:textSize="@dimen/textSizeforreports"
+        android:textStyle="normal" />
+
+    <View
+        android:layout_width="0.01dp"
+        android:layout_height="match_parent"
+        android:background="@color/viewcolour" />
+
+    <TextView
+        android:id="@+id/mSerDescptv"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Service Description"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:textSize="@dimen/textSizeforreports"
+        android:textStyle="normal" />
+
+    <View
+        android:layout_width="0.01dp"
+        android:layout_height="match_parent"
+        android:background="@color/viewcolour" />
+    <TextView
+        android:id="@+id/mSerQtytv"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:hint="QTY"
+        android:inputType="number"
+        android:background="@android:color/transparent"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:textSize="@dimen/textSizeforreports"
+        android:textStyle="normal" />
+
+    <View
+        android:layout_width="0.01dp"
+        android:layout_height="match_parent"
+        android:background="@color/viewcolour" />
+
+
+
+    <TextView
+        android:id="@+id/mSerRateTv"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="RATE"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:textSize="@dimen/textSizeforreports"
+        android:textStyle="normal" />
+
+    <View
+        android:layout_width="0.01dp"
+        android:layout_height="match_parent"
+        android:background="@color/viewcolour" />
+
+
+
+    <TextView
+        android:id="@+id/mSerTotalValtv"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="TOTAL VAL"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:textSize="@dimen/textSizeforreports"
+        android:textStyle="normal" />
+
+    <View
+        android:layout_width="0.01dp"
+        android:layout_height="match_parent"
+        android:background="@color/viewcolour" />
+
+    <EditText
+        android:id="@+id/mSerRemarkstv"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:hint="Remarks"
+        android:maxLength="150"
+        android:inputType="textEmailAddress"
+        android:background="@android:color/transparent"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:textSize="@dimen/textSizeforreports"
+        android:textStyle="normal" />
+    <View
+        android:layout_width="0.01dp"
+        android:layout_height="match_parent"
+        android:background="@color/viewcolour" />
+
+    <ImageButton
+        android:id="@+id/IdDeleteIconImg"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.8"
+        android:background="@android:color/transparent"
+        android:src="@drawable/delete_icon"/>
+
+</LinearLayout>
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/submitId">
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/LinearLayoutbtn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                tools:ignore="MissingConstraints">
+                <TableLayout android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent">
+
+                        <TextView
+                            android:id="@+id/summary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:text="Summary"
+                            android:textStyle="bold"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="@dimen/textSize"></TextView>
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:id="@+id/vehicleNo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_marginLeft="5dp"
+                            android:textColor="@color/black"
+                            android:text="Vehicle No "></TextView>
+
+                        <TextView
+                            android:id="@+id/vehicleNoTv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:textColor="@color/black"></TextView>
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:id="@+id/vehicleName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_marginLeft="5dp"
+                            android:textColor="@color/black"
+                            android:text="Customer Name "></TextView>
+
+                        <TextView
+                            android:id="@+id/vehicleNameTv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:textColor="@color/black"></TextView>
+                    </TableRow>
+                    <TableRow>
+                        <TextView
+                            android:id="@+id/modelNo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_marginLeft="5dp"
+                            android:textColor="@color/black"
+                            android:text="Mobile No "></TextView>
+                        <TextView
+                            android:id="@+id/modelNoTv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:textColor="@color/black"></TextView>
+                    </TableRow>
+                    <TableRow>
+                        <TextView
+                            android:id="@+id/noOfServices"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_marginLeft="5dp"
+                            android:textColor="@color/black"
+                            android:text="No of Services "></TextView>
+                        <TextView
+                            android:id="@+id/noOfServicesTv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:textColor="@color/black"></TextView>
+                    </TableRow>
+                    <TableRow>
+                        <TextView
+                            android:id="@+id/noOfSpares"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_marginLeft="5dp"
+                            android:textColor="@color/black"
+                            android:text="No of Spares "></TextView>
+                        <TextView
+                            android:id="@+id/numberOfSparesTv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:textColor="@color/black"></TextView>
+                    </TableRow>
+                    <TableRow>
+                        <TextView
+                            android:id="@+id/totalAmount"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/noOfSpares"
+                            android:layout_margin="5dp"
+                            android:layout_marginLeft="5dp"
+                            android:textColor="@color/black"
+                            android:text="Total Amount "></TextView>
+                        <TextView
+                            android:id="@+id/totalAmountTv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:textColor="@color/black"></TextView>
+
+                    </TableRow>
+
+                </TableLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/ImgBackLinerLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/IdCaptureImgView"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="10sp"
+                        android:layout_weight="1"
+                        android:background="@drawable/background_line"
+                        android:src="@drawable/imageview_btn"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/drawingImage"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_weight="1"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/IdImageCaptureBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginRight="5sp"
+                        android:layout_marginBottom="10sp"
+                        android:layout_weight="1"
+                        android:background="@drawable/btnoutlinebackground"
+                        android:text="Capture Image"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorPrimary" />
+
+                    <Button
+                        android:id="@+id/IdSignatureBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginBottom="10sp"
+                        android:layout_weight="1"
+                        android:background="@drawable/btnoutlinebackground"
+                        android:text="Signature"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorPrimary" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/LinearLayoutRemarks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:orientation="vertical"
+                    tools:ignore="MissingConstraints">
+
+                    <android.support.design.widget.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/black">
+
+                        <EditText
+                            android:id="@+id/RemarksEdt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/imageView"
+                            android:gravity="start"
+                            android:hint="Remarks"
+                            android:inputType="textMultiLine"
+                            android:lines="5"
+                            android:maxLength="500"
+                            android:minLines="5"
+                            android:paddingLeft="10dp"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/textSize"
+                            android:textStyle="normal" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <!-- <EditText
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:layout_below="@+id/imageView"
+                         android:background="@drawable/background_line"
+                         android:gravity="start"
+                         android:hint="Remarks"
+                         android:inputType="textMultiLine"
+                         android:lines="5"
+                         android:maxLength="250"
+                         android:minLines="5"
+                         android:paddingLeft="10dp"
+                         android:singleLine="true"
+                         android:textColor="@color/black"
+                         android:textStyle="normal" />-->
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal"
+                    tools:ignore="MissingConstraints">
+
+                    <Button
+                        android:id="@+id/IdClearBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/button_background"
+                        android:text="Clear"
+                        android:textAllCaps="true"
+                        android:textColor="@color/white" />
+
+                    <Button
+                        android:id="@+id/IdSaveJobCardBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/button_background"
+                        android:text="Save"
+                        android:textAllCaps="true"
+                        android:textColor="@color/white"
+                        app:backgroundTint="@color/btn_colored_background_tint" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </ScrollView>
+
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</android.support.constraint.ConstraintLayout>

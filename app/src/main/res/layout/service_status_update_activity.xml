@@ -1,0 +1,474 @@
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="Service Update"
+                        android:textColor="@color/white"
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/dateAndTimeTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="20dp"
+                        android:gravity="right"
+                        android:text="Date"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.Toolbar>
+
+
+
+        </android.support.design.widget.AppBarLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+            <TableLayout android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:stretchColumns="1">
+
+                <TableRow>
+
+                    <TextView
+                        android:id="@+id/vehicleNo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="3dip"
+                        android:layout_gravity="left"
+                        android:textColor="@color/black"
+                        android:text="Vehicle No "></TextView>
+
+                    <TextView
+                        android:id="@+id/vehicleNoTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="3dip"
+                        android:textColor="@color/black"></TextView>
+                    <Button
+                        android:id="@+id/btn_submit_new"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/button_background"
+                        android:text="Submit"
+                        android:padding="3dip"
+                        android:textAllCaps="true"
+                        android:textColor="@color/white"
+                        android:visibility="visible"
+                        android:layout_gravity="right"
+                        app:backgroundTint="@color/btn_colored_background_tint" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:id="@+id/custName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="3dip"
+                        android:layout_gravity="left"
+                        android:textColor="@color/black"
+                        android:text="Customer Name "></TextView>
+
+                    <TextView
+                        android:id="@+id/custNameTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="3dip"
+                        android:layout_gravity="center"
+                        android:textColor="@color/black"></TextView>
+                </TableRow>
+                <TableRow>
+                    <TextView
+                        android:id="@+id/mobileNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="3dip"
+                        android:layout_gravity="left"
+                        android:textColor="@color/black"
+                        android:text="Mobile No "></TextView>
+                    <TextView
+                        android:id="@+id/mobileNoTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="3dip"
+                        android:layout_gravity="center"
+                        android:textColor="@color/black"></TextView>
+                </TableRow>
+                <TableRow>
+                    <TextView
+                        android:id="@+id/jobcardId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="3dip"
+                        android:layout_gravity="left"
+                        android:textColor="@color/black"
+                        android:text="JobCard Id "></TextView>
+                    <TextView
+                        android:id="@+id/jobcardIdTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="3dip"
+                        android:layout_gravity="center"
+                        android:textColor="@color/black"></TextView>
+                    <Button
+                        android:id="@+id/btn_select_all"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/button_background"
+                        android:text="Select All"
+                        android:padding="3dip"
+                        android:textAllCaps="true"
+                        android:textColor="@color/white"
+                        android:visibility="visible"
+                        android:layout_gravity="right"
+                        app:backgroundTint="@color/btn_colored_background_tint" />
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/LinearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40sp"
+                android:layout_gravity="center"
+                android:background="?attr/colorPrimary"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:gravity="center"
+                    android:paddingLeft="2dp"
+                    android:paddingRight="2dp"
+                    android:text="SNo"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSizeforreports"
+                    android:textStyle="normal" />
+
+                <View
+                    android:layout_width="0.1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/viewcolour" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.3"
+                    android:gravity="left|center_vertical"
+                    android:text="Service Name"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSizeforreports"
+                    android:visibility="gone"
+                    android:textStyle="normal" />
+
+                <View
+                    android:layout_width="0.1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/viewcolour" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Job Type"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSizeforreports"
+                    android:textStyle="normal" />
+
+                <View
+                    android:layout_width="0.1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/viewcolour" />
+
+                <TextView
+
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left"
+                    android:layout_weight="0.7"
+                    android:gravity="center"
+                    android:text="QTY"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSizeforreports"
+                    android:textStyle="normal" />
+                <!--<View
+                    android:layout_width="0.1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/viewcolour" />
+
+                <TextView
+
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left"
+                    android:layout_weight="0.7"
+                    android:gravity="center"
+                    android:text="Avl.QTY"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSizeforreports"
+                    android:textStyle="normal" />-->
+
+                <View
+                    android:layout_width="0.1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/viewcolour" />
+
+                <TextView
+
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Issue Type"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSizeforreports"
+                    android:textStyle="normal" />
+
+
+                <View
+                    android:layout_width="0.1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/viewcolour" />
+
+                <TextView
+
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left"
+                    android:layout_weight="0.8"
+                    android:gravity="center"
+                    android:text="ACTIONS"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSizeforreports"
+                    android:textStyle="normal" />
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:background="@color/viewcolour" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="2">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/ServiceMasterRecyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="550dp"
+                    android:background="@android:color/transparent"
+                    android:divider="@android:color/transparent"
+                    android:listSelector="@color/black"
+                    android:scrollbars="vertical">
+
+                </android.support.v7.widget.RecyclerView>
+
+            </ScrollView>
+
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_weight="1">
+
+
+
+            <Button
+                android:id="@+id/btn_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:background="@drawable/button_background"
+                android:text="Submit"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/btn_colored_background_tint" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/LinearLayoutServiceSelected"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/LinearLayoutWheelServices"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:padding="20dp"
+            android:text="Services"
+            android:textAllCaps="true"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/viewcolour" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <CheckBox
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:gravity="left|center"
+                android:layoutDirection="rtl"
+                android:text="Tyre Fitment"
+                android:theme="@style/MyCheckBox" />
+
+            <CheckBox
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:gravity="left|center"
+                android:layoutDirection="rtl"
+                android:text="Tubeless repair"
+                android:theme="@style/MyCheckBox" />
+
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/SelectedServiceRecyclerviewid"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:divider="@android:color/transparent"
+            android:listSelector="@color/black"
+            android:scrollbars="vertical"
+            android:visibility="gone"></android.support.v7.widget.RecyclerView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/background_line">
+
+            <Spinner
+                android:id="@+id/selectServiceSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"></Spinner>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/selectedServiceTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Selected Services"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="16sp" />
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/SelectedServiceRecyclerviewid1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/selectedServiceTv"
+                android:layout_margin="20dp"
+                android:layout_weight="1"
+                android:divider="@null"
+                android:fadeScrollbars="false"
+                android:listSelector="@color/black"
+                android:scrollbars="vertical"
+                android:visibility="visible"></android.support.v7.widget.RecyclerView>
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</android.support.design.widget.CoordinatorLayout>

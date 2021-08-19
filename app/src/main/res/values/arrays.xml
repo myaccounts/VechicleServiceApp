@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--<array name="resicon">
+        <item>@android:drawable/ic_dialog_alert</item>
+        <item>@android:drawable/ic_dialog_dialer</item>
+        <item>@android:drawable/ic_dialog_email</item>
+        <item>@android:drawable/ic_dialog_info</item>
+        <item>@android:drawable/ic_dialog_map</item>
+        <item>@android:drawable/ic_menu_camera</item>
+        <item>@android:drawable/ic_menu_compass</item>
+        <item>@android:drawable/ic_menu_gallery</item>
+        <item>@android:drawable/ic_menu_my_calendar</item>
+        <item>@android:drawable/ic_menu_myplaces</item>
+        <item>@android:drawable/ic_menu_slideshow</item>
+        <item>@android:drawable/ic_menu_today</item>
+    </array>-->
+    <array name="restext">
+        <item>WHEEL BEARING(S) LH/RH</item>
+        <item>BALL JOINTS – STEERING / SUSPENSION</item>
+        <item>TIE ROD END(S) LH/RH</item>
+        <item>SUSPENSION BUSHES / STEERING RUBBER BOOTS</item>
+        <item>IDLER ARM / DROP ARM BUSH(S)</item>
+        <item>STEERING WHEEL FREE PLAY</item>
+        <item>CHASSIS CORROSION / DISTORSION</item>
+        <item>UNEVEN HEIGHT</item>
+        <item>TYRES</item>
+        <item>HIGH SERVICING PRICE</item>
+        <item>LEAVING THIS TOWN TODAY</item>
+        <item>GOING TO CATCH THE TRAIN</item>
+        <item>NO INTEREST TO DO HERE</item>
+
+    </array>
+
+</resources>

@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:id="@+id/LinerLayOutHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical"
+            android:padding="10dp"
+            tools:ignore="MissingConstraints">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/TextLabel">
+
+                    <EditText
+                        android:id="@+id/VehicleNoEdt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 "
+                        android:hint="@string/vehiclenoedt"
+                        android:inputType="textCapCharacters"
+                        android:maxLength="14"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textSize"
+                        android:textStyle="normal" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/TextInputLayout3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/TextLabel">
+
+                    <EditText
+                        android:id="@+id/CustMobileNoEdt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/imageView"
+                        android:hint="@string/contactnoedt"
+                        android:inputType="number"
+                        android:maxLength="12"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textSize"
+                        android:textStyle="normal" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/TextInputLayout1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/TextLabel">
+
+                    <EditText
+                        android:id="@+id/CustNameEdt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true"
+                        android:hint="@string/custnameedt"
+                        android:inputType="text"
+                        android:maxLength="50"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textSize"
+                        android:textStyle="normal" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/CustDateEdtLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/TextAppearance"
+                    >
+
+                    <EditText
+                        android:id="@+id/CustDateEdt"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clickable="false"
+                        android:editable="false"
+                        android:hint="Date"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textSize"
+                        android:textStyle="normal" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/TextLabel"
+                    android:id="@+id/CustTimeEdtLayout"
+                    >
+
+                    <EditText
+                        android:id="@+id/CustTimeInEdt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:drawableRight="@drawable/time_icon"
+                        android:editable="false"
+                        android:hint="Time In "
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textSize"
+                        android:textStyle="normal" />
+
+                </android.support.design.widget.TextInputLayout>
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/TextLabel">
+
+                    <EditText
+                        android:id="@+id/PlaceEdt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/placeedt"
+                        android:inputType="textEmailAddress"
+                        android:maxLength="250"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textSize"
+                        android:textStyle="normal" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <!--<LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="2"
+                    android:orientation="horizontal"
+                    android:background="@drawable/btnoutlinebackground"
+                    android:padding="5dp">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:text="New"
+                        android:textColor="@color/black" />
+
+                    <Spinner
+                        android:id="@+id/SpnStatusSelection"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:entries="@array/StatusList">
+
+                    </Spinner>
+
+                </LinearLayout>-->
+                <LinearLayout
+                    android:id="@+id/LinearLayoutList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:orientation="vertical"
+                    tools:ignore="MissingConstraints">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Reason*"
+                        android:padding="10dp"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textSizeReports" />
+
+                    <ListView
+                        android:id="@+id/listView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp" />
+
+                    <android.support.design.widget.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/black">
+
+                        <EditText
+                            android:id="@+id/RemarksEdt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/imageView"
+                            android:gravity="start"
+                            android:padding="10dp"
+                            android:hint="Reason For Cancel :"
+                            android:inputType="textMultiLine"
+                            android:lines="5"
+                            android:maxLength="500"
+                            android:minLines="5"
+                            android:paddingLeft="10dp"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/textSize"
+                            android:textStyle="normal" />
+
+                    </android.support.design.widget.TextInputLayout>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/IdNextBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/button_background"
+                android:text="Next"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:visibility="visible"
+                app:backgroundTint="@color/btn_colored_background_tint" />
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</android.support.constraint.ConstraintLayout>

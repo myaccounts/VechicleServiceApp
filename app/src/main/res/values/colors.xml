@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FF7F50</color>
+    <color name="colorPrimaryDark">#FCFF6600</color>
+    <color name="colorAccent">#FF7F50</color>
+    <color name="viewcolour">#dddddf</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="skyblue">#2196f3</color>
+    <color name="lightblue">#FF6FAFCF</color>
+    <color name="indigo">#4B0082</color>
+    <color name="pink">#FF69B4</color>
+    <color name="orange">#FF6600</color>
+</resources>
