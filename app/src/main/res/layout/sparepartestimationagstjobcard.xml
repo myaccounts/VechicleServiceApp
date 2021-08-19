@@ -33,7 +33,9 @@
                 android:drawSelectorOnTop="true"
                 android:entries="@array/SpnerList"
                 android:padding="10sp"
-                android:textAlignment="center"></Spinner>
+                android:textAlignment="center">
+
+            </Spinner>
 
 
         </RelativeLayout>
