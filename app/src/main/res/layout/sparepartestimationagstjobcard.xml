@@ -972,7 +972,7 @@
                         android:minHeight="30dp"
                         android:id="@+id/IdJobCardCustomerRecyclerview"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
+                        android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
                         android:divider="@android:color/transparent"
                         android:listSelector="@color/black"
