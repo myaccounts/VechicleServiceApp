@@ -979,41 +979,41 @@ public class NewCaptureImageAndSignFragment extends Fragment {
         try {
 
             swipeRefreshLayout.setRefreshing(false);
-            if (jsonArray.length() > 0) {
+            if (jsonArray.length() > 0)
+            {
                 String result = jsonArray.getJSONObject(0).getString("Result");
                 String JobCardNumber = jsonArray.getJSONObject(0).getString("JobCardNumber");
 
-                Log.d("jobbbbbbb", JobCardNumber);
+                sessionManager.clearSession();
+                MainActivity.comingfrom="1";
 
-                    sessionManager.clearSession();
-                    MainActivity.comingfrom="1";
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Intent intent = new Intent(getContext(), MainActivity.class);
-                        startActivity(intent);
-                    }
-                }, 2000);
-
-
-                    progress_bar_jobcard_save.setVisibility(View.GONE);
-                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                if (result != null)
+                if(dialog != null && dialog.isShowing())
                 {
-                    if(dialog != null && dialog.isShowing()){
-                        dialog.dismiss();
-                    }
-                    IdSaveBtn.setEnabled(true);
-                    Toast.makeText(getActivity(), result + "" + JobCardNumber, Toast.LENGTH_SHORT).show();
-//                    ClearData();
-//                    isFirstRun = true;
+                    dialog.dismiss();
+                    // progress_bar_jobcard_save.setVisibility(View.GONE);
+                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 }
-//                JobCardNoEdt.setText(JobCardNumber);
+                IdSaveBtn.setEnabled(true);
+                Toast.makeText(getActivity(), result + "" + JobCardNumber, Toast.LENGTH_SHORT).show();
 
                 SharedPreferences.Editor edit = jobcardPref.edit();
                 edit.putString("JobCardNumber", JobCardNumber);
                 edit.commit();
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        progress_bar_jobcard_save.setVisibility(View.VISIBLE);
+                        Intent intent = new Intent(getContext(), MainActivity.class);
+                        startActivity(intent);
+                        progress_bar_jobcard_save.setVisibility(View.GONE);
+                    }
+                }, 2000);
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+                {
+                    Objects.requireNonNull(getActivity()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                }
 
             }
 
