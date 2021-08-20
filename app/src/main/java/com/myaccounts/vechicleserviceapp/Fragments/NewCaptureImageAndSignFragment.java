@@ -35,6 +35,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -88,6 +89,9 @@ import static com.myaccounts.vechicleserviceapp.Fragments.NewMainVehicleDetailsF
 import static com.myaccounts.vechicleserviceapp.Utils.SessionManager.KEY_SPAREID;
 
 public class NewCaptureImageAndSignFragment extends Fragment {
+
+    ProgressBar progress_bar_jobcard_save;
+
     int NUMBER_OF_SERVICES=0;
     ProgressDialog dialog;
     SharedPreferences pref, lpref;
@@ -198,7 +202,8 @@ public class NewCaptureImageAndSignFragment extends Fragment {
 
         getActivity();
         lpref = getActivity().getSharedPreferences("goWheelsVehicleIdPref", 0);
-
+        progress_bar_jobcard_save = rootView.findViewById(R.id.progress_bar_jobcard_save);
+        progress_bar_jobcard_save.setVisibility(View.GONE);
         numberOfSparesTv = (TextView) rootView.findViewById(R.id.numberOfSparesTv);
         IdImageCaptureBtn = (Button) rootView.findViewById(R.id.IdImageCaptureBtn);
         IdSignatureBtn = (Button) rootView.findViewById(R.id.IdSignatureBtn);
@@ -708,7 +713,8 @@ public class NewCaptureImageAndSignFragment extends Fragment {
             }
         }
         //user is returning from cropping the image
-        else if (requestCode == PIC_CROP) {
+        else if (requestCode == PIC_CROP)
+        {
             //get the returned data
             Bundle extras = data.getExtras();
             //get the cropped bitmap
@@ -717,7 +723,8 @@ public class NewCaptureImageAndSignFragment extends Fragment {
             Log.e(TAG, "pic_crop: " + thePic );
             //display the returned cropped image
             IdCaptureImgView.setImageBitmap(thePic);
-        } else if (requestCode == 101 && data != null && resultCode == RESULT_OK) {
+        }
+        else if (requestCode == 101 && data != null && resultCode == RESULT_OK) {
 
         }
         else if (requestCode == 33 && data != null && resultCode == RESULT_OK)
@@ -726,6 +733,7 @@ public class NewCaptureImageAndSignFragment extends Fragment {
         }
         else if (requestCode == 38 && data != null && resultCode == RESULT_OK)
         {
+
             SaveData();
             saveClick=false;
         }
@@ -789,6 +797,8 @@ public class NewCaptureImageAndSignFragment extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void saveDataToServer()
     {
+
+        progress_bar_jobcard_save.setVisibility(View.VISIBLE);
 
         Objects.requireNonNull(getActivity()).getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
@@ -928,10 +938,12 @@ public class NewCaptureImageAndSignFragment extends Fragment {
         }
 
         @Override
-        public void onJSONArrayResponse(JSONArray jsonArray) {
+        public void onJSONArrayResponse(JSONArray jsonArray)
+        {
             if (requestName.equalsIgnoreCase("SaveJobCardDetails_New")) {
                 try {
                     handeSaveJobCardDetails(jsonArray);
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -975,10 +987,20 @@ public class NewCaptureImageAndSignFragment extends Fragment {
 
                     sessionManager.clearSession();
                     MainActivity.comingfrom="1";
-                    Intent intent = new Intent(getContext(), MainActivity.class);
-                    startActivity(intent);
-                    Log.d("ANUSHA ","---"+result);
-                if (result != null) {
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(getContext(), MainActivity.class);
+                        startActivity(intent);
+                    }
+                }, 2000);
+
+
+                    progress_bar_jobcard_save.setVisibility(View.GONE);
+                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                if (result != null)
+                {
                     if(dialog != null && dialog.isShowing()){
                         dialog.dismiss();
                     }
@@ -992,6 +1014,7 @@ public class NewCaptureImageAndSignFragment extends Fragment {
                 SharedPreferences.Editor edit = jobcardPref.edit();
                 edit.putString("JobCardNumber", JobCardNumber);
                 edit.commit();
+
             }
 
         } catch (Exception e) {
