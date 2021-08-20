@@ -1,49 +1,49 @@
 -- Merging decision tree log ---
 manifest
-ADDED from E:\My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:1:1-15:12
-INJECTED from E:\My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:1:1-15:12
-INJECTED from E:\My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:1:1-15:12
-INJECTED from E:\My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:1:1-15:12
-INJECTED from E:\My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:1:1-15:12
-INJECTED from E:\My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:1:1-15:12
-INJECTED from E:\My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:1:1-15:12
+ADDED from E:\Live My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:1:1-15:12
+INJECTED from E:\Live My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:1:1-15:12
+INJECTED from E:\Live My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:1:1-15:12
+INJECTED from E:\Live My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:1:1-15:12
+INJECTED from E:\Live My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:1:1-15:12
+INJECTED from E:\Live My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:1:1-15:12
+INJECTED from E:\Live My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:1:1-15:12
 	package
-		ADDED from E:\My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:2:5-40
-		INJECTED from E:\My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
-		INJECTED from E:\My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
+		ADDED from E:\Live My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:2:5-40
+		INJECTED from E:\Live My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
+		INJECTED from E:\Live My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
 	android:versionName
-		ADDED from E:\My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:4:5-30
-		INJECTED from E:\My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
-		INJECTED from E:\My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
+		ADDED from E:\Live My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:4:5-30
+		INJECTED from E:\Live My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
+		INJECTED from E:\Live My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
 	xmlns:android
-		ADDED from E:\My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:1:11-69
+		ADDED from E:\Live My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:1:11-69
 	android:versionCode
-		ADDED from E:\My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:3:5-28
-		INJECTED from E:\My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
-		INJECTED from E:\My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
+		ADDED from E:\Live My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:3:5-28
+		INJECTED from E:\Live My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
+		INJECTED from E:\Live My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
 uses-permission#android.permission.BLUETOOTH
-ADDED from E:\My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:8:5-68
+ADDED from E:\Live My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:8:5-68
 	android:name
-		ADDED from E:\My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:8:22-65
+		ADDED from E:\Live My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:8:22-65
 uses-permission#android.permission.BLUETOOTH_ADMIN
-ADDED from E:\My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:9:5-74
+ADDED from E:\Live My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:9:5-74
 	android:name
-		ADDED from E:\My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:9:22-71
+		ADDED from E:\Live My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:9:22-71
 application
-ADDED from E:\My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:11:5-13:19
+ADDED from E:\Live My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:11:5-13:19
 	android:allowBackup
-		ADDED from E:\My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:12:9-35
+		ADDED from E:\Live My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml:12:9-35
 uses-sdk
-INJECTED from E:\My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from E:\My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
-INJECTED from E:\My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
-INJECTED from E:\My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
-INJECTED from E:\My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
+INJECTED from E:\Live My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from E:\Live My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
+INJECTED from E:\Live My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
+INJECTED from E:\Live My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
+INJECTED from E:\Live My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
 	android:targetSdkVersion
-		INJECTED from E:\My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
-		ADDED from E:\My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
-		INJECTED from E:\My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
+		INJECTED from E:\Live My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
+		ADDED from E:\Live My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
+		INJECTED from E:\Live My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from E:\My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
-		ADDED from E:\My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
-		INJECTED from E:\My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
+		INJECTED from E:\Live My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
+		ADDED from E:\Live My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
+		INJECTED from E:\Live My Wheels app\VechicleServiceApp\printerLibs\src\main\AndroidManifest.xml
