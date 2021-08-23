@@ -19,32 +19,44 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.myaccounts.vechicleserviceapp.Activity.NewJobCardDetailsMain;
 import com.myaccounts.vechicleserviceapp.Activity.ServiceStatusUpdateActivity;
 import com.myaccounts.vechicleserviceapp.Pojo.NewServiceMasterDetails;
 import com.myaccounts.vechicleserviceapp.Pojo.ServiceMaster;
 import com.myaccounts.vechicleserviceapp.Pojo.SparePartDetails;
 import com.myaccounts.vechicleserviceapp.R;
+import com.myaccounts.vechicleserviceapp.Utils.ProjectVariables;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class NewServiceUpdateAdapter extends RecyclerView.Adapter<NewServiceUpdateAdapter.ItemViewHolder> {
 
-    private Context context;
-    private ArrayList<NewServiceMasterDetails> sparePartDetailsArrayList;
+    private final Context context;
+    private final ArrayList<NewServiceMasterDetails> sparePartDetailsArrayList;
     private NewServiceUpdateAdapter.OnItemClickListener onItemClickListener;
     private String ValueStr = "";
-    // String[] issueType = {"Paid", "Free"};
-    // String qty = "1";
+    String jc_id="";
 
     String storeSpinner;
     List<String> categories;
 
-    public NewServiceUpdateAdapter(Context context, int new_service_issue_row_item, ArrayList<NewServiceMasterDetails> sparePartDetailsArrayList, String jobcard) {
+    public NewServiceUpdateAdapter(Context context, int new_service_issue_row_item, ArrayList<NewServiceMasterDetails> sparePartDetailsArrayList, String jobcard, String jobcard_id) {
         this.context = context;
         this.sparePartDetailsArrayList = sparePartDetailsArrayList;
         ValueStr = jobcard;
+        this.jc_id = jobcard_id;
 
     }
 
@@ -59,82 +71,119 @@ public class NewServiceUpdateAdapter extends RecyclerView.Adapter<NewServiceUpda
     @Override
     public void onBindViewHolder(@NonNull final ItemViewHolder holder, final int position) {
         try {
-            final NewServiceMasterDetails serviceDetails = sparePartDetailsArrayList.get(position);
+            final NewServiceMasterDetails serviceDetails = sparePartDetailsArrayList.get(holder.getAdapterPosition());
             categories = new ArrayList<String>();
-
             categories.add(serviceDetails.getmIssueType());
-
-
-            /*ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.spinner_item, categories);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            holder.ServiceIssueTypeTv.setAdapter(adapter);*/
-
-
-            Log.d("fffffff", "" + serviceDetails + "," + position + 1);
-            serviceDetails.setRowNo(position + 1);
-
+            serviceDetails.setRowNo(holder.getAdapterPosition() + 1);
             storeSpinner = serviceDetails.getmIssueType();
-
-
-            Log.d("Adapissuetype", storeSpinner);
 
             holder.SnoTv.setText(String.valueOf(serviceDetails.getRowNo()));
             holder.ServicetNameTv.setText(String.valueOf(serviceDetails.getmServiceName()));
             holder.JobItemTypeTv.setText(String.valueOf(serviceDetails.getmSubServiceName()));
-            Log.d("Sssssss", String.valueOf(serviceDetails.getmSubServiceName()));
             holder.ServiceQtyTv.setText(String.valueOf(serviceDetails.getmQty()));
-//            holder.ServiceAvlQtyTv.setText(String.valueOf(serviceDetails.getmAvlQty()));
             holder.ServiceIssueTv.setText(String.valueOf(serviceDetails.getmIssueType()));
-//            String status = String.valueOf(serviceDetails.getSelected());
             String status = String.valueOf(serviceDetails.getmSetSerStatus());
-            Log.e("status",status);
-            Log.d(" ANUSHA ","++++++"+status);
-            if(status.equals("true")){
-                holder.chk_status.setChecked(true);
-            }
-            else{
-                holder.chk_status.setChecked(false);
-            }
+
+            holder.chk_status.setChecked(status.equals("true"));
+
             holder.chk_status.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                    if(holder.chk_status.isChecked()){
+                    Log.e("onClick", "onClick: " + holder.chk_status.isChecked() );
+
+                    String value = "";
+
+                    if (holder.chk_status.isChecked())
+                    {
+                        value = "true";
+                    }
+                    else
+                    {
+                        value = "false";
+                    }
+
+                    final String finalValue = value;
+                    Runnable runnable = new Runnable(){
+                        public void run()
+                        {
+                            UpdateServiceStatus(jc_id,serviceDetails.getmServiceId(),serviceDetails.getmSubServiceId(), finalValue);
+                        }
+                    };
+
+                    Thread thread = new Thread(runnable);
+                    thread.start();
+
+
+                }
+            });
+
+            /*holder.chk_status.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if(holder.chk_status.isChecked())
+                    {
                         serviceDetails.setSelected(true);
-                        Log.e("checked ",sparePartDetailsArrayList.get(position).getmServiceName()+", "+sparePartDetailsArrayList.get(position).getmServiceId()
-                         +" , "+sparePartDetailsArrayList.get(position).getmSubServiceId()+", "+sparePartDetailsArrayList.get(position).getSelected());
                         ServiceStatusUpdateActivity.checkBoxStatus=true;
                     }
                     else
                     {
                         serviceDetails.setSelected(false);
                         ServiceStatusUpdateActivity.checkBoxStatus=false;
-                        Log.e("not checked ",sparePartDetailsArrayList.get(position).getmServiceName());
                     }
-
-
                 }
-            });
-            if(ServiceStatusUpdateActivity.isSelectAll){
+            });*/
+
+            if(ServiceStatusUpdateActivity.isSelectAll)
+            {
                 holder.chk_status.setChecked(true);
                 serviceDetails.setSelected(true);
                 ServiceStatusUpdateActivity.checkBoxStatus=true;
-            }/*else if(!ServiceStatusUpdateActivity.isSelectAll && !status.equals("true")){
-                holder.chk_status.setChecked(false);
-                serviceDetails.setSelected(false);
-                ServiceStatusUpdateActivity.checkBoxStatus=false;
-            }*/
+            }
 
-//            holder.ServiceIssueTypeTv.setText("");
         } catch (Exception e) {
             e.printStackTrace();
             Log.e("Exception in adapter", String.valueOf(e));
         }
-
     }
 
+    private void UpdateServiceStatus(String jc_id, String service_id, String subServiceId, String value)
+    {
 
+        Log.e("service_update", "Adapter " + jc_id + " " + service_id + " " + subServiceId+ " " + value);
 
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.put("JobCardId",jc_id);
+            jsonObject.put("ServiceId",service_id);
+            jsonObject.put("SubServiceId",subServiceId);
+            jsonObject.put("Status",value);
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, ProjectVariables.BASE_URL + ProjectVariables.UpdateServiceStatus, jsonObject, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray jsonArray) {
+
+                Log.e("checkbox", "onResponse: " + jsonArray );
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError)
+            {
+                Log.e("checkbox", "volleyError: " + volleyError.getLocalizedMessage() );
+            }
+        });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(jsonArrayRequest);
+
+    }
 
     @Override
     public int getItemCount() {
@@ -148,57 +197,48 @@ public class NewServiceUpdateAdapter extends RecyclerView.Adapter<NewServiceUpda
 
 
     public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView SnoTv, ServicetNameTv, JobItemTypeTv, RemarksTv,ServiceIssueTv;
+        private final TextView SnoTv;
+        private final TextView ServicetNameTv;
+        private final TextView JobItemTypeTv;
+        private TextView RemarksTv;
+        private final TextView ServiceIssueTv;
         CheckBox chk_status;
-        // public Spinner ServiceIssueTypeTv;
         TextView ServiceQtyTv;
-        private ImageButton IdEditIconImg, IdDeleteIconImg;
+        private final ImageButton IdEditIconImg;
+        private final ImageButton IdDeleteIconImg;
 
-        public ItemViewHolder(View itemView) {
+        public ItemViewHolder(View itemView)
+        {
             super(itemView);
             SnoTv = (TextView) itemView.findViewById(R.id.SnoTv);
             ServicetNameTv = (TextView) itemView.findViewById(R.id.ServicetNameTv);
             JobItemTypeTv = (TextView) itemView.findViewById(R.id.JobItemTypeTv);
-
             ServiceQtyTv = (TextView) itemView.findViewById(R.id.ServiceQtyTv);
-//            ServiceAvlQtyTv = (TextView) itemView.findViewById(R.id.ServiceAvlQtyTv);
-//            RemarksTv = (TextView) itemView.findViewById(R.id.RemarksTv);
             ServiceIssueTv = (TextView) itemView.findViewById(R.id.ServiceIssueTv);
             IdEditIconImg = (ImageButton) itemView.findViewById(R.id.IdEditIconImg);
             IdDeleteIconImg = (ImageButton) itemView.findViewById(R.id.IdDeleteIconImg);
             chk_status = (CheckBox) itemView.findViewById(R.id.chk_service_update);
-
-
-
-            if (ValueStr.equalsIgnoreCase("jobcard")) {
-//                RemarksTv.setVisibility(View.GONE);
-
-            } else {
-//                RemarksTv.setVisibility(View.VISIBLE);
-
-            }
             chk_status.setOnClickListener(this);
-           // IdDeleteIconImg.setOnClickListener(this);
+            // IdDeleteIconImg.setOnClickListener(this);
 
         }
 
         @Override
-        public void onClick(View v) {
+        public void onClick(View v)
+        {
             try {
-                if (onItemClickListener != null) {
-                    onItemClickListener.onItemClick(v, getPosition(), sparePartDetailsArrayList.get(getPosition()).getmServiceName());
-
+                if (onItemClickListener != null)
+                {
+                    onItemClickListener.onItemClick(v, getAdapterPosition(), sparePartDetailsArrayList.get(getAdapterPosition()).getmServiceName());
                 }
 
-            } catch (Exception e) {
-                e.printStackTrace();
-
-            }
+            } catch (Exception e) { e.printStackTrace(); }
         }
     }
 
-    public interface OnItemClickListener {
-        public void onItemClick(View view, int position, String itemName);
+    public interface OnItemClickListener
+    {
+        void onItemClick(View view, int position, String itemName);
     }
 }
 

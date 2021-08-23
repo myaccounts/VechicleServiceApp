@@ -1,36 +1,22 @@
 package com.myaccounts.vechicleserviceapp.Activity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.icu.util.EthiopicCalendar;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -41,14 +27,7 @@ import android.widget.Toast;
 import android.support.v7.app.AppCompatActivity;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
-import com.myaccounts.vechicleserviceapp.Activity.NewJobCardDetailsMain;
-import com.myaccounts.vechicleserviceapp.Activity.NewServicesActivity;
-import com.myaccounts.vechicleserviceapp.Adapter.JobCardReportsAdapter;
-import com.myaccounts.vechicleserviceapp.Adapter.NewServiceMasterIssueAdapter;
 import com.myaccounts.vechicleserviceapp.Adapter.NewServiceUpdateAdapter;
-import com.myaccounts.vechicleserviceapp.Fragments.JobCardReportsFragment;
-import com.myaccounts.vechicleserviceapp.Pojo.EditServiceDetails;
-import com.myaccounts.vechicleserviceapp.Pojo.JobCardDetails;
 import com.myaccounts.vechicleserviceapp.Pojo.NewServiceMasterDetails;
 import com.myaccounts.vechicleserviceapp.R;
 import com.myaccounts.vechicleserviceapp.Utils.AlertDialogManager;
@@ -60,10 +39,8 @@ import com.myaccounts.vechicleserviceapp.Utils.Enums;
 import com.myaccounts.vechicleserviceapp.Utils.JSONVariables;
 import com.myaccounts.vechicleserviceapp.Utils.MyMessageObject;
 import com.myaccounts.vechicleserviceapp.Utils.OnServiceCallCompleteListener;
-import com.myaccounts.vechicleserviceapp.Utils.ProjectMethods;
 import com.myaccounts.vechicleserviceapp.Utils.ProjectVariables;
 import com.myaccounts.vechicleserviceapp.Utils.SessionManager;
-import com.theartofdev.edmodo.cropper.CropImage;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -72,8 +49,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.BindView;
-
-import static android.app.Activity.RESULT_OK;
 
 public class ServiceStatusUpdateActivity extends AppCompatActivity {
 
@@ -140,6 +115,7 @@ public class ServiceStatusUpdateActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Service Update");
+
         dateAndTimeTV = (TextView) findViewById(R.id.dateAndTimeTV);
         ServiceMasterRecyclerview = (RecyclerView) findViewById(R.id.ServiceMasterRecyclerview);
         btn_submit = (Button) findViewById(R.id.btn_submit_new);
@@ -152,7 +128,32 @@ public class ServiceStatusUpdateActivity extends AppCompatActivity {
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("ANUSHA "," if condition outside"+checkBoxStatus);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(ServiceStatusUpdateActivity.this);
+                builder.setCancelable(false);
+                builder.setTitle("Updated");
+                builder.setMessage("Service updated successfully.");
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        sessionManager.clearSession();
+                        MainActivity.comingfrom="2";
+                        Toast.makeText(ServiceStatusUpdateActivity.this, "Updated.." , Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog alert = builder.create();
+                alert.show();
+
+                /*Log.e("ANUSHA "," if condition outside"+checkBoxStatus);
                 boolean selectStatus=false;
 
                 for(int i=0;i<ediServiceDetailsArrayList.size();i++){
@@ -161,7 +162,8 @@ public class ServiceStatusUpdateActivity extends AppCompatActivity {
                     }
                 }
                 Log.d("ANUSHA "," if condition outside selectStatus "+selectStatus);
-                if(selectStatus) {
+                if(selectStatus)
+                {
                     AlertDialog.Builder builder = new AlertDialog.Builder(ServiceStatusUpdateActivity.this);
                     builder.setCancelable(false);
                     builder.setTitle("Updated");
@@ -188,11 +190,11 @@ public class ServiceStatusUpdateActivity extends AppCompatActivity {
 
                                 updtServiceDetailsArrayList.add(newServiceMasterDetails);
 
-                         /*   Log.i("updgetmServiceName: ", updtServiceDetailsArrayList.get(i).getmServiceName());
+                         *//*   Log.i("updgetmServiceName: ", updtServiceDetailsArrayList.get(i).getmServiceName());
                             Log.i(":updgetmServiceId ", updtServiceDetailsArrayList.get(i).getmServiceId());
                             Log.i("updgetmSubServiceId: ", updtServiceDetailsArrayList.get(i).getmSubServiceId());
                             Log.i("updgetSelected: ", String.valueOf(updtServiceDetailsArrayList.get(i).getSelected()));
-*/
+*//*
 
                             }
                             UpdateService();
@@ -213,7 +215,7 @@ public class ServiceStatusUpdateActivity extends AppCompatActivity {
                 }else{
                     Log.e("ANUSHA "," else condition"+checkBoxStatus);
                     Toast.makeText(ServiceStatusUpdateActivity.this,"Please Select At least One Service",Toast.LENGTH_SHORT).show();
-                }
+                }*/
             }
         });
         btn_select_all.setOnClickListener(new View.OnClickListener() {
@@ -277,7 +279,8 @@ public class ServiceStatusUpdateActivity extends AppCompatActivity {
                 try {
 //                    swipeRefreshLayout.setRefreshing(true);
 
-                    if (ediServiceDetailsArrayList.size() > 0) {
+                    if (ediServiceDetailsArrayList.size() > 0)
+                    {
 
                         for (int i = 0; i < ediServiceDetailsArrayList.size(); i++) {
 
@@ -289,11 +292,11 @@ public class ServiceStatusUpdateActivity extends AppCompatActivity {
                             String status = String.valueOf(ediServiceDetailsArrayList.get(i).getSelected());
                             jsonObject.accumulate(JSONVariables.Status,status);
 
-                           Log.e("sending",jobcardId);
-                           Log.e("sending",ediServiceDetailsArrayList.get(i).getmServiceId());
-                           Log.e("sending",ediServiceDetailsArrayList.get(i).getmSubServiceId());
-                           Log.e("sending", status);
-                           Log.d("ANUSHA "," "+jsonObject.toString());
+                            Log.e("sending",jobcardId);
+                            Log.e("sending",ediServiceDetailsArrayList.get(i).getmServiceId());
+                            Log.e("sending",ediServiceDetailsArrayList.get(i).getmSubServiceId());
+                            Log.e("sending", status);
+                            Log.d("ANUSHA "," "+jsonObject.toString());
                             BackendServiceCall serviceCall = new BackendServiceCall(this, false);
                             requestName = "UpdateServiceStatus";
                             serviceCall.setOnServiceCallCompleteListener(new OnServiceCallCompleteListenerImpl());
@@ -378,17 +381,18 @@ public class ServiceStatusUpdateActivity extends AppCompatActivity {
             try {
                 Log.d("ANUSHA ", " "+jsonArray.length());
                 Log.d("ANUSHA ", " "+jsonArray.getJSONObject(0).toString());
-                if (jsonArray.length() > 0) {
+                if (jsonArray.length() > 0)
+                {
                     String result = jsonArray.getJSONObject(0).getString("Result");
 //                    String JobCardNumber = jsonArray.getJSONObject(0).getString("JobCardNumber");
 
 //                    Log.d("jobbbbbbb", JobCardNumber);
                     if (result != null) {
 
-                        sessionManager.clearSession();
+                        /*sessionManager.clearSession();
                         MainActivity.comingfrom="2";
                         Toast.makeText(ServiceStatusUpdateActivity.this, result , Toast.LENGTH_SHORT).show();
-                        finish();
+                        finish();*/
 //                        Intent intent = new Intent(ServiceStatusUpdateActivity.thi, MainActivity.class);
 //                        startActivity(intent);
 //                    ClearData();
@@ -414,174 +418,169 @@ public class ServiceStatusUpdateActivity extends AppCompatActivity {
 
 
     private void AddtemToGrid (NewServiceMasterDetails sp){
-            Log.e("AddtemToGrid called", "AddtemToGrid called");
+        Log.e("AddtemToGrid called", "AddtemToGrid called");
 
+        try {
+
+            ediServiceDetailsArrayList.add(sp);
+            ServiceMasterRecyclerview.smoothScrollToPosition(ediServiceDetailsArrayList.size() - 1);
+
+
+
+            PrepareItemDetailsList();
+
+            newServiceupdateAdapter.notifyDataSetChanged();
+
+            // checkGridValue();
             try {
-
-                    ediServiceDetailsArrayList.add(sp);
-                    ServiceMasterRecyclerview.smoothScrollToPosition(ediServiceDetailsArrayList.size() - 1);
-
-
-
-                PrepareItemDetailsList();
-
-                newServiceupdateAdapter.notifyDataSetChanged();
-
-                // checkGridValue();
-                try {
-                    InputMethodManager in = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
-                    in.hideSoftInputFromWindow(AddImgBtn.getApplicationWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
+                InputMethodManager in = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+                in.hideSoftInputFromWindow(AddImgBtn.getApplicationWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
 
-        private void AddListToGrid () {
-            Log.e("AddListToGrid called", "AddListToGrid called");
+    private void AddListToGrid () {
+        Log.e("AddListToGrid called", "AddListToGrid called");
 
 
-            newServiceupdateAdapter = new NewServiceUpdateAdapter(this, R.layout.new_service_update_row_item, ediServiceDetailsArrayList, "jobcard");
-            ServiceMasterRecyclerview.setLayoutManager(new LinearLayoutManager(this));
-            ServiceMasterRecyclerview.setItemAnimator(new DefaultItemAnimator());
-            ServiceMasterRecyclerview.setHasFixedSize(true);
-            ServiceMasterRecyclerview.setAdapter(newServiceupdateAdapter);
+        newServiceupdateAdapter = new NewServiceUpdateAdapter(this, R.layout.new_service_update_row_item, ediServiceDetailsArrayList, "jobcard",jobcardId);
+        ServiceMasterRecyclerview.setLayoutManager(new LinearLayoutManager(this));
+        ServiceMasterRecyclerview.setItemAnimator(new DefaultItemAnimator());
+        ServiceMasterRecyclerview.setHasFixedSize(true);
+        ServiceMasterRecyclerview.setAdapter(newServiceupdateAdapter);
 
 
 //            newServiceMasterIssueAdapter.notifyDataSetChanged();
 
-            newServiceupdateAdapter.SetOnItemClickListener(new NewServiceUpdateAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(View view, int position, String itemName) {
-                    boolean value = false;
-                    switch (view.getId()) {
+        newServiceupdateAdapter.SetOnItemClickListener(new NewServiceUpdateAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position, String itemName) {
+                boolean value = false;
 
-                        case R.id.IdEditIconImg:
-                            try {
-                                CustomDailog("Service Issue", "Do You Want to Edit Details?", 133, "Edit", position);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            break;
-                        case R.id.IdDeleteIconImg:
-                            try {
-                                CustomDailog("Service Issue", "Do You Want to Delete Details?", 134, "Delete", position);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            break;
-                    }
+                switch (view.getId()) {
+
+                    case R.id.IdEditIconImg:
+                        try {
+                            CustomDailog("Service Issue", "Do You Want to Edit Details?", 133, "Edit", position);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case R.id.IdDeleteIconImg:
+                        try {
+                            CustomDailog("Service Issue", "Do You Want to Delete Details?", 134, "Delete", position);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
                 }
-            });
+            }
+        });
+    }
 
+    private void SparPartInformation (Intent data){
+        try {
+            AvlQty = "";
+            UOMId = "";
+            UOMName = "";
+            String ServiceRate = data.getStringExtra("ServiceRate");
+            String ServiceFreeRate = data.getStringExtra("ServiceRate");
+            String ServiceResult = data.getStringExtra("ServiceResult");
+            String ServiceId = data.getStringExtra("ServiceId");
+            String ServiceName = data.getStringExtra("ServiceName");
+            String SubServiceId = data.getStringExtra("SubServiceId");
+            String SubServiceName = data.getStringExtra("SubServiceName");
 
+            Log.d("sdsdsdd", ServiceName);
 
-        }
-
-
-
-
-        private void SparPartInformation (Intent data){
-            try {
-                AvlQty = "";
-                UOMId = "";
-                UOMName = "";
-                String ServiceRate = data.getStringExtra("ServiceRate");
-                String ServiceFreeRate = data.getStringExtra("ServiceRate");
-                String ServiceResult = data.getStringExtra("ServiceResult");
-                String ServiceId = data.getStringExtra("ServiceId");
-                String ServiceName = data.getStringExtra("ServiceName");
-                String SubServiceId = data.getStringExtra("SubServiceId");
-                String SubServiceName = data.getStringExtra("SubServiceName");
-
-                Log.d("sdsdsdd", ServiceName);
-
-                IdServiceEdt.setText(ServiceName);
-                IdServiceEdt.setTag(ServiceId);
-                mrpTv.setText(ServiceRate);
-                freemrpTv.setText(ServiceFreeRate);
+            IdServiceEdt.setText(ServiceName);
+            IdServiceEdt.setTag(ServiceId);
+            mrpTv.setText(ServiceRate);
+            freemrpTv.setText(ServiceFreeRate);
            /* AvlQty = ShortBalQty;
             UOMName = ShortUomName;
             UOMId = ShortUomId;*/
-                //mrpTv
-                // QtyEdt.setText(AvlQty);
-                ServiceSubServiceTv.setText(SubServiceName);
-                ServiceSubServiceIdTv.setText(SubServiceId);
+            //mrpTv
+            // QtyEdt.setText(AvlQty);
+            ServiceSubServiceTv.setText(SubServiceName);
+            ServiceSubServiceIdTv.setText(SubServiceId);
 //            UomTv.setText(ShortUomName);
 //            UomTv.setTag(ShortUomId);
 
-            } catch (Exception e) {
-                e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
 
+        }
+    }
+
+    private void CustomDailog (String Title, String msg,int value, String btntxt,int position){
+        try {
+            MyMessageObject.setMyTitle(Title);
+            MyMessageObject.setMyMessage(msg);
+            MyMessageObject.setMessageType(Enums.MyMesageType.YesNo);
+            Intent intent = new Intent(this, CustomDialogClass.class);
+            intent.putExtra("msgbtn", btntxt);
+            startActivityForResult(intent, value);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onActivityResult ( int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 103) {
+            if (data != null && resultCode == RESULT_OK) {
+                Log.d("spareee", "sparee");
+                SparPartInformation(data);
             }
         }
 
-        private void CustomDailog (String Title, String msg,int value, String btntxt,int position){
-            try {
-                MyMessageObject.setMyTitle(Title);
-                MyMessageObject.setMyMessage(msg);
-                MyMessageObject.setMessageType(Enums.MyMesageType.YesNo);
-                Intent intent = new Intent(this, CustomDialogClass.class);
-                intent.putExtra("msgbtn", btntxt);
-                startActivityForResult(intent, value);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+    }
 
-        @Override
-        public void onActivityResult ( int requestCode, int resultCode, Intent data){
-            super.onActivityResult(requestCode, resultCode, data);
 
-            if (requestCode == 103) {
-                if (data != null && resultCode == RESULT_OK) {
-                    Log.d("spareee", "sparee");
-                    SparPartInformation(data);
+    private void PrepareItemDetailsList () {
+        Log.e("PrepareItem called", "PrepareItemDetailsList called");
+        try {
+            finalServiceDetailsDetailList = "";
+            for (int j = 0; j < ediServiceDetailsArrayList.size(); j++) {
+
+                Log.d("ddddddd", "" + ediServiceDetailsArrayList.get(j).getRowNo());
+                if (ediServiceDetailsArrayList.get(j).getRowNo() >= 0) {
+                    Log.d("execute", "" + ediServiceDetailsArrayList.get(j).getRowNo());
+
+                    finalServiceDetailsDetailList += (j + 1) + "!";
                 }
-            }
-
-        }
-
-
-        private void PrepareItemDetailsList () {
-            Log.e("PrepareItem called", "PrepareItemDetailsList called");
-            try {
-                finalServiceDetailsDetailList = "";
-                for (int j = 0; j < ediServiceDetailsArrayList.size(); j++) {
-
-                    Log.d("ddddddd", "" + ediServiceDetailsArrayList.get(j).getRowNo());
-                    if (ediServiceDetailsArrayList.get(j).getRowNo() >= 0) {
-                        Log.d("execute", "" + ediServiceDetailsArrayList.get(j).getRowNo());
-
-                        finalServiceDetailsDetailList += (j + 1) + "!";
-                    }
-                    if (ediServiceDetailsArrayList.get(j).getmServiceId() != null) {
-                        finalServiceDetailsDetailList += ediServiceDetailsArrayList.get(j).getmServiceId() + "!";
-                    }
-                    if (ediServiceDetailsArrayList.get(j).getmSubServiceId() != null) {
-                        finalServiceDetailsDetailList += ediServiceDetailsArrayList.get(j).getmSubServiceId() + "!";
-                    }
-                    if (ediServiceDetailsArrayList.get(j).getmQty() != null) {
-                        finalServiceDetailsDetailList += ediServiceDetailsArrayList.get(j).getmQty() + "!";
-                    }
-                    if (ediServiceDetailsArrayList.get(j).getmRate() != null) {
-                        finalServiceDetailsDetailList += ediServiceDetailsArrayList.get(j).getmRate() + "!";
-                    }
-                    if (ediServiceDetailsArrayList.get(j).getmResult() != null) {
-                        finalServiceDetailsDetailList += totalAmount + "!";
-                    }
-                    if (ediServiceDetailsArrayList.get(j).getmResult() != null) {
-                        finalServiceDetailsDetailList += "N/A" + "!";
-                    }
-                    if (ediServiceDetailsArrayList.get(j).getmIssueType() != null) {
-                        finalServiceDetailsDetailList += ediServiceDetailsArrayList.get(j).getmIssueType() + "!";
-                    }
-                    if(ediServiceDetailsArrayList.get(j).getmSetSerStatus() != null) {
-                        finalServiceDetailsDetailList += ediServiceDetailsArrayList.get(j).getmSetSerStatus();//this field added as per status changing of job card
-                    }
+                if (ediServiceDetailsArrayList.get(j).getmServiceId() != null) {
+                    finalServiceDetailsDetailList += ediServiceDetailsArrayList.get(j).getmServiceId() + "!";
+                }
+                if (ediServiceDetailsArrayList.get(j).getmSubServiceId() != null) {
+                    finalServiceDetailsDetailList += ediServiceDetailsArrayList.get(j).getmSubServiceId() + "!";
+                }
+                if (ediServiceDetailsArrayList.get(j).getmQty() != null) {
+                    finalServiceDetailsDetailList += ediServiceDetailsArrayList.get(j).getmQty() + "!";
+                }
+                if (ediServiceDetailsArrayList.get(j).getmRate() != null) {
+                    finalServiceDetailsDetailList += ediServiceDetailsArrayList.get(j).getmRate() + "!";
+                }
+                if (ediServiceDetailsArrayList.get(j).getmResult() != null) {
+                    finalServiceDetailsDetailList += totalAmount + "!";
+                }
+                if (ediServiceDetailsArrayList.get(j).getmResult() != null) {
+                    finalServiceDetailsDetailList += "N/A" + "!";
+                }
+                if (ediServiceDetailsArrayList.get(j).getmIssueType() != null) {
+                    finalServiceDetailsDetailList += ediServiceDetailsArrayList.get(j).getmIssueType() + "!";
+                }
+                if(ediServiceDetailsArrayList.get(j).getmSetSerStatus() != null) {
+                    finalServiceDetailsDetailList += ediServiceDetailsArrayList.get(j).getmSetSerStatus();//this field added as per status changing of job card
+                }
 
 //                if (serviceMasterDetailsArrayList.get(j).getmServiceName() != null) {
 //                    finalServiceDetailsDetailList += serviceMasterDetailsArrayList.get(j).getmServiceName() + "!";
@@ -594,7 +593,7 @@ public class ServiceStatusUpdateActivity extends AppCompatActivity {
 //                    finalSparePartDetailList += serviceMasterDetailsArrayList.get(j).getmSparePartID();
 //                }
 
-                    Log.d("length", "" + ediServiceDetailsArrayList.size());
+                Log.d("length", "" + ediServiceDetailsArrayList.size());
 
 //                if (serviceMasterDetailsArrayList.size() == 1) {
 //                    finalServiceDetailsDetailList = finalServiceDetailsDetailList + "";
@@ -604,100 +603,99 @@ public class ServiceStatusUpdateActivity extends AppCompatActivity {
 //
 //                    CalculationPart();
 //                }
-                    if (ediServiceDetailsArrayList.size() > 0) {
+                if (ediServiceDetailsArrayList.size() > 0) {
 
-                        if (ediServiceDetailsArrayList.size() > 1) {
-                            finalServiceDetailsDetailList = finalServiceDetailsDetailList + "~";
-                        } else {
-                            finalServiceDetailsDetailList = finalServiceDetailsDetailList;
-                        }
+                    if (ediServiceDetailsArrayList.size() > 1) {
+                        finalServiceDetailsDetailList = finalServiceDetailsDetailList + "~";
+                    } else {
+                        finalServiceDetailsDetailList = finalServiceDetailsDetailList;
+                    }
 
 //                    Log.d("finalSparePart", "" + finalrows);
 
-                        Log.e("finnnnn", "" + finalServiceDetailsDetailList.length() + "," + finalServiceDetailsDetailList);
+                    Log.e("finnnnn", "" + finalServiceDetailsDetailList.length() + "," + finalServiceDetailsDetailList);
 
 
 
 
-                    } else {
-                        finalServiceDetailsDetailList = "";
-                    }
+                } else {
+                    finalServiceDetailsDetailList = "";
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
 
 
-        private void handeEditServiceDetails (JSONArray jsonArray){
-            Log.e("handeEditServicecalled", "handeEditServiceDetails called"+jsonArray.length());
+    private void handeEditServiceDetails (JSONArray jsonArray)
+    {
+        Log.e("handeEditServicecalled", "handeEditServiceDetails called"+jsonArray.length());
 //        mswiperefreshlayout.setRefreshing(false);
-            if (jsonArray.length() > 0) {
-                if (ediServiceDetailsArrayList == null) {
-                    ediServiceDetailsArrayList = new ArrayList<>();
-                }
-                //  ediServiceDetailsArrayList.clear();
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    try {
-                        JSONObject object = jsonArray.getJSONObject(i);
-                        String Result = object.getString("Result");
-                        if (Result.equalsIgnoreCase("No Records Found")) {
-                            btn_submit.setVisibility(View.INVISIBLE);
-                            btn_select_all.setVisibility(View.INVISIBLE);
-                            Toast.makeText(this, Result, Toast.LENGTH_SHORT).show();
-//                        ((NewJobCardDetailsMain)getActivity()).serviceMasterArrayList.clear();
-                            ediServiceDetailsArrayList.clear();
-                        } else {
-                            btn_submit.setVisibility(View.VISIBLE);
-                            btn_select_all.setVisibility(View.INVISIBLE);
-                            Log.e("handeEditServicecalled", "handeEditServiceDetails called"+object);
-                            NewServiceMasterDetails documentTypes = new NewServiceMasterDetails();
-                            documentTypes.setmIssueType(object.getString("IssueType"));
-                            documentTypes.setmQty(object.getString("Qty"));
-                            documentTypes.setmRate(object.getString("Rate"));
-                            documentTypes.setRemarks(object.getString("Remarks"));
-                            documentTypes.setmResult(object.getString("Result"));
-                            documentTypes.setmServiceId(object.getString("ServiceId"));
-                            documentTypes.setmServiceName(object.getString("ServiceName"));
-                            documentTypes.setSno(object.getString("SlNo"));
-                            documentTypes.setmSubServiceId(object.getString("SubServiceId"));
-                            documentTypes.setmSubServiceName(object.getString("SubServiceName"));
-                            documentTypes.setTotalValue(object.getString("TotValue"));
-                            documentTypes.setmSetSerStatus(object.getString("SerStatus"));
-//                            documentTypes.setmAvlQty(object.getString("AvailQty"));
-                            String status = (object.getString("Status"));
-                            Log.d("JESUS 5","#### JSONOBJECT "+object.toString());
-                            Log.d("JESUS 5","#### JSONOBJECT "+object.getString("SerStatus"));
-                            Log.d("JESUS 5","#### JSONOBJECT "+documentTypes.getmSetSerStatus());
-                            Log.d("ANUSHA "," if condition outside selectStatus "+object.getString("SerStatus"));
-//                            Log.d("ANUSHA "," if condition outside selectStatus "+documentTypes.getmSetSerStatus());
-                            Log.d("ANUSHA "," if condition outside selectStatus ___ "+status);
-                            if (status.equals("true"))
-                            {
-                                documentTypes.setSelected(true);
-                            }
-                            else if (status.equals("false"))
-                            {
-                                documentTypes.setSelected(false);
-                            }
-                            ediServiceDetailsArrayList.add(documentTypes);
-//                        ((NewJobCardDetailsMain)getActivity()).serviceMasterArrayList.add(documentTypes);
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-                AddListToGrid();
-                //  GetServiceManListRelatedToServices();
+        if (jsonArray.length() > 0) {
+            if (ediServiceDetailsArrayList == null) {
+                ediServiceDetailsArrayList = new ArrayList<>();
             }
+            //  ediServiceDetailsArrayList.clear();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                try {
+                    JSONObject object = jsonArray.getJSONObject(i);
+                    String Result = object.getString("Result");
+                    if (Result.equalsIgnoreCase("No Records Found")) {
+                        btn_submit.setVisibility(View.INVISIBLE);
+                        btn_select_all.setVisibility(View.INVISIBLE);
+                        Toast.makeText(this, Result, Toast.LENGTH_SHORT).show();
+//                        ((NewJobCardDetailsMain)getActivity()).serviceMasterArrayList.clear();
+                        ediServiceDetailsArrayList.clear();
+                    } else {
+                        btn_submit.setVisibility(View.VISIBLE);
+                        btn_select_all.setVisibility(View.INVISIBLE);
+                        Log.e("handeEditServicecalled", "handeEditServiceDetails called"+object);
+                        NewServiceMasterDetails documentTypes = new NewServiceMasterDetails();
+                        documentTypes.setmIssueType(object.getString("IssueType"));
+                        documentTypes.setmQty(object.getString("Qty"));
+                        documentTypes.setmRate(object.getString("Rate"));
+                        documentTypes.setRemarks(object.getString("Remarks"));
+                        documentTypes.setmResult(object.getString("Result"));
+                        documentTypes.setmServiceId(object.getString("ServiceId"));
+                        documentTypes.setmServiceName(object.getString("ServiceName"));
+                        documentTypes.setSno(object.getString("SlNo"));
+                        documentTypes.setmSubServiceId(object.getString("SubServiceId"));
+                        documentTypes.setmSubServiceName(object.getString("SubServiceName"));
+                        documentTypes.setTotalValue(object.getString("TotValue"));
+                        documentTypes.setmSetSerStatus(object.getString("SerStatus"));
+//                            documentTypes.setmAvlQty(object.getString("AvailQty"));
+                        String status = (object.getString("Status"));
+                        Log.d("JESUS 5","#### JSONOBJECT "+object.toString());
+                        Log.d("JESUS 5","#### JSONOBJECT "+object.getString("SerStatus"));
+                        Log.d("JESUS 5","#### JSONOBJECT "+documentTypes.getmSetSerStatus());
+                        Log.d("ANUSHA "," if condition outside selectStatus "+object.getString("SerStatus"));
+//                            Log.d("ANUSHA "," if condition outside selectStatus "+documentTypes.getmSetSerStatus());
+                        Log.d("ANUSHA "," if condition outside selectStatus ___ "+status);
+                        if (status.equals("true"))
+                        {
+                            documentTypes.setSelected(true);
+                        }
+                        else if (status.equals("false"))
+                        {
+                            documentTypes.setSelected(false);
+                        }
+                        ediServiceDetailsArrayList.add(documentTypes);
+//                        ((NewJobCardDetailsMain)getActivity()).serviceMasterArrayList.add(documentTypes);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            AddListToGrid();
+            //  GetServiceManListRelatedToServices();
+        }
 
 //        UIUpdateListLeadView();
+    }
 
-        }
-
-
-
-    private void GetEditServiceDetails() {
+    private void GetEditServiceDetails()
+    {
         Log.e("GetEditServiceDetails", "GetEditServiceDetails called");
 
         if (AppUtil.isNetworkAvailable(this)) {
