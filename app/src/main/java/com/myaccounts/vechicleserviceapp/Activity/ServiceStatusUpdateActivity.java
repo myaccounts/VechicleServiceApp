@@ -6,13 +6,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,7 +24,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.myaccounts.vechicleserviceapp.Adapter.NewServiceUpdateAdapter;
@@ -51,8 +51,7 @@ import java.util.HashMap;
 import butterknife.BindView;
 
 public class ServiceStatusUpdateActivity extends AppCompatActivity {
-
-
+    
     public static boolean checkBoxStatus=false;
     private TextView IdtotalRows, IdTotalQty, IdTotalAmt, FreeTotalTv, ServiceSubServiceTv, ServiceSubServiceIdTv, UomTv, mrpTv, freemrpTv;
     private String AvlQty = "", UOMName = "", UOMId = "", MRP = "";
@@ -107,7 +106,6 @@ public class ServiceStatusUpdateActivity extends AppCompatActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.e(TAG, "onCreate: called");
-        Log.e("ANUSHA ", "onCreate: called"+checkBoxStatus+" isSelectAll "+isSelectAll);
 
         setContentView(R.layout.service_status_update_activity);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -153,69 +151,6 @@ public class ServiceStatusUpdateActivity extends AppCompatActivity {
                 AlertDialog alert = builder.create();
                 alert.show();
 
-                /*Log.e("ANUSHA "," if condition outside"+checkBoxStatus);
-                boolean selectStatus=false;
-
-                for(int i=0;i<ediServiceDetailsArrayList.size();i++){
-                    if(ediServiceDetailsArrayList.get(i).getSelected()) {
-                        selectStatus = true;
-                    }
-                }
-                Log.d("ANUSHA "," if condition outside selectStatus "+selectStatus);
-                if(selectStatus)
-                {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(ServiceStatusUpdateActivity.this);
-                    builder.setCancelable(false);
-                    builder.setTitle("Updated");
-                    builder.setMessage("Service updated successfully.");
-                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            //if user pressed "yes", then he is allowed to exit from application
-                            Log.e("ediSlsArrayList", String.valueOf(ediServiceDetailsArrayList.size()));
-                            NewServiceMasterDetails newServiceMasterDetails = new NewServiceMasterDetails();
-                            for (int i = 0; i < ediServiceDetailsArrayList.size(); i++) {
-                                Log.i("getmServiceName: ", ediServiceDetailsArrayList.get(i).getmServiceName());
-                                Log.i(":getmServiceId ", ediServiceDetailsArrayList.get(i).getmServiceId());
-                                Log.i("getmSubServiceId: ", ediServiceDetailsArrayList.get(i).getmSubServiceId());
-                                Log.i("getSelected: ", String.valueOf(ediServiceDetailsArrayList.get(i).getSelected()));
-
-                                newServiceMasterDetails.setmServiceName(ediServiceDetailsArrayList.get(i).getmServiceName());
-
-                                newServiceMasterDetails.setmServiceId(ediServiceDetailsArrayList.get(i).getmServiceId());
-
-                                newServiceMasterDetails.setmSubServiceId(ediServiceDetailsArrayList.get(i).getmSubServiceId());
-
-                                newServiceMasterDetails.setSelected(ediServiceDetailsArrayList.get(i).getSelected());
-
-                                updtServiceDetailsArrayList.add(newServiceMasterDetails);
-
-                         *//*   Log.i("updgetmServiceName: ", updtServiceDetailsArrayList.get(i).getmServiceName());
-                            Log.i(":updgetmServiceId ", updtServiceDetailsArrayList.get(i).getmServiceId());
-                            Log.i("updgetmSubServiceId: ", updtServiceDetailsArrayList.get(i).getmSubServiceId());
-                            Log.i("updgetSelected: ", String.valueOf(updtServiceDetailsArrayList.get(i).getSelected()));
-*//*
-
-                            }
-                            UpdateService();
-                            checkBoxStatus=false;
-                            isSelectAll=false;
-//                            finish();
-                        }
-                    });
-                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            //if user select "No", just cancel this dialog and continue with app
-                            dialog.cancel();
-                        }
-                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-                }else{
-                    Log.e("ANUSHA "," else condition"+checkBoxStatus);
-                    Toast.makeText(ServiceStatusUpdateActivity.this,"Please Select At least One Service",Toast.LENGTH_SHORT).show();
-                }*/
             }
         });
         btn_select_all.setOnClickListener(new View.OnClickListener() {
@@ -296,15 +231,11 @@ public class ServiceStatusUpdateActivity extends AppCompatActivity {
                             Log.e("sending",ediServiceDetailsArrayList.get(i).getmServiceId());
                             Log.e("sending",ediServiceDetailsArrayList.get(i).getmSubServiceId());
                             Log.e("sending", status);
-                            Log.d("ANUSHA "," "+jsonObject.toString());
                             BackendServiceCall serviceCall = new BackendServiceCall(this, false);
                             requestName = "UpdateServiceStatus";
                             serviceCall.setOnServiceCallCompleteListener(new OnServiceCallCompleteListenerImpl());
                             serviceCall.makeJSONOArryPostRequest(ProjectVariables.BASE_URL + ProjectVariables.UpdateServiceStatus, jsonObject, Request.Priority.HIGH);
                             Log.e("updatedetail", "" + jsonObject);
-                            Log.e("ANUSHA ", "" + jsonObject);
-                            Log.d("JESUS 5","#### JSONOBJECT "+jsonObject.toString());
-                            Log.d("ANUSHA "," "+ProjectVariables.BASE_URL + ProjectVariables.UpdateServiceStatus);
                         }
                     } else {
                         Log.e("updtServiceDetsArrList", "" + ediServiceDetailsArrayList.size());
@@ -350,13 +281,9 @@ public class ServiceStatusUpdateActivity extends AppCompatActivity {
         private void handeUpdtServiceDetails(JSONArray jsonArray) {
 
             try {
-                Log.d("ANUSHA ", " "+jsonArray);
                 if (jsonArray.length() > 0) {
                     String result = jsonArray.getJSONObject(0).getString("Result");
                     String JobCardNumber = jsonArray.getJSONObject(0).getString("JobCardNumber");
-                    Log.d("ANUSHA ", " result "+result);
-                    Log.d("ANUSHA "," if condition outside selectStatus "+result);
-                    Log.d("jobbbbbbb", JobCardNumber);
                     if (result != null) {
 
                         sessionManager.clearSession();
@@ -379,8 +306,6 @@ public class ServiceStatusUpdateActivity extends AppCompatActivity {
         private void handeSubmitServiceDetails(JSONArray jsonArray) {
 
             try {
-                Log.d("ANUSHA ", " "+jsonArray.length());
-                Log.d("ANUSHA ", " "+jsonArray.getJSONObject(0).toString());
                 if (jsonArray.length() > 0)
                 {
                     String result = jsonArray.getJSONObject(0).getString("Result");
@@ -666,12 +591,6 @@ public class ServiceStatusUpdateActivity extends AppCompatActivity {
                         documentTypes.setmSetSerStatus(object.getString("SerStatus"));
 //                            documentTypes.setmAvlQty(object.getString("AvailQty"));
                         String status = (object.getString("Status"));
-                        Log.d("JESUS 5","#### JSONOBJECT "+object.toString());
-                        Log.d("JESUS 5","#### JSONOBJECT "+object.getString("SerStatus"));
-                        Log.d("JESUS 5","#### JSONOBJECT "+documentTypes.getmSetSerStatus());
-                        Log.d("ANUSHA "," if condition outside selectStatus "+object.getString("SerStatus"));
-//                            Log.d("ANUSHA "," if condition outside selectStatus "+documentTypes.getmSetSerStatus());
-                        Log.d("ANUSHA "," if condition outside selectStatus ___ "+status);
                         if (status.equals("true"))
                         {
                             documentTypes.setSelected(true);
@@ -705,9 +624,7 @@ public class ServiceStatusUpdateActivity extends AppCompatActivity {
                 jsonObject.accumulate("JobCardId", jobcardId);
                 BackendServiceCall serviceCall = new BackendServiceCall(this, false);
                 Log.d("servicecall", "" + serviceCall);
-                Log.d("ANUSHA "," "+jsonObject.toString());
                 requestName = "GetServicesAgstJobCard";
-                Log.d("ANUSHA "," "+ProjectVariables.BASE_URL + ProjectVariables.GetEditServiceDetails);
                 serviceCall.setOnServiceCallCompleteListener(new OnServiceCallCompleteListenerReportsImpl());
                 serviceCall.makeJSONOArryPostRequest(ProjectVariables.BASE_URL + ProjectVariables.GetEditServiceDetails, jsonObject, Request.Priority.HIGH);
             } catch (Exception e) {

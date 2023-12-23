@@ -80,9 +80,9 @@
                 android:background="@drawable/btnoutlinebackground">
 
                 <TextView
-                    android:layout_centerInParent="true"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
+                    android:layout_centerInParent="true"
                     android:gravity="center"
                     android:text="New"
                     android:textColor="@color/black" />
@@ -211,20 +211,20 @@
                 android:visibility="visible" />
         </LinearLayout>
 
-        <android.support.v4.widget.SwipeRefreshLayout
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipe_refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="0dp">
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/IdJobCardRecyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-            </android.support.v7.widget.RecyclerView>
-        </android.support.v4.widget.SwipeRefreshLayout>
+            </androidx.recyclerview.widget.RecyclerView>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </LinearLayout>
 </RelativeLayout>

@@ -10,14 +10,12 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.core.content.ContextCompat;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
@@ -41,10 +39,8 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.myaccounts.vechicleserviceapp.Activity.DrawingSignatureActivity;
-import com.myaccounts.vechicleserviceapp.Activity.JobCardNoActivity;
 import com.myaccounts.vechicleserviceapp.Activity.MainActivity;
 import com.myaccounts.vechicleserviceapp.Activity.NewJobCardDetailsMain;
-import com.myaccounts.vechicleserviceapp.Activity.ServiceStatusUpdateActivity;
 import com.myaccounts.vechicleserviceapp.Adapter.JobCardReportsAdapter;
 import com.myaccounts.vechicleserviceapp.Adapter.JobDetailsAdpater;
 import com.myaccounts.vechicleserviceapp.Pojo.DocumentTypes;
@@ -74,9 +70,6 @@ import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -226,10 +219,8 @@ public class JobCardReportsFragment extends Fragment implements SwipeRefreshLayo
                 jsonObject = new JSONObject();
                 jsonObject.accumulate("Flag", 10);
                 jsonObject.accumulate("Status", "Ready");
-                Log.d("ANUSHA ", "" + jsonObject);
                 BackendServiceCall serviceCall = new BackendServiceCall(getActivity(), false);
                 requestName = "GetServicesAgstJobCard";
-                Log.d("ANUSHA "," "+ProjectVariables.BASE_URL + ProjectVariables.GetEditServiceDetails);
                 serviceCall.setOnServiceCallCompleteListener(new OnServiceCallCompleteListenerReportsImpl());
                 serviceCall.makeJSONOArryPostRequest(ProjectVariables.BASE_URL + ProjectVariables.GetEditServiceDetails, jsonObject, Request.Priority.HIGH);
             } catch (Exception e) {
@@ -246,10 +237,8 @@ public class JobCardReportsFragment extends Fragment implements SwipeRefreshLayo
                 jsonObject = new JSONObject();
                 jsonObject.accumulate("Flag", 10);
                 jsonObject.accumulate("Status", SelectedStatus);
-                Log.d("ANUSHA ", "" + jsonObject);
                 BackendServiceCall serviceCall = new BackendServiceCall(getActivity(), false);
                 requestName = "GetServicesAgstJobCard";
-                Log.d("ANUSHA "," "+ProjectVariables.BASE_URL + ProjectVariables.GetEditServiceDetails);
                 serviceCall.setOnServiceCallCompleteListener(new OnServiceCallCompleteListenerReportsImpl());
                 serviceCall.makeJSONOArryPostRequest(ProjectVariables.BASE_URL + ProjectVariables.GetEditServiceDetails, jsonObject, Request.Priority.HIGH);
             } catch (Exception e) {
@@ -303,7 +292,6 @@ public class JobCardReportsFragment extends Fragment implements SwipeRefreshLayo
                 requestName = "GetJobCardDetails";
                 serviceCall.setOnServiceCallCompleteListener(new OnServiceCallCompleteListenerReportsImpl());
                 serviceCall.makeJSONOArryPostRequest(ProjectVariables.BASE_URL + ProjectVariables.GetJobCardDetails, jsonObject, Request.Priority.HIGH);
-                Log.d("ANUSHA ", "" + ProjectVariables.BASE_URL + ProjectVariables.GetJobCardDetails);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -314,7 +302,6 @@ public class JobCardReportsFragment extends Fragment implements SwipeRefreshLayo
 
     @Override
     public void onRefresh() {
-        Log.d("ANUSHA ","ONREFRESH");
         mswiperefreshlayout.setRefreshing(false);
     }
 
@@ -564,6 +551,7 @@ public class JobCardReportsFragment extends Fragment implements SwipeRefreshLayo
                         CustomDailog("Job Card Details", "Do You Want to Save the Data?", 33, "SAVE");
                     } catch (Exception e) {
                         e.printStackTrace();
+
 
                     }
 
@@ -854,7 +842,6 @@ public class JobCardReportsFragment extends Fragment implements SwipeRefreshLayo
                 try {
                     JSONObject object = jsonArray.getJSONObject(i);
                     String Result = object.getString("Result");
-                    Log.e("ANUSHA ","JSONARRAY "+object.toString());
                     if (Result.equalsIgnoreCase("No Records Found")) {
                         Toast.makeText(getActivity(), Result, Toast.LENGTH_SHORT).show();
                         jobCardDetailsArrayList.clear();
@@ -891,7 +878,6 @@ public class JobCardReportsFragment extends Fragment implements SwipeRefreshLayo
 
                                 jobCardDetailsArrayList.add(documentTypes);
                             } else {
-                                Log.d("ANUSHA ", "@@@@ MENUCLICK @@@@ jobcardDate Not Equal Condition "+JSERIALNO);
                             }
                     }
                 } catch (Exception e) {

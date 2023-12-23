@@ -6,13 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
-import android.text.Html;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -30,11 +29,8 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
-import com.myaccounts.vechicleserviceapp.Activity.JobCardNoActivity;
 import com.myaccounts.vechicleserviceapp.Activity.SparePartsActivity;
-import com.myaccounts.vechicleserviceapp.Adapter.JobCardHistoryAdpater;
 import com.myaccounts.vechicleserviceapp.Adapter.SparePartConsumptionAdpater;
-import com.myaccounts.vechicleserviceapp.Pojo.JobCardHistory;
 import com.myaccounts.vechicleserviceapp.Pojo.SparePartReports;
 import com.myaccounts.vechicleserviceapp.Pojo.UserList;
 import com.myaccounts.vechicleserviceapp.R;
@@ -47,7 +43,6 @@ import com.myaccounts.vechicleserviceapp.Utils.MyMessageObject;
 import com.myaccounts.vechicleserviceapp.Utils.OnServiceCallCompleteListener;
 import com.myaccounts.vechicleserviceapp.Utils.ProjectMethods;
 import com.myaccounts.vechicleserviceapp.Utils.ProjectVariables;
-import com.myaccounts.vechicleserviceapp.Utils.SessionManager;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -419,7 +414,7 @@ public class SparePartConsumptionReport extends Fragment implements View.OnClick
             case R.id.deletebtn:
                 try {
                     if(sparePartReportsArrayList.size()>0) {
-                        CustomDailog("ANUSHA", "Do You Want to Delete  Details?", 38, "Delete");
+                        CustomDailog("SparePartConsumption", "Do You Want to Delete  Details?", 38, "Delete");
                     }else {
                         inputJobcardSearchEdt.setText("");
                         DateSlectionLinearLayout.setVisibility(View.VISIBLE);

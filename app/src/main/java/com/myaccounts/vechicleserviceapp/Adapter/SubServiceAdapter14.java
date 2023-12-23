@@ -2,7 +2,7 @@ package com.myaccounts.vechicleserviceapp.Adapter;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -14,7 +14,6 @@ import android.widget.LinearLayout;
 import com.myaccounts.vechicleserviceapp.Pojo.SubService;
 import com.myaccounts.vechicleserviceapp.Pojo.SubServiceHeader;
 import com.myaccounts.vechicleserviceapp.R;
-import com.myaccounts.vechicleserviceapp.Utils.ProjectMethods;
 
 import java.util.ArrayList;
 

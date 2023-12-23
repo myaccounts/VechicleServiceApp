@@ -99,7 +99,6 @@ public class GeneralServiceActivity extends Activity {
                 try {
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.accumulate("JobCardId", jobCardId);
-                    Log.d("ANUSHA ", " " + jsonObject);
                     BackendServiceCall serviceCall = new BackendServiceCall(GeneralServiceActivity.this, false);
                     requestName = "GetJobCardDetailsReport";
                     serviceCall.setOnServiceCallCompleteListener(new GeneralServiceActivity.OnServiceCallCompleteListenerImplMethod());
@@ -128,8 +127,6 @@ public class GeneralServiceActivity extends Activity {
                     jsonObject.accumulate("VehicleId", ModelId);
                     BackendServiceCall serviceCall = new BackendServiceCall(GeneralServiceActivity.this, false);
                     requestName = "JCServices";
-                    Log.d("ANUSHA "," "+jsonObject.toString());
-                    Log.d("ANUSHA "," "+ProjectVariables.BASE_URL + ProjectVariables.NEW_GET_SERVICE_MASTER);
                     serviceCall.setOnServiceCallCompleteListener(new GeneralServiceActivity.OnServiceCallCompleteListenerImplMethod());
                     serviceCall.makeJSONOArryPostRequest(ProjectVariables.BASE_URL + ProjectVariables.NEW_GET_SERVICE_MASTER, jsonObject, Request.Priority.HIGH);
                 } catch (Exception e) {
@@ -195,10 +192,8 @@ public class GeneralServiceActivity extends Activity {
                 } else {
                     Log.e("Executing block","I am here");
                     //   mCustomerId = jsonArray.getJSONObject(0).getString("CustomerId");
-                    Log.d("ANUSHA ",result.toString());
                     String ModelId = jsonArray.getJSONObject(0).getString("ModelNo");
                     GetUsersList(ModelId);
-                    Log.d("ANUSHA ",ModelId);
                 }
 
                 //  GetServiceManListRelatedToServices();
@@ -291,7 +286,6 @@ public class GeneralServiceActivity extends Activity {
                 } else {
                     Log.e("Executing block","I am here");
                     //   mCustomerId = jsonArray.getJSONObject(0).getString("CustomerId");
-                    Log.e("ANUSHA ",jsonObject.toString());
                     ModelId = jsonArray.getJSONObject(0).getString("ModelNo");
                     Log.e("Executing block","I am here"+ModelId);
                     GetUsersList(ModelId);

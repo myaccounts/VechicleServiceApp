@@ -3,7 +3,7 @@ package com.myaccounts.vechicleserviceapp.LoginSetUp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.WindowManager;
 
 import com.myaccounts.vechicleserviceapp.R;

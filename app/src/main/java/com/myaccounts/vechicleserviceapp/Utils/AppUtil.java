@@ -13,11 +13,10 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
-import android.support.annotation.RequiresApi;
+import androidx.annotation.RequiresApi;
 import android.widget.Button;
 
 
-import com.myaccounts.vechicleserviceapp.MainActivity;
 import com.myaccounts.vechicleserviceapp.R;
 
 import java.io.IOException;

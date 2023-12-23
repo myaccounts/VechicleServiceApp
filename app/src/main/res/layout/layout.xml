@@ -138,6 +138,40 @@
                 android:textSize="15sp" />
 
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layount_email"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_weight="1"
+            android:minHeight="40dp"
+            android:visibility="gone"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="12"
+                android:text="Email Id"
+                android:layout_marginLeft="15dp"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+            <EditText
+                android:id="@+id/emailId"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="8"
+                android:layout_marginRight="25dp"
+                android:hint="Enter Emailid"
+                android:inputType="textEmailAddress"
+                android:singleLine="true"
+                android:paddingRight="10dp"
+                android:selectAllOnFocus="true"
+                android:textSize="15sp" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/IdReturnChangeLayout"

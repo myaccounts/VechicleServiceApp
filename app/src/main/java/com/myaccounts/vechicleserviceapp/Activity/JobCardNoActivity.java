@@ -56,7 +56,6 @@ public class JobCardNoActivity extends Activity {
             dynamicList = new ArrayList<>();
             jobCardDetailsArrayList = new ArrayList<>();
             jobCardStatus=getIntent().getStringExtra("STATUS");
-            Log.d("ANUSHA "," +++++++++"+jobCardStatus);
             GetJobCardNoData(jobCardStatus);
 //            GetJobCardNoDataReady();
             inputSearchfield.addTextChangedListener(new TextWatcher() {
@@ -90,7 +89,6 @@ public class JobCardNoActivity extends Activity {
                     JSONObject   jsonObject = new JSONObject();
                     jsonObject.accumulate("Flag", 10);
                     jsonObject.accumulate("Status", "Ready");
-                    Log.d("ANUSHA ", "" + jsonObject.toString());
                     BackendServiceCall serviceCall = new BackendServiceCall(JobCardNoActivity.this, false);
                     requestName = "GetJobCardDetails";
                     serviceCall.setOnServiceCallCompleteListener(new OnServiceCallCompleteListenerSpareImp());
@@ -118,7 +116,6 @@ public class JobCardNoActivity extends Activity {
                  JSONObject   jsonObject = new JSONObject();
                     jsonObject.accumulate("Flag", 10);
                     jsonObject.accumulate("Status", status);
-                    Log.d("ANUSHA ", "" + jsonObject.toString());
                     BackendServiceCall serviceCall = new BackendServiceCall(JobCardNoActivity.this, false);
                     requestName = "GetJobCardDetails";
                     serviceCall.setOnServiceCallCompleteListener(new OnServiceCallCompleteListenerSpareImp());
@@ -162,7 +159,6 @@ public class JobCardNoActivity extends Activity {
 
     private void handeGetJobCardDetails(JSONArray jsonArray) {
         if (jsonArray.length() > 0) {
-            Log.d("ANUSHA "," jsonArray.length() "+jsonArray.length());
             for (int i = 0; i < jsonArray.length() ; i++) {
                 try {
                     JSONObject object = jsonArray.getJSONObject(i);
@@ -172,24 +168,24 @@ public class JobCardNoActivity extends Activity {
 //{"CustomerName":"an rahan","JCDate":"18-02-2021","JCTime":"13:02:39","JobCardNo":"01010001","MobileNo":"8000080000","ModifiedDate":"18-02-2021","ModifiedTime":"13:01:24","Result":"","SLNO":"1","ScreenName":"JobCard","Status":"Completed","VehicleNo":"ap37bs1525"}
                         //{"CustomerName":"G. Ramana Rao","JCDate":"18-02-2021","JCTime":"17:56:59","JobCardNo":"01E296180014","MobileNo":"9399988355","ModifiedDate":"18-02-2021","ModifiedTime":"17:55:45","Result":"","SLNO":"13","ScreenName":"JobCard","Status":"Pending","VehicleNo":"aP39 eL  0951"}
                     } else {
-                        Log.d("ANUSHA ","JobcardNo Activity "+object.toString());
                         JobCardDetails documentTypes = new JobCardDetails();
                         documentTypes.setCustomerName(object.getString("CustomerName"));
                         documentTypes.setJCDate(object.getString("JCDate"));
+//                        documentTypes.setJCTime(object.getString("JCTime"));
+                        documentTypes.setModifiedTime(object.getString("ModifiedTime"));
                         documentTypes.setJobCardNo(object.getString("JobCardNo"));
                         documentTypes.setMobileNo(object.getString("MobileNo"));
                         documentTypes.setModel(object.getString("ModelNo"));
+                        documentTypes.setJobRemarks(object.getString("JCRemarks"));
 //                        documentTypes.setSLNO(object.getString("SLNO"));
                         documentTypes.setSLNO(String.valueOf(i));
                         documentTypes.setStatus(object.getString("Status"));
                         documentTypes.setVehicleNo(object.getString("VehicleNo"));
                         documentTypes.setTechnicianName(object.getString("Technician"));
-                        Log.d("ANUSHA ","JobcardNo Activity Technician "+object.getString("Technician"));
                         jobCardDetailsArrayList.add(documentTypes);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Log.d("ANUSHA "," Exception  "+e.toString());
                 }
             }
         }
@@ -201,37 +197,32 @@ public class JobCardNoActivity extends Activity {
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3) {
-                    Log.d("ANUSHA ","@@@ EXCEPTION ONCLICK ");
                     try {
-                        String JobNo, CustName, CustMobNo, VehicleNo, JCDate, TechnicianName,ModelNo;
+                        String JobNo, CustName, CustMobNo, VehicleNo, JCDate,JCTime, TechnicianName,ModelNo,JCRemarks;
 
                         if (dynamicList.size() == 0) {//Type--i\Insert Update//Technician ""
-                            Log.d("ANUSHA ","@@@ EXCEPTION ONCLICK size 0"+dynamicList.size());
-                            Log.d("ANUSHA ","@@@ EXCEPTION ONCLICK size 0"+jobCardDetailsArrayList.size());
                             JobNo = jobCardDetailsArrayList.get(position).getJobCardNo();
                             CustName = jobCardDetailsArrayList.get(position).getCustomerName();
                             CustMobNo = jobCardDetailsArrayList.get(position).getMobileNo();
                             VehicleNo = jobCardDetailsArrayList.get(position).getVehicleNo();
                             JCDate = jobCardDetailsArrayList.get(position).getJCDate();
+//                            JCTime=jobCardDetailsArrayList.get(position).getJCTime();
+                            JCTime=jobCardDetailsArrayList.get(position).getModifiedTime();
                             TechnicianName = jobCardDetailsArrayList.get(position).getTechnicianName();
                             ModelNo=jobCardDetailsArrayList.get(position).getModel();
-                            Log.d("ANUSHA ","@@@ EXCEPTION ONCLICK size 0 JobNo "+JobNo);
-                            Log.d("ANUSHA ","@@@ EXCEPTION ONCLICK size 0 CustName "+CustName);
-                            Log.d("ANUSHA ","@@@ EXCEPTION ONCLICK size 0 CustMobNo "+CustMobNo);
-                            Log.d("ANUSHA ","@@@ EXCEPTION ONCLICK size 0 VehicleNo "+VehicleNo);
-                            Log.d("ANUSHA ","@@@ EXCEPTION ONCLICK size 0 JCDate "+JCDate);
-                            Log.d("ANUSHA ","@@@ EXCEPTION ONCLICK size 0 TechnicianName "+TechnicianName);
-                            Log.d("ANUSHA ","@@@ EXCEPTION ONCLICK size 0 ModelNo "+ModelNo);
+                            JCRemarks=jobCardDetailsArrayList.get(position).getJobRemarks();
 
                         } else {
-                            Log.d("ANUSHA ","@@@ EXCEPTION ONCLICK else "+dynamicList.size());
                             JobNo = dynamicList.get(position).getJobCardNo();
                             CustName = dynamicList.get(position).getCustomerName();
                             CustMobNo = dynamicList.get(position).getMobileNo();
                             VehicleNo = dynamicList.get(position).getVehicleNo();
                             JCDate = dynamicList.get(position).getJCDate();
+//                            JCTime=jobCardDetailsArrayList.get(position).getJCTime();
+                            JCTime=jobCardDetailsArrayList.get(position).getModifiedTime();
                             TechnicianName = jobCardDetailsArrayList.get(position).getTechnicianName();
                             ModelNo=jobCardDetailsArrayList.get(position).getModel();
+                            JCRemarks=jobCardDetailsArrayList.get(position).getJobRemarks();
 
                         }
                         Intent itemIntent = new Intent();
@@ -240,18 +231,18 @@ public class JobCardNoActivity extends Activity {
                         itemIntent.putExtra("CustMobNo", CustMobNo);
                         itemIntent.putExtra("VehicleNo", VehicleNo);
                         itemIntent.putExtra("JCDate", JCDate);
+                        itemIntent.putExtra("JCTime", JCTime);
                         itemIntent.putExtra("TechnicianName", TechnicianName);
                         itemIntent.putExtra("ModelNo", ModelNo);
+                        itemIntent.putExtra("JCRemarks", JCRemarks);
                         setResult(RESULT_OK, itemIntent);
                         finish();
                     }catch(Exception e){
-                        Log.d("ANUSHA ","@@@ EXCEPTION "+e.toString());
                     }
                 }
             });
         } catch (Exception e) {
             e.printStackTrace();
-            Log.d("ANUSHA ","@@@ outside EXCEPTION "+e.toString());
         }
     }
 }

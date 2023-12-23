@@ -10,21 +10,22 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.os.SystemClock;
+import android.os.Looper;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
-import android.support.v4.widget.SwipeRefreshLayout;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import com.google.android.material.tabs.TabLayout;
+import androidx.fragment.app.Fragment;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -51,6 +52,8 @@ import com.myaccounts.vechicleserviceapp.Utils.AppUtil;
 import com.myaccounts.vechicleserviceapp.Utils.BackendServiceCall;
 import com.myaccounts.vechicleserviceapp.Utils.Constants;
 import com.myaccounts.vechicleserviceapp.Utils.CustomDialogClass;
+import com.myaccounts.vechicleserviceapp.Utils.DownloadImageServer;
+import com.myaccounts.vechicleserviceapp.Utils.DownloadImageSignature;
 import com.myaccounts.vechicleserviceapp.Utils.Enums;
 import com.myaccounts.vechicleserviceapp.Utils.JSONVariables;
 import com.myaccounts.vechicleserviceapp.Utils.MyMessageObject;
@@ -59,6 +62,8 @@ import com.myaccounts.vechicleserviceapp.Utils.ProjectMethods;
 import com.myaccounts.vechicleserviceapp.Utils.ProjectVariables;
 import com.myaccounts.vechicleserviceapp.Utils.SessionManager;
 import com.myaccounts.vechicleserviceapp.Utils.UploadimageServer;
+import com.myaccounts.vechicleserviceapp.Utils.UploadimageSignatureServer;
+import com.myaccounts.vechicleserviceapp.network.DatabaseHelper;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import org.json.JSONArray;
@@ -68,36 +73,35 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import static android.app.Activity.RESULT_OK;
 import static com.myaccounts.vechicleserviceapp.Activity.NewJobCardDetailsMain.dateAndTimeTV;
 import static com.myaccounts.vechicleserviceapp.Activity.NewJobCardDetailsMain.tabLayout;
 import static com.myaccounts.vechicleserviceapp.Activity.NewJobCardDetailsMain.viewPager;
 import static com.myaccounts.vechicleserviceapp.Fragments.MainJobCardFragment.JOBCARD_STATUS;
-import static com.myaccounts.vechicleserviceapp.Fragments.NewMainVehicleDetailsFragment.CustMobileNo;
 import static com.myaccounts.vechicleserviceapp.Fragments.NewMainVehicleDetailsFragment.CustMobileNoEdt;
 import static com.myaccounts.vechicleserviceapp.Fragments.NewMainVehicleDetailsFragment.CustNameEdt;
-import static com.myaccounts.vechicleserviceapp.Fragments.NewMainVehicleDetailsFragment.Place;
 import static com.myaccounts.vechicleserviceapp.Fragments.NewMainVehicleDetailsFragment.PlaceEdt;
 import static com.myaccounts.vechicleserviceapp.Fragments.NewMainVehicleDetailsFragment.VehicleNoEdt;
 import static com.myaccounts.vechicleserviceapp.Fragments.NewMainVehicleDetailsFragment.jobCardId;
+import static com.myaccounts.vechicleserviceapp.Utils.SessionManager.KEY_SERVICES_QTY;
 import static com.myaccounts.vechicleserviceapp.Utils.SessionManager.KEY_SPAREID;
+import static com.myaccounts.vechicleserviceapp.Utils.SessionManager.KEY_SPAREPARTS_QTY;
 
 public class NewCaptureImageAndSignFragment extends Fragment {
 
     ProgressBar progress_bar_jobcard_save;
 
-    int NUMBER_OF_SERVICES=0;
     ProgressDialog dialog;
     SharedPreferences pref, lpref;
     public static boolean saveClick=false;
     private long mLastClickTime = 0;
-    private Button IdImageCaptureBtn, IdSignatureBtn,IdClearBtn;
+    private Button IdImageCaptureBtn, IdSignatureBtn,IdClearBtn,IdViewSignature,IdViewCaptureImage;
     private File captureImagePath;
     private static final int TAKE_PHOTO = 115;
     private static final int REQUEST_CAPTURE_IMAGE = 100;
@@ -112,23 +116,23 @@ public class NewCaptureImageAndSignFragment extends Fragment {
     String imageURI = "", SavedJobCardNo;
     private static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 100;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private String requestName;
+    private String requestName,signatureImageName;
     private SharedPreferences jobcardPref;
     public static Button IdSaveBtn;
     private View rootView;
     SessionManager sessionManager;
     String technicianName,vehicleId, vehicleNo = null, contactNo = null, name = null, place = null, block = null, odoReading = null, mileage = null, avgKms = null, model = null, make = null, vehicleType = null, serviceDetails = null, newsparePartsDetails = null, noOfServices = null;
-    String jobcardId,jobcardno,SpareId=null,ServiceId=null;
-    private String noOfSparesParts = null;
+    String jobcardId,jobcardno,SpareId=null,ServiceId=null,signatureFilePath=null;
+    private String local_signature_image1=null,signature_image1=null,capture_image1=null,noOfSparesParts = null,local_capture_image1=null;
     TextView vehicleNoTv,vehicleNameTv, modelNoTv, noOfServicesTv, numberOfSparesTv, totalAmountTv;
-    String currentDate, currentTime, mCustomerId, totalAmountServices, totalAmountSpares;
+    String currentDate, currentTime, mCustomerId, totalAmountServices, totalAmountSpares,qtyServices,qtySpareParts;
     Double totalAmount = 0.0;
     private ArrayList<VehicleDetails> vehicleDetailsArrayList;
     String selectedBlock;
     public static final String TAG = "Submit Parts";
     boolean called = false;
     EditText RemarksEdt;
-    String remarks;
+    String remarks = null;
     private int requestCode = 100;
 
     @Override
@@ -138,26 +142,21 @@ public class NewCaptureImageAndSignFragment extends Fragment {
             try {
                 sessionManager = new SessionManager(getActivity());
                 HashMap<String, String> user = sessionManager.getVehicleDetails();
-                noOfSparesParts = user.get(SessionManager.KEY_NO_OF_SPARES);
                 totalAmountSpares = user.get(SessionManager.KEY_SPARES_DETAILS_TOTAL_AMOUNT);
                 newsparePartsDetails = user.get(SessionManager.KEY_SPARE_PARTS_DETAILS_LIST);
-                Log.d("ANUSHA ","___"+newsparePartsDetails);
-                Log.d("ANUSHA ","___"+noOfSparesParts);
-                Log.d("ANUSHA ","___"+noOfServices);
+                qtyServices = user.get(KEY_SERVICES_QTY);
+                qtySpareParts = user.get(SessionManager.KEY_SPAREPARTS_QTY);
 
-//                noOfServices = user.get(SessionManager.KEY_NO_OF_SERVICES);
                 totalAmountServices = user.get(SessionManager.KEY_SERVICE_DETAILS_TOTAL_AMOUNT);
-                Log.d("ANUSHA ","___totalAmountServices"+totalAmountServices);
-                Log.d("ANUSHA ","___totalAmountSpares"+totalAmountSpares);
                 try {
-                    Log.d("ewrwerwer", totalAmountSpares + "," + totalAmountServices + "," + noOfSparesParts);
+                    Log.d("ewrwerwer", totalAmountSpares + "," + totalAmountServices + "," + qtySpareParts);
                     double amountSpare,amountServices;
-                    if(noOfServices==(null))
-                        noOfServices="0";
-                    if(noOfSparesParts==(null))
-                        noOfSparesParts="0";
-                    noOfServicesTv.setText(" : " + noOfServices);
-                    numberOfSparesTv.setText(" : " + noOfSparesParts);
+                    if(qtyServices==(null))
+                        qtyServices="0";
+                    if(qtySpareParts==(null))
+                        qtySpareParts="0";
+                    noOfServicesTv.setText(" : " + qtyServices);
+                    numberOfSparesTv.setText(" : " + qtySpareParts);
                     if(totalAmountSpares==null)
                         amountSpare=0;
                     else
@@ -168,7 +167,6 @@ public class NewCaptureImageAndSignFragment extends Fragment {
                         amountServices=Double.parseDouble(totalAmountServices);
 
                     Double total = amountServices+amountSpare;
-                    Log.d("ANUSHA ","__total"+total);
                     //  totalAmountTv.setText(" : Rs." + totalAmountSpares);
                     /*if(totalAmountServices == null)//added null check
                     totalAmount = Double.parseDouble(totalAmountServices) + Double.parseDouble(totalAmountSpares);
@@ -178,15 +176,14 @@ public class NewCaptureImageAndSignFragment extends Fragment {
                     totalAmountTv.setText(" : " + total);
 
                 } catch (NullPointerException e) {
-                    noOfSparesParts = "0";
-                    numberOfSparesTv.setText(" : " + noOfSparesParts);
-                    Log.d("ANUSHA ","___EX1"+e.toString());
+                    qtySpareParts = "0";
+                    numberOfSparesTv.setText(" : " + qtySpareParts);
                 }
-                numberOfSparesTv.setText(" : " + noOfSparesParts);
+                numberOfSparesTv.setText(" : " + qtySpareParts);
+                setRemarksText(qtyServices,qtySpareParts);
             }
             catch (NullPointerException e)
             {
-                Log.d("ANUSHA ","___EX2"+e.toString());
             }
         }
     }
@@ -197,7 +194,6 @@ public class NewCaptureImageAndSignFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         LayoutInflater lf = getActivity().getLayoutInflater();
-        Log.d("ANUSHA ", "onCreateView: called"+"NewCaptureImageAndSignFragment");
         rootView = lf.inflate(R.layout.new_capture_image_sign_fragment, container, false);
 
         getActivity();
@@ -207,9 +203,12 @@ public class NewCaptureImageAndSignFragment extends Fragment {
         numberOfSparesTv = (TextView) rootView.findViewById(R.id.numberOfSparesTv);
         IdImageCaptureBtn = (Button) rootView.findViewById(R.id.IdImageCaptureBtn);
         IdSignatureBtn = (Button) rootView.findViewById(R.id.IdSignatureBtn);
+        IdViewCaptureImage=(Button) rootView.findViewById(R.id.IdImageViewCaptureBtn);
+        IdViewSignature=(Button) rootView.findViewById(R.id.IdImageViewSignatureBtn);
         IdSaveBtn = (Button) rootView.findViewById(R.id.IdSaveJobCardBtn);
         ImgBackLinerLayout = (LinearLayout) rootView.findViewById(R.id.ImgBackLinerLayout);
         IdCaptureImgView = (ImageView) rootView.findViewById(R.id.IdCaptureImgView);
+        drawingImage= (ImageView) rootView.findViewById(R.id.drawingImage);
 
         IdClearBtn=(Button)rootView.findViewById(R.id.IdClearBtn);
 
@@ -224,7 +223,6 @@ public class NewCaptureImageAndSignFragment extends Fragment {
 
         jobcardPref = getActivity().getSharedPreferences(JOBCARD_STATUS, Context.MODE_PRIVATE);
         SavedJobCardNo = jobcardPref.getString("JobCardNumber", null);
-        Log.e("ANUSHA ","SAVEDJOBCARD "+SavedJobCardNo);
         sessionManager = new SessionManager(getActivity());
         HashMap<String, String> user = sessionManager.getVehicleDetails();
 
@@ -248,38 +246,12 @@ public class NewCaptureImageAndSignFragment extends Fragment {
             totalAmountSpares = user.get(SessionManager.KEY_SPARES_DETAILS_TOTAL_AMOUNT);
             remarks = user.get(SessionManager.KEY_REMARKS);
 
-           // remarks = user.get(SessionManager.KEY_R)
             ServiceId = user.get(SessionManager.KEY_SERVICEID);
             SpareId=lpref.getString(KEY_SPAREID, null);
             serviceDetails = user.get(SessionManager.KEY_SERVICE_DETAILS_LIST);
             newsparePartsDetails = user.get(SessionManager.KEY_SPARE_PARTS_DETAILS_LIST);
-            noOfSparesParts = user.get(SessionManager.KEY_NO_OF_SPARES);
-//            noOfServices = user.get(SessionManager.KEY_NO_OF_SERVICES);
-            if(!serviceDetails.equalsIgnoreCase("")) {
-                NUMBER_OF_SERVICES=0;
-                String[] result = serviceDetails.split("~");
-                for (String s : result) {
-                    System.out.println(">" + s + "<");
-                    NUMBER_OF_SERVICES=NUMBER_OF_SERVICES + 1;
-                    Log.d("ANUSHA saveddetail", "RESUT " + s);
-                    Log.d("ANUSHA saveddetail", "RESUT " + NUMBER_OF_SERVICES);
-                }
+           } catch (NullPointerException e) {
             }
-            Log.d("ANUSHA 5", "NOT Equals condition to 0.1 ELSE CONDITION " + serviceDetails);
-            noOfServices = String.valueOf(NUMBER_OF_SERVICES);
-            Log.d("ANUSHA ", " Sparepartdetails "+newsparePartsDetails);
-            Log.d("ANUSHA ", " Service details"+serviceDetails);
-            Log.d("ANUSHA ", "remarks "+remarks);
-            Log.d("ANUSHA ", "ONRESUME "+"Technician name "+technicianName);
-        } catch (NullPointerException e) {
-            Log.d("ANUSHA ", "Exception "+e.toString());
-        }
-        Log.d("ANUSHA ", " Sparepartdetails "+newsparePartsDetails);
-        Log.d("ANUSHA ", " Service details"+serviceDetails);
-        Log.d("userrdetail", ProjectMethods.getUserId() + "," + ProjectMethods.getCounterId());
-
-        Log.d("gggggggg", newsparePartsDetails + ",,," + "," + serviceDetails + "," + ServiceId + "," + totalAmountServices + "," + totalAmountSpares + "name : " + name + "vehid" + vehicleNo + "," + vehicleId + "," + model);
-
         if (vehicleNo == null) {
             vehicleNo = "";
         }
@@ -287,8 +259,8 @@ public class NewCaptureImageAndSignFragment extends Fragment {
             name = "";
         }
 
-        if (noOfServices == null) {
-            noOfServices = "";
+        if (qtyServices == null) {
+            qtyServices = "";
         }
 
         if (contactNo == null) {
@@ -307,8 +279,8 @@ public class NewCaptureImageAndSignFragment extends Fragment {
             totalAmountServices = "0";
         }
 
-        if (noOfSparesParts == null) {
-            noOfSparesParts = "0";
+        if (qtySpareParts == null) {
+            qtySpareParts = "0";
         }
 
 
@@ -319,24 +291,60 @@ public class NewCaptureImageAndSignFragment extends Fragment {
         vehicleNoTv.setText(" : " + vehicleNo);
         vehicleNameTv.setText(" : " + name);
         modelNoTv.setText(" : " + contactNo);
-        noOfServicesTv.setText(" : " + noOfServices);
-        numberOfSparesTv.setText(" : " + noOfSparesParts);
+        noOfServicesTv.setText(" : " + qtyServices);
+        numberOfSparesTv.setText(" : " + qtySpareParts);
 
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh_layout);
 
-       Log.e("Jobcardid",jobcardId+" :: "+jobCardId);
-        Log.d("ANUSHA submit", " "+name);
 
         if ( jobCardId != null && !jobCardId.isEmpty() && !jobCardId.equals("null") && !jobCardId.equals("empty"))
         {
             Log.e("update data","update");
             IdSaveBtn.setText("UPDATE");
-            if(remarks == null) {
-                remarks = "";
-                RemarksEdt.setText("");
-            }else{
-                RemarksEdt.setText(remarks);
+            HashMap<String, String> userr = sessionManager.getCaptureImage();
+            capture_image1 = userr.get(SessionManager.KEY_CAPTURE_IMAGE1);
+            if(capture_image1.length() != 0){
+                    IdViewCaptureImage.setVisibility(View.VISIBLE);
+//                IdImageCaptureBtn.setVisibility(View.VISIBLE);
+
+            }else {
+                IdViewCaptureImage.setVisibility(View.GONE);
+//                IdImageCaptureBtn.setVisibility(View.GONE);
             }
+            HashMap<String, String> userSignature = sessionManager.getSignatureImage();
+            signature_image1 = userSignature.get(SessionManager.KEY_SIGNATURE_IMAGE1);
+            if(signature_image1.length() != 0){
+                IdViewSignature.setVisibility(View.VISIBLE);
+//                IdSignatureBtn.setVisibility(View.VISIBLE);//IdViewSignature,IdViewCaptureImage
+            }else {
+                IdViewSignature.setVisibility(View.GONE);
+//                IdSignatureBtn.setVisibility(View.GONE);
+            }
+            if(signature_image1!=null){
+                try {// image download from server
+                    HashMap<String, String> userrS = sessionManager.getSignatureImage1LocalPath();
+                    local_signature_image1=userrS.get(SessionManager.KEY_SIGNATURE_IMAGE1_LOCAL);
+                    if(local_signature_image1!=null){
+                        try {
+                            imageURI=local_signature_image1;
+                            ImgBackLinerLayout.setVisibility(View.VISIBLE);
+                            drawingImage.setVisibility(View.VISIBLE);
+//                            IdCaptureImgView.setImageBitmap(BitmapFactory.decodeFile(new File(Environment.getExternalStorageDirectory(), imageURI).getAbsolutePath()));
+                            drawingImage.setImageDrawable(Drawable.createFromPath(local_signature_image1));
+
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+//            IdImageCaptureBtn.setText("VIEW");
+            setRemarksText(qtyServices,qtySpareParts);
+
 //            if(remarks.length()>0)
 //            RemarksEdt.setSelection(RemarksEdt.getText().length());
 
@@ -345,6 +353,7 @@ public class NewCaptureImageAndSignFragment extends Fragment {
         {
             Log.e("save data","save");
             IdSaveBtn.setText("SAVE");
+            IdSignatureBtn.setText("SIGNATURE");
             RemarksEdt.setText("");
         }
 
@@ -380,12 +389,12 @@ public class NewCaptureImageAndSignFragment extends Fragment {
         IdSignatureBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    Intent sig = new Intent(getActivity(), DrawingSignatureActivity.class);
-                    startActivityForResult(sig, 11);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
+                     try {
+                        Intent sig = new Intent(getActivity(), DrawingSignatureActivity.class);
+                        startActivityForResult(sig, 11);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
             }
         });
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -404,6 +413,69 @@ public class NewCaptureImageAndSignFragment extends Fragment {
 
             }
         });
+        IdViewSignature.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    DownloadImageSignature server1 = new DownloadImageSignature(signature_image1, getActivity());
+                    server1.execute();
+                } catch (Exception e) {
+                }
+                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //Do something here
+                        HashMap<String, String> userrS = sessionManager.getSignatureImage1LocalPath();
+                        local_signature_image1 = userrS.get(SessionManager.KEY_SIGNATURE_IMAGE1_LOCAL);
+                        if (local_signature_image1 != null) {
+                            try {
+//                                    imageURI = local_signature_image1;
+                                ImgBackLinerLayout.setVisibility(View.VISIBLE);
+                                drawingImage.setVisibility(View.VISIBLE);
+//                            IdCaptureImgView.setImageBitmap(BitmapFactory.decodeFile(new File(Environment.getExternalStorageDirectory(), imageURI).getAbsolutePath()));
+                                drawingImage.setImageDrawable(Drawable.createFromPath(local_signature_image1));
+
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }, 5000);
+            }
+
+        });
+        IdViewCaptureImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    try {// image download from server
+                    DownloadImageServer server = new DownloadImageServer(capture_image1,getActivity());
+                    server.execute();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        HashMap<String, String> userrL = sessionManager.getCaptureImage1LocalPath();
+                        local_capture_image1=userrL.get(SessionManager.KEY_CAPTURE_IMAGE1_LOCAL);
+                        if(local_capture_image1!=null) {
+                            try {
+                                imageURI = local_capture_image1;
+                                ImgBackLinerLayout.setVisibility(View.VISIBLE);
+                                IdCaptureImgView.setVisibility(View.VISIBLE);
+//                            IdCaptureImgView.setImageBitmap(BitmapFactory.decodeFile(new File(Environment.getExternalStorageDirectory(), imageURI).getAbsolutePath()));
+                                IdCaptureImgView.setImageDrawable(Drawable.createFromPath(local_capture_image1));
+
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }, 5000);
+            }
+        });
 
 //        IdSaveBtn.clic
         IdSaveBtn.setOnClickListener(new View.OnClickListener() {
@@ -412,23 +484,25 @@ public class NewCaptureImageAndSignFragment extends Fragment {
 // preventing double, using threshold of 1000 ms
                 saveClick=true;
                 IdSaveBtn.setEnabled(false);
-                Log.d("ANUSHA "," "+saveClick);
 //                        if(saveClick) {
                             if (IdSaveBtn.getText().equals("SAVE")) {
-                                if (validationVehicleDetails())
+                                if (validationVehicleDetails(signatureImageName))
                                 {
                                     CustomDailog("Job Card", "Do You Want to Save JobCard Details?", 38, "save");
                                 }
                                 else
                                 {
                                     saveClick = false;
+                                    IdSaveBtn.setEnabled(true);
                                 }
                             }
                             else {
-                                if (validationVehicleDetails())
+                                if (validationVehicleDetails(signature_image1))
                                     UpdateData();
-                                else
+                                else {
                                     saveClick = false;
+                                    IdSaveBtn.setEnabled(true);
+                                }
 //                        Toast.makeText(getActivity(), "Updated sucessfully", Toast.LENGTH_SHORT).show();
                             }
             }
@@ -446,13 +520,35 @@ public class NewCaptureImageAndSignFragment extends Fragment {
         });
 
         currentDate = ProjectMethods.getBusinessDate();
-        currentTime = ProjectMethods.GetCurrentTime();
+        currentTime = ProjectMethods.GetCustomerCurrentTime();
 
         return rootView;
     }
 
-    private boolean validationVehicleDetails() {
+    private void setRemarksText(String tempServicesQty,String tempSparesQty) {
+        if(remarks.isEmpty() || remarks == null || remarks.startsWith(" | ")) {// | No Of S : 0 | No Of Sp : 0
+            remarks = "";
+            RemarksEdt.setText("");
+        }else{
+            String tempRemarks = remarks.split(" | ")[0];
+            if(tempServicesQty != null) {
+                tempRemarks = tempRemarks + " | No Of S : "+tempServicesQty;
+            }
+            if(tempSparesQty != null) {
+                tempRemarks = tempRemarks + " | No Of Sp : "+tempSparesQty;
+            }
+            remarks = tempRemarks;
+            RemarksEdt.setText(remarks);
+        }
+    }
+
+
+    private boolean validationVehicleDetails(String signatureImageName) {
         boolean resultValue = true;
+        if(signatureImageName == null || signatureImageName.isEmpty())
+            signatureImageName = null;
+        if(capture_image1 == null || capture_image1.isEmpty() )
+            capture_image1 = null;
         if (vehicleNo.isEmpty()) {
             VehicleNoEdt.setError("Please Enter VehicleNo");
             VehicleNoEdt.requestFocus();
@@ -476,26 +572,79 @@ public class NewCaptureImageAndSignFragment extends Fragment {
         } else if (vehicleId == null) {
             Toast.makeText(getActivity().getBaseContext(), "Please Select VehicleModel", Toast.LENGTH_SHORT).show();
             resultValue = false;
+        } /*else if(capture_image1 == null) {
+            resultValue = false;
+        }*/ else if(signatureImageName == null){//signature_image1
+
+            resultValue=false;
+//            resultSignature=false;
         }
         if (!resultValue) {
-//                NewJobCardDetailsMain.validationCheck=true;
-            Toast toast = Toast.makeText(getActivity().getBaseContext(), "  Please Enter Mandatory Fields  ", Toast.LENGTH_SHORT);
-            View view = toast.getView();
-            view.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-            TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
-            v.setTextColor(Color.WHITE);
-            toast.setGravity(Gravity.CENTER, 0, 0);
-            toast.show();
-            TabLayout tabhost = (TabLayout) getActivity().findViewById(R.id.tabs);
-            tabhost.getTabAt(0).select();
-            resultValue= false;
+//                NewJobCardDetailsMain.validationCheck=true; && capture_image1 != null
+            if(signatureImageName != null) {
+                Toast toast = Toast.makeText(getActivity().getBaseContext(), "  Please Enter Mandatory Fields  ", Toast.LENGTH_SHORT);
+//                View view = toast.getView();
+//                view.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+//                TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
+//                v.setTextColor(Color.WHITE);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
+                TabLayout tabhost = (TabLayout) getActivity().findViewById(R.id.tabs);
+                tabhost.getTabAt(0).select();
+                resultValue = false;
+            } /*else if(capture_image1 == null){
+                Toast toast = Toast.makeText(getActivity().getBaseContext(), "  Please Capture Image ", Toast.LENGTH_SHORT);
+                View view = toast.getView();
+                view.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
+                v.setTextColor(Color.WHITE);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
+                try {
+                    //  FileUriExposedException
+                    Intent photocapture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    Uri photoURI = null;
+                    captureImagePath = new File(getActivity().getExternalCacheDir(), "temp.jpg");
+                    if (Build.VERSION.SDK_INT >= 24) {
+
+                        photoURI = FileProvider.getUriForFile(getActivity(), com.myaccounts.vechicleserviceapp.BuildConfig.APPLICATION_ID + ".provider", captureImagePath);
+
+//                        UploadimageServer server = new UploadimageServer(captureImagePath, imageURl, resultUri, getActivity());
+//                        server.execute();
+                        Log.d("zzzzzz", "" + captureImagePath);
+                    } else {
+                        photoURI = Uri.fromFile(captureImagePath);
+
+                        Log.d("rrrrrrr", "" + captureImagePath);
+                    }
+                    photocapture.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                    startActivityForResult(photocapture, TAKE_PHOTO);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                resultValue=false;
+            } */else if(signatureImageName == null){
+                Toast toast = Toast.makeText(getActivity().getBaseContext(), "  Please Add Signature  ", Toast.LENGTH_SHORT);
+//                View view = toast.getView();
+//                view.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+//                TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
+//                v.setTextColor(Color.WHITE);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
+                try {
+                    Intent sig = new Intent(getActivity(), DrawingSignatureActivity.class);
+                    startActivityForResult(sig, 11);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                resultValue=false;
+            }
         }
         Log.e("Executing block","I am here"+vehicleNo);
         Log.e("Executing block","I am here"+contactNo);
         Log.e("Executing block","I am here"+name);
         Log.e("Executing block","I am here"+place);
         Log.e("Executing block","I am here"+vehicleId);
-
         return resultValue;
     }
 
@@ -528,7 +677,7 @@ public class NewCaptureImageAndSignFragment extends Fragment {
                             jsonObject.accumulate(JSONVariables.JCDate, separated[0].replace(",",""));
                             jsonObject.accumulate(JSONVariables.JCId,jobCardId );
                             jsonObject.accumulate(JSONVariables.JCNo, jobCardId);
-                            jsonObject.accumulate(JSONVariables.JC_InTime, separated[1]);
+                            jsonObject.accumulate(JSONVariables.JC_InTime,dateAndTimeTV.getText().toString());
                             jsonObject.accumulate(JSONVariables.JC_OutTime, "");
                             jsonObject.accumulate(JSONVariables.CustomerId, mCustomerId);
                             jsonObject.accumulate(JSONVariables.Vehicle_Id, vehicleId);
@@ -539,6 +688,7 @@ public class NewCaptureImageAndSignFragment extends Fragment {
                             jsonObject.accumulate(JSONVariables.CounterId, ProjectMethods.getCounterId());
                             jsonObject.accumulate(JSONVariables.ServiceDetails, serviceDetails);
                             jsonObject.accumulate(JSONVariables.JCImage, imageURl);
+                            jsonObject.accumulate(JSONVariables.JCSignature,signature_image1);
                             jsonObject.accumulate(JSONVariables.Documents, "");
                             jsonObject.accumulate(JSONVariables.CustName, name);
                             jsonObject.accumulate(JSONVariables.CustEmailId, "");
@@ -560,9 +710,6 @@ public class NewCaptureImageAndSignFragment extends Fragment {
                         if(!technicianName.isEmpty()) {
                             DatabaseHelper1 db = new DatabaseHelper1(rootView.getContext());
                             dbValue = db.jgetValueId(technicianName);
-                            Log.e("Executing block", "JESUS name to id " + dbValue);
-                        }else{
-                            Log.e("Executing block", "JESUS name to id else part " + dbValue);
                         }
                         jsonObject.accumulate(JSONVariables.TechnicianName, dbValue);
                         jsonObject.accumulate(JSONVariables.Type, "Update");
@@ -575,11 +722,11 @@ public class NewCaptureImageAndSignFragment extends Fragment {
                         serviceCall.makeJSONOArryPostRequest(ProjectVariables.BASE_URL + ProjectVariables.UpdateJobCardDetails, jsonObject, Request.Priority.HIGH);
                         /*Log.d("updatedetail", "" + jsonObject);
                         Log.d("updated ID", "" + newsparePartsDetails);
-                        Log.d("ANUSHA Update","___"+jsonObject);*/
+                        */
+
 
                     } catch (Exception e) {
                         e.printStackTrace();
-                        Log.d("ANUSHA ","___"+e.toString());
                     }
                 } else {
                     swipeRefreshLayout.setRefreshing(false);
@@ -599,20 +746,20 @@ public class NewCaptureImageAndSignFragment extends Fragment {
 
         sessionManager = new SessionManager(getActivity());
         HashMap<String, String> user = sessionManager.getVehicleDetails();
-        noOfSparesParts = user.get(SessionManager.KEY_NO_OF_SPARES);
+        qtySpareParts = user.get(SessionManager.KEY_SPAREPARTS_QTY);
         totalAmountSpares = user.get(SessionManager.KEY_SPARES_DETAILS_TOTAL_AMOUNT);
         totalAmountServices = user.get(SessionManager.KEY_SERVICE_DETAILS_TOTAL_AMOUNT);
-//        noOfServices = user.get(SessionManager.KEY_NO_OF_SERVICES);
+
 
         try {
-            Log.d("kjghfk", noOfSparesParts);
-            numberOfSparesTv.setText(" : " + noOfSparesParts);
+            Log.d("kjghfk", qtySpareParts);
+            numberOfSparesTv.setText(" : " + qtySpareParts);
             Double total = Double.parseDouble(totalAmountSpares) + Double.parseDouble(totalAmountServices);
-            noOfServicesTv.setText(" : " + noOfServices);
+            noOfServicesTv.setText(" : " + qtyServices);
             totalAmountTv.setText(" : Rs." + total);
         } catch (NullPointerException e) {
-            noOfSparesParts = "0";
-            numberOfSparesTv.setText(" : " + noOfSparesParts);
+            qtySpareParts = "0";
+            numberOfSparesTv.setText(" : " + qtySpareParts);
         }
 
     }
@@ -654,13 +801,12 @@ public class NewCaptureImageAndSignFragment extends Fragment {
                 captureImagePath = new File(imageURl);
                 imageURl = "Image_" + getRandomNumberInRange(1, 10000) + ".jpg";
 
-                Log.d("uriiiii", imageURI);
-                try {
+                /*try {
                     UploadimageServer server = new UploadimageServer(captureImagePath, imageURl, resultUri, getActivity());
                     server.execute();
                 } catch (Exception e) {
                     e.printStackTrace();
-                }
+                }*/
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), resultUri);
                     Log.e(TAG, "crop_image_request_code: " + bitmap );
@@ -711,6 +857,35 @@ public class NewCaptureImageAndSignFragment extends Fragment {
                 picTaken = true; //to ensure picture is taken
 
             }
+        }else if(resultCode == 200 && requestCode == 11){
+//            Toast.makeText(getContext(), "ONACTIVITYRESULT ", Toast.LENGTH_SHORT).show();
+            sessionManager = new SessionManager(getActivity());
+            HashMap<String, String> user = sessionManager.getstoreSignatureDetails();
+            String fileSignature = user.get(SessionManager.KEY_SIGNATURE_FILE);
+            String imageSignature = user.get(SessionManager.KEY_IMAGE); 
+            String uriSignature = user.get(SessionManager.KEY_URI);
+            signatureImageName=imageSignature;
+            signature_image1 = imageSignature;
+            /*Bitmap bitmap = null;
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), Uri.parse(uriSignature));
+                ImgBackLinerLayout.setVisibility(View.VISIBLE);
+                drawingImage.setVisibility(View.VISIBLE);
+                drawingImage.setImageDrawable(Drawable.createFromPath(fileSignature));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Log.e(TAG, "crop_image_request_code: " + bitmap );*/
+
+//            drawingImage.setImageDrawable(Drawable.createFromPath(local_signature_image1));
+            try {
+                Uri myUri = Uri.parse(uriSignature);
+                File file = new File(fileSignature);
+                UploadimageSignatureServer server = new UploadimageSignatureServer(file, imageSignature, myUri, getActivity());
+                server.execute();
+            }catch(Exception e){
+            }
+
         }
         //user is returning from cropping the image
         else if (requestCode == PIC_CROP)
@@ -806,6 +981,14 @@ public class NewCaptureImageAndSignFragment extends Fragment {
         try {
             remarks = RemarksEdt.getText().toString();
             Log.e("remarks", "remarks: " + remarks);
+            if(!remarks.contains("|")) {
+                if (qtyServices != null) {
+                    remarks = remarks + " | No Of S : " + qtyServices;
+                }
+                if (qtySpareParts != null) {
+                    remarks = remarks + " | No Of Sp : " + qtySpareParts;
+                }
+            }
             String list = "";
             String DocumentIdValues = list;
             Gson userGson = new GsonBuilder().create();
@@ -821,6 +1004,12 @@ public class NewCaptureImageAndSignFragment extends Fragment {
                     }
                     if(serviceDetails==null){
                         serviceDetails="";
+                    }
+                    HashMap<String, String> user = sessionManager.getSignatureFilepath();
+
+                    try {
+                        signatureFilePath = user.get(SessionManager.KEY_SIGNATURE_FILE_PATH);
+                    } catch (NullPointerException e) {
                     }
                     Log.e("ImageAndSignFragment "," newsparePartsDetails "+newsparePartsDetails);
                     JSONObject jsonObject = new JSONObject();
@@ -838,6 +1027,7 @@ public class NewCaptureImageAndSignFragment extends Fragment {
                     jsonObject.accumulate(JSONVariables.CounterId, ProjectMethods.getCounterId());
                     jsonObject.accumulate(JSONVariables.ServiceDetails, serviceDetails);
                     jsonObject.accumulate(JSONVariables.JCImage, imageURl);
+                    jsonObject.accumulate(JSONVariables.JCSignature,signatureImageName);
                     jsonObject.accumulate(JSONVariables.Documents, "");
                     jsonObject.accumulate(JSONVariables.CustName, name);
                     jsonObject.accumulate(JSONVariables.CustEmailId, "");
@@ -860,24 +1050,17 @@ public class NewCaptureImageAndSignFragment extends Fragment {
                         DatabaseHelper1 db = new DatabaseHelper1(rootView.getContext());
                         dbValue = db.jgetValueId(technicianName);
                     }else{
-                        Log.e("Executing block", "JESUS name to id else part " + dbValue);
                     }
                     jsonObject.accumulate(JSONVariables.TechnicianName, dbValue);
                     jsonObject.accumulate(JSONVariables.Type, "Save");
-                    Log.d("CaptureAndSignFragment", "jsondata" + jsonObject);//GM10650
-                    Log.d("ANUSHA noOfServices"," "+noOfServices);
-                    Log.d("ANUSHA saveddetail", "ITEMDETAILS" + jsonObject.getString(JSONVariables.ItemDetails));
 
-                    if(validationVehicleDetails()) {
+                    if(validationVehicleDetails(signatureImageName)) {
                         if(!serviceDetails.equalsIgnoreCase("")) {
                             String[] result = serviceDetails.split("~");
                             for (String s : result) {
                                 System.out.println(">" + s + "<");
-                                Log.d("ANUSHA saveddetail", "RESUT " + s);
                                 String[] singleResult=s.split("!");
-                                for(String s2 : singleResult){
-                                    Log.d("ANUSHA saveddetail", "RESUT SINGLE" + s2);
-                                }
+
                             }
                         }
 
@@ -887,7 +1070,8 @@ public class NewCaptureImageAndSignFragment extends Fragment {
                         requestName = "SaveJobCardDetails_New";
                         serviceCall.setOnServiceCallCompleteListener(new OnServiceCallCompleteListenerImpl());
                         serviceCall.makeJSONOArryPostRequest(ProjectVariables.BASE_URL + ProjectVariables.SaveJobCardDetails_New, jsonObject, Request.Priority.HIGH);
-
+                        /*DatabaseHelper db = new DatabaseHelper(getActivity());
+                        db.insert_EmailidDetails(jobCardId, newsparePartsDetails);*/
                     }
 
                 } catch (Exception e) {
@@ -995,7 +1179,11 @@ public class NewCaptureImageAndSignFragment extends Fragment {
                 }
                 IdSaveBtn.setEnabled(true);
                 Toast.makeText(getActivity(), result + "" + JobCardNumber, Toast.LENGTH_SHORT).show();
-
+                long millis=System.currentTimeMillis();
+                java.util.Date date=new java.util.Date(millis);
+                String jobc=JobCardNumber+IdSaveBtn.getText().toString()+date;
+                DatabaseHelper db = new DatabaseHelper(getActivity());
+                db.insert_SpareDetails(jobc, newsparePartsDetails);
                 SharedPreferences.Editor edit = jobcardPref.edit();
                 edit.putString("JobCardNumber", JobCardNumber);
                 edit.commit();

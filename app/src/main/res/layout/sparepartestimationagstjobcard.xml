@@ -79,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -100,9 +100,9 @@
                         android:textSize="@dimen/textSize"
                         android:textStyle="normal" />
 
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/JobCardSelectionLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -112,13 +112,13 @@
 
                     <EditText
                         android:id="@+id/IdJobCardNoEdt"
-                        android:layout_width="match_parent"
+                        android:layout_width="190dp"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentLeft="true"
-                        android:drawableRight="@drawable/search_icon"
                         android:clickable="false"
                         android:cursorVisible="false"
+                        android:drawableRight="@drawable/search_icon"
                         android:editable="false"
                         android:focusable="false"
                         android:hint="Job Card Number"
@@ -128,7 +128,7 @@
                         android:textSize="@dimen/textSize"
                         android:textStyle="normal" />
 
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
 
                 <LinearLayout
@@ -138,7 +138,7 @@
                     android:layout_weight="1"
                     android:visibility="gone">
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/CusomerSelectionLayout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -160,7 +160,7 @@
                             android:textSize="@dimen/textSize"
                             android:textStyle="normal" />
 
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <ImageButton
                         android:id="@+id/IdImgSearchBtn"
@@ -176,7 +176,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/receiptLayout"
                 android:orientation="horizontal">
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/TextLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -202,8 +202,8 @@
                         android:textSize="@dimen/textSize"
                         android:textStyle="normal" />
 
-                </android.support.design.widget.TextInputLayout>
-                <android.support.design.widget.TextInputLayout
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -224,7 +224,7 @@
                         android:textSize="@dimen/textSize"
                         android:textStyle="normal" />
 
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/LinearLayoutTechnician"
@@ -266,7 +266,7 @@
                     android:orientation="horizontal"
                     android:visibility="visible">
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
 
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -291,7 +291,7 @@
                             android:textSize="@dimen/textSize"
                             android:textStyle="normal" />
 
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
 
 
@@ -310,7 +310,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
-                            <android.support.design.widget.TextInputLayout
+                            <com.google.android.material.textfield.TextInputLayout
 
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -336,8 +336,8 @@
                                     android:textSize="@dimen/textSize"
                                     android:textStyle="normal" />
 
-                            </android.support.design.widget.TextInputLayout>
-                            <android.support.design.widget.TextInputLayout
+                            </com.google.android.material.textfield.TextInputLayout>
+                            <com.google.android.material.textfield.TextInputLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="top"
@@ -362,7 +362,7 @@
                                     android:textSize="@dimen/textSize"
                                     android:textStyle="normal" />
 
-                            </android.support.design.widget.TextInputLayout>
+                            </com.google.android.material.textfield.TextInputLayout>
                             <ImageButton
                                 android:id="@+id/IdAddImgbtn_j"
                                 android:layout_width="0dp"
@@ -534,7 +534,7 @@
                         android:layout_height="0.2dp"
                         android:background="@color/viewcolour" />
 
-                    <android.support.v7.widget.RecyclerView
+                    <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/IdGeneralServiceReccylerview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -544,7 +544,7 @@
                         android:listSelector="@color/black"
                         android:scrollbars="vertical">
 
-                    </android.support.v7.widget.RecyclerView>
+                    </androidx.recyclerview.widget.RecyclerView>
 
                     <LinearLayout
                         android:layout_marginTop="50dp"
@@ -703,7 +703,7 @@
                         android:orientation="vertical">
 
 
-                        <android.support.design.widget.TextInputLayout
+                        <com.google.android.material.textfield.TextInputLayout
 
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -727,7 +727,7 @@
                                 android:textSize="@dimen/textSize"
                                 android:textStyle="normal" />
 
-                        </android.support.design.widget.TextInputLayout>
+                        </com.google.android.material.textfield.TextInputLayout>
 
 
                     </LinearLayout>
@@ -746,7 +746,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal">
-                                <android.support.design.widget.TextInputLayout
+                                <com.google.android.material.textfield.TextInputLayout
 
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
@@ -771,8 +771,8 @@
                                         android:textSize="@dimen/textSize"
                                         android:textStyle="normal" />
 
-                                </android.support.design.widget.TextInputLayout>
-                                <android.support.design.widget.TextInputLayout
+                                </com.google.android.material.textfield.TextInputLayout>
+                                <com.google.android.material.textfield.TextInputLayout
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="top"
@@ -796,7 +796,7 @@
                                         android:textSize="@dimen/textSize"
                                         android:textStyle="normal" />
 
-                                </android.support.design.widget.TextInputLayout>
+                                </com.google.android.material.textfield.TextInputLayout>
                                 <ImageButton
                                     android:id="@+id/IdAddImgbtn"
                                     android:layout_width="0dp"
@@ -970,7 +970,7 @@
                         android:layout_height="0.2dp"
                         android:background="@color/viewcolour" />
 
-                    <android.support.v7.widget.RecyclerView
+                    <androidx.recyclerview.widget.RecyclerView
                         android:minHeight="30dp"
                         android:id="@+id/IdJobCardCustomerRecyclerview"
                         android:layout_width="match_parent"
@@ -980,7 +980,7 @@
                         android:listSelector="@color/black"
                         android:scrollbars="vertical">
 
-                    </android.support.v7.widget.RecyclerView>
+                    </androidx.recyclerview.widget.RecyclerView>
 
                     <LinearLayout
                         android:layout_marginTop="50dp"
@@ -1152,7 +1152,7 @@
                             android:textStyle="normal"
                             android:visibility="gone" />
 
-                        <android.support.design.widget.TextInputLayout
+                        <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.5"
@@ -1175,7 +1175,7 @@
                                 android:focusable="false"
                                 android:textStyle="normal" />
 
-                        </android.support.design.widget.TextInputLayout>
+                        </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
 
                     <LinearLayout
@@ -1186,7 +1186,7 @@
                         android:layout_below="@+id/discountLayout"
                         android:orientation="horizontal">
 
-                        <android.support.design.widget.TextInputLayout
+                        <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/IdNerAmtTextLayout"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -1211,7 +1211,7 @@
                                 android:textSize="@dimen/textSize"
                                 android:textStyle="normal" />
 
-                        </android.support.design.widget.TextInputLayout>
+                        </com.google.android.material.textfield.TextInputLayout>
 
                         <Button
                             android:id="@+id/btn_paynow"
@@ -1232,7 +1232,7 @@
 
                 </LinearLayout>
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -1254,7 +1254,7 @@
                         android:textSize="@dimen/textSize"
                         android:textStyle="normal" />
 
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>

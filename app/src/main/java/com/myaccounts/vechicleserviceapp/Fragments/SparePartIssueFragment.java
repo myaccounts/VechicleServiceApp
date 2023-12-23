@@ -6,11 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
 import android.view.Gravity;
@@ -37,7 +37,6 @@ import com.myaccounts.vechicleserviceapp.Activity.SparePartsActivity;
 import com.myaccounts.vechicleserviceapp.Adapter.SparePartIssueAdapter;
 import com.myaccounts.vechicleserviceapp.Pojo.JobCardDetails;
 import com.myaccounts.vechicleserviceapp.Pojo.SparePartDetails;
-import com.myaccounts.vechicleserviceapp.Pojo.SparePartEstDetails;
 import com.myaccounts.vechicleserviceapp.Pojo.UserList;
 import com.myaccounts.vechicleserviceapp.R;
 import com.myaccounts.vechicleserviceapp.Utils.AlertDialogManager;
@@ -55,15 +54,10 @@ import com.myaccounts.vechicleserviceapp.Utils.SessionManager;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -161,9 +155,6 @@ public class SparePartIssueFragment extends Fragment implements View.OnClickList
     }
 
     private void AddListToGrid() {
-        for(int i=0;i<sparePartDetailsArrayList.size();i++) {
-            Log.d("ANUSHA ", "array" + sparePartDetailsArrayList.get(i).getmQTY());
-        }
         sparePartIssueAdapter = new SparePartIssueAdapter(getActivity(), R.layout.sparepart_issue_row_item, sparePartDetailsArrayList, "");
         SparePartrecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         SparePartrecyclerview.setItemAnimator(new DefaultItemAnimator());
@@ -450,7 +441,7 @@ public class SparePartIssueFragment extends Fragment implements View.OnClickList
         }
        if (sparePartDetailsArrayList.size() > 0) {
             sessionManager.storeNoSpares("" + sparePartDetailsArrayList.size());
-            sessionManager.storeThirdSparePartsDetails(finalSparePartDetailList, "" + totalAmount);
+            sessionManager.storeThirdSparePartsDetails(finalSparePartDetailList, "" + totalAmount,String.format("%.0f", totalQty));
         }
         totalRowsTv.setText(String.valueOf(finalrows));
         TotalQtyTv.setText(String.format("%.0f", totalQty));
@@ -517,7 +508,6 @@ public class SparePartIssueFragment extends Fragment implements View.OnClickList
                     jsonObject.accumulate("ItemDetails", finalSparePartDetailList);
                     jsonObject.accumulate("SMId", SmId);
                     jsonObject.accumulate("JobCardId", JobCardNo);
-                    Log.d("ANUSHA ","save details"+jsonObject.toString());
                     BackendServiceCall serviceCall = new BackendServiceCall(getActivity(), false);
                     requestName = "SaveSparePartIssueDetails";
                     serviceCall.setOnServiceCallCompleteListener(new OnServiceCallCompleteListenerSaveImpl());
@@ -669,9 +659,6 @@ public class SparePartIssueFragment extends Fragment implements View.OnClickList
             JCDate = data.getStringExtra("JCDate");
 //            String ModifiedDate = data.getStringExtra("ModifiedDate");
 //            String ModifiedTime = data.getStringExtra("ModifiedTime");
-            Log.d("ANUSHA ", "JCDate" + JCDate);
-//            Log.d("ANUSHA ", "ModifiedDate" + ModifiedDate);
-//            Log.d("ANUSHA ", "ModifiedTime" + ModifiedTime);
             jobCardNoEdt.setText(jobCardN);
             CustNameEdt.setText(CustName);
             mobileNoEdt.setText(CustMobNo);
@@ -695,7 +682,6 @@ public class SparePartIssueFragment extends Fragment implements View.OnClickList
                 try {
                     JSONObject jsonObject = new JSONObject();//JoBcardNo
                     jsonObject.accumulate("JoBcardNo", jobcardId);
-                    Log.d("ANUSHA "," "+jsonObject);
                     BackendServiceCall serviceCall = new BackendServiceCall(getActivity(), false);
                     requestName = "GetNewJobCardSpeDetails";
                     serviceCall.setOnServiceCallCompleteListener(new OnServiceCallCompleteListenerSaveImpl());
@@ -709,7 +695,6 @@ public class SparePartIssueFragment extends Fragment implements View.OnClickList
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Log.d("ANUSHA "," "+e.toString());
         }
 
     }
@@ -971,7 +956,6 @@ public class SparePartIssueFragment extends Fragment implements View.OnClickList
             if (jsonArray.length() > 0) {
                 try {
                     JSONObject object = jsonArray.getJSONObject(0);
-                    Log.d("ANUSHA ", "array" + object.toString());
                     String Result = object.getString("Result");
                     if (Result.equalsIgnoreCase("No Data Found")) {
                         Toast.makeText(getActivity(), Result, Toast.LENGTH_SHORT).show();

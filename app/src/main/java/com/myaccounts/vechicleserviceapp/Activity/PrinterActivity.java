@@ -12,10 +12,10 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -34,23 +34,22 @@ import com.myaccounts.vechicleserviceapp.Printernew.InitializePrinter;
 import com.myaccounts.vechicleserviceapp.Printernew.ShowMsg;
 import com.myaccounts.vechicleserviceapp.Printernew.SpnModelsItem;
 import com.myaccounts.vechicleserviceapp.R;
+import com.myaccounts.vechicleserviceapp.Utils.Enums;
 import com.myaccounts.vechicleserviceapp.Utils.FileUtils;
 import com.myaccounts.vechicleserviceapp.Utils.Global;
 import com.myaccounts.vechicleserviceapp.Utils.ProjectMethods;
-import com.myaccounts.vechicleserviceapp.Utils.ProjectVariables;
+import com.myaccounts.vechicleserviceapp.network.DatabaseHelper;
 import com.myaccounts.vechicleserviceapp.scantechPrinter.WorkService;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 
 import static com.myaccounts.vechicleserviceapp.Utils.Enums.Printers.EPSON;
 import static com.myaccounts.vechicleserviceapp.Utils.Enums.Printers.EPSON_M30;
 import static com.myaccounts.vechicleserviceapp.Utils.Enums.Printers.MAESTROS;
-import static com.myaccounts.vechicleserviceapp.Utils.Enums.Printers.SCANTECH;
-import static com.myaccounts.vechicleserviceapp.Utils.Enums.Printers.SUNMI_28_COLUMN;
-import static com.myaccounts.vechicleserviceapp.Utils.Enums.Printers.SUNMI_42_COLUMN;
 
 public class PrinterActivity extends Activity implements View.OnClickListener, ReceiveListener {
-
+    private ArrayList<String> printerList;
     private Button btnEpsonM30 = null;
     private Button buttonMaestros = null;
     private Button btnScantech = null;
@@ -178,6 +177,25 @@ public class PrinterActivity extends Activity implements View.OnClickListener, R
     protected void onActivityResult(int requestCode, final int resultCode, final Intent data) {
         try {
             if (data != null) {
+                ProjectMethods.set_BillPrinterIP(data.getStringExtra(getString(R.string.title_target)));
+                ProjectMethods.SetPrinterIP(mContext, data.getStringExtra(getString(R.string.title_target)));
+                SharedPreferences.Editor edit1 = printerSharedpreferences.edit();
+                edit1.putString(InitializePrinter.PRINT_IP, ProjectMethods.get_BillPrinterIP());
+                edit1.commit();
+                String printerName=printerSharedpreferences.getString(InitializePrinter.PRINT_NAME,"");
+                DatabaseHelper db = new DatabaseHelper(this);
+                db.insert_PrinterDetails(ProjectMethods.get_BillPrinterIP(),printerName);
+
+                /*Cursor cursor = db.getPrinterDetails("");
+                if (cursor != null) {
+                    if (cursor.getCount() > 0) {
+                        cursor.moveToFirst();
+                        String Permission = cursor.getString(cursor.getColumnIndex(InfDbSpecs.PRINTERIP));
+                    }
+                }*/
+//                db.getPrinterDetails("");
+//                String TransactionNo="";
+//                Print_BillFormat(TransactionNo);
                 if (requestCode == 5) {
                     String target = data.getStringExtra(getString(R.string.title_target));
                     if (target != null) {
@@ -192,7 +210,6 @@ public class PrinterActivity extends Activity implements View.OnClickListener, R
                         finish();
                     }
                 } else if (requestCode == 10) {
-                    android.util.Log.d("ANUSHA "," DEVICE "+data.getStringExtra("Device"));
                     ProjectMethods.set_BillPrinterIP(data.getStringExtra("Device"));
                     ProjectMethods.SetPrinterIP(mContext, data.getStringExtra("Device"));
                     finish();
@@ -221,6 +238,119 @@ public class PrinterActivity extends Activity implements View.OnClickListener, R
         }
     }
 
+    private void Print_BillFormat(String transactionNo) {
+            try {
+                PreparePrintList();
+                PrintEpson_fM30_Printer();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+    }
+
+    private void PrintEpson_fM30_Printer() {
+        try {
+            android.util.Log.v("Result3", "Now Trying to connect");
+//            if (!Connect_Epson_M_30_Printer()) {
+//                finalizeObject();
+//                return;
+//            }
+            mPrinter = new Printer(Printer.TM_M30, 0, this);
+//            mPrinter.connect("BT:00:01:90:84:FD:9", Printer.PARAM_DEFAULT);
+//            mPrinter.connect("BT:00:01:90:77:25:00", Printer.PARAM_DEFAULT);
+            mPrinter.connect(ProjectMethods.get_BillPrinterIP(), Printer.PARAM_DEFAULT);
+            mPrinter.clearCommandBuffer();
+            mPrinter.setReceiveEventListener(null);
+
+            for (int PrintLine = 0; PrintLine < printerList.size(); PrintLine++) {
+                String strPrintLine = printerList.get(PrintLine);
+                if (strPrintLine.equalsIgnoreCase("CompName")) {
+                    Bitmap logoData = BitmapFactory.decodeResource(getResources(), R.drawable.myaccounts600x135);
+                    mPrinter.addImage(logoData, 0, 0,
+                            logoData.getWidth(),
+                            logoData.getHeight(),
+                            Printer.COLOR_1,
+                            Printer.MODE_MONO,
+                            Printer.HALFTONE_DITHER,
+                            Printer.PARAM_DEFAULT,
+                            Printer.COMPRESS_AUTO);
+                    PrintLine++;
+                    PrintLine++;
+                }
+                mPrinter.addText(strPrintLine);
+                mPrinter.addFeedLine(1);
+            }
+            mPrinter.addCut(Printer.CUT_FEED);
+            mPrinter.sendData(Printer.PARAM_DEFAULT);
+            android.util.Log.v("Result3", "msg" + Printer.PARAM_DEFAULT);
+
+            After_Epson_M_30_Print();
+        } catch (Exception e) {
+            e.printStackTrace();
+            android.util.Log.v("PrintEpson_fM30_Printer", "QuickBilling");
+        }
+    }
+
+    private boolean After_Epson_M_30_Print() {
+        boolean Result = false;
+        try {
+            android.util.Log.v("Result3", "end connection");
+            boolean isBeginTransaction = false;
+            try {
+                mPrinter.beginTransaction();
+                isBeginTransaction = true;
+            } catch (Exception e) {
+                e.printStackTrace();
+                android.util.Log.v("After_Epson_M_30_Print", "PrinterTransaction");
+            }
+            if (!isBeginTransaction) {
+                try {
+                    mPrinter.disconnect();
+                    return false;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            mPrinter.endTransaction();
+            mPrinter.disconnect();
+
+            PrinterStatusInfo status = mPrinter.getStatus();
+            /*if (!isPrintable(status)) {
+                ShowMsg.showMsg(makeErrorMessage(status), getContext());
+                try {
+                    mPrinter.disconnect();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                return false;
+            }*/
+
+            try {
+                mPrinter.sendData(Printer.PARAM_DEFAULT);
+            } catch (Exception e) {
+                ShowMsg.showException(e, "sendData", this);
+                try {
+                    mPrinter.disconnect();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            android.util.Log.v("After_Epson_M_30_Print", "");
+            return false;
+        }
+        return true;
+    }
+
+    private void PreparePrintList() {
+        printerList = new ArrayList<String>();
+        int NoOfCols = 48;
+        String BillPrintType = ProjectMethods.getBillPrinterType().toString();
+        printerList.add(" PRINTNAME ");
+    }
+
     @Override
     public void onClick(View v) {
         Intent intent = null;
@@ -230,6 +360,9 @@ public class PrinterActivity extends Activity implements View.OnClickListener, R
                 try {
                     ProjectMethods.setBillPrinterType(EPSON);
                     ProjectMethods.SetPrinterType(mContext, ProjectMethods.getBillPrinterType().toString());
+                    SharedPreferences.Editor edit1 = printerSharedpreferences.edit();
+                    edit1.putString(InitializePrinter.PRINT_NAME,Enums.Printers.EPSON.toString());
+                    edit1.commit();
                     intent = new Intent(this, DiscoveryActivity.class);
                     startActivityForResult(intent, 5);
                 } catch (Exception e) {
@@ -240,6 +373,9 @@ public class PrinterActivity extends Activity implements View.OnClickListener, R
                 try {
                     ProjectMethods.setBillPrinterType(EPSON_M30);
                     ProjectMethods.SetPrinterType(mContext, ProjectMethods.getBillPrinterType().toString());
+                    SharedPreferences.Editor edit1 = printerSharedpreferences.edit();
+                    edit1.putString(InitializePrinter.PRINT_NAME, EPSON_M30.toString());
+                    edit1.commit();
                     intent = new Intent(this, DiscoveryActivity.class);
                     startActivityForResult(intent, 5);
 

@@ -86,10 +86,8 @@ public class SparePartsActivity extends Activity {
                 try {
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.accumulate("Flag", 10);
-                    Log.d("ANUSHA "," "+jsonObject.toString());
                     BackendServiceCall serviceCall = new BackendServiceCall(SparePartsActivity.this, false);
                     requestName = "SparepartMaster";
-                    Log.d("ANUSHA "," "+ProjectVariables.BASE_URL + ProjectVariables.GetSparepartMaster);
                     serviceCall.setOnServiceCallCompleteListener(new OnServiceCallCompleteListenerSpareImp());
                     serviceCall.makeJSONOArryPostRequest(ProjectVariables.BASE_URL + ProjectVariables.GetSparepartMaster, jsonObject, Request.Priority.HIGH);
                 } catch (Exception e) {
@@ -181,7 +179,6 @@ public class SparePartsActivity extends Activity {
                         SparePartMRP = sparePartsArrayList.get(position).getRate();
                         SparePartFreeRate = sparePartsArrayList.get(position).getFreeMRP();
 
-                        Log.d("ANUSHA","++"+SparePartBalQty);
                     } else {
 
                         SparePartId = dynamicList.get(position).getId();

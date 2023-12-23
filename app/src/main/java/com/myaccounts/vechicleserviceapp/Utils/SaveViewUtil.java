@@ -4,10 +4,13 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Environment;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+
+import com.myaccounts.vechicleserviceapp.network.DatabaseHelper;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -16,6 +19,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Random;
 
 /**
  * Created by kiran on 2/27/2017.
@@ -23,14 +28,17 @@ import java.util.Date;
 
 public class SaveViewUtil {
 
-
+    private static String imageURls = "";
+    private static  File captureImagePaths;
     private static final File rootDir = new File(Environment.getExternalStorageDirectory()
             + "/Android/data/"
             + "/Files");
     private static Bitmap bitmap;
+    private static SessionManager sessionManager;
+    private static String filePath,vehicleNumber;
     private static Context context;
     private static String mImageName;
-    ;
+
     private static String sigValue;
 //    ContextWrapper cw;
 
@@ -62,9 +70,27 @@ public class SaveViewUtil {
             File mediaFile;
             mImageName = "MI_" + timeStamp + ".jpg";
             File mypath=new File(directory,mImageName);
-            Log.d("mimagenmae", mImageName);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, new FileOutputStream(mypath));
+            filePath=mypath.getAbsolutePath().toString();
+            sessionManager = new SessionManager(context);
+            sessionManager.storeSignatureFilePath(mImageName);
+            HashMap<String, String> user = sessionManager.getVehicleDetails();
+            vehicleNumber = user.get(SessionManager.KEY_VEHICLE_NO);
+            DatabaseHelper db = new DatabaseHelper(context);
+            db.insert_EmailidDetails(vehicleNumber,filePath);
             sharedPreferences(sigValue);
+            try {
+                Uri resultUri = Uri.fromFile(mypath);
+                imageURls = resultUri.getPath();
+                captureImagePaths = new File(imageURls);
+                imageURls = "Image_" + getRandomNumberInRange(1, 10000) + ".jpg";
+                sessionManager.storeSignatureDetails(captureImagePaths,imageURls,resultUri);
+//                UploadimageServer server = new UploadimageServer(captureImagePaths, imageURls, resultUri, context);
+//                server.execute();
+//                context.finish();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             return true;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -146,5 +172,13 @@ public class SaveViewUtil {
         Log.d("Image Log:", imageEncoded);
         return imageEncoded;
     }
+    private static int getRandomNumberInRange(int min, int max) {
 
+        if (min >= max) {
+            throw new IllegalArgumentException("max must be greater than min");
+        }
+
+        Random r = new Random();
+        return r.nextInt((max - min) + 1) + min;
+    }
 }

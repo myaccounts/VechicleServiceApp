@@ -1,30 +1,25 @@
 package com.myaccounts.vechicleserviceapp.Activity;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+
+import com.google.android.material.navigation.NavigationView;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
@@ -35,34 +30,31 @@ import android.widget.TextView;
 
 import com.myaccounts.vechicleserviceapp.Fragments.ChangePasswordFragment;
 import com.myaccounts.vechicleserviceapp.Fragments.ContextMenuDialogFragment;
-import com.myaccounts.vechicleserviceapp.Fragments.DatabaseHelper1;
-import com.myaccounts.vechicleserviceapp.Fragments.HomeFragment;
 import com.myaccounts.vechicleserviceapp.Fragments.JobCardReportsFragment;
 import com.myaccounts.vechicleserviceapp.Fragments.MainJobCardFragment;
+import com.myaccounts.vechicleserviceapp.Fragments.SettingsFragment;
 import com.myaccounts.vechicleserviceapp.Fragments.SparePartEstAgstJobCard;
 import com.myaccounts.vechicleserviceapp.Fragments.SparePartIssueFragment;
+import com.myaccounts.vechicleserviceapp.Fragments.SparesListFragment;
 import com.myaccounts.vechicleserviceapp.Fragments.UserWisePrevilegeFragment;
 import com.myaccounts.vechicleserviceapp.LoginSetUp.LoginActivity;
 import com.myaccounts.vechicleserviceapp.R;
-import com.myaccounts.vechicleserviceapp.Reports.JobCardHistoryReport;
 import com.myaccounts.vechicleserviceapp.Reports.ReportsFrgament;
 import com.myaccounts.vechicleserviceapp.Utils.AppUtil;
 import com.myaccounts.vechicleserviceapp.Utils.DatePickerFragment;
 import com.myaccounts.vechicleserviceapp.Utils.OnDateSetCompleted;
 import com.myaccounts.vechicleserviceapp.Utils.ProjectVariables;
-import com.myaccounts.vechicleserviceapp.Utils.SessionManager;
-import com.yalantis.contextmenu.lib.MenuParams;
 
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
 
 import static com.myaccounts.vechicleserviceapp.Utils.DatePickerFragment.currentdate;
 import static com.myaccounts.vechicleserviceapp.Utils.DatePickerFragment.menuCalenderSelectonDate;
+import static com.myaccounts.vechicleserviceapp.Utils.SessionManager.KEY_SAVED_DATE;
 import static com.myaccounts.vechicleserviceapp.Utils.SessionManager.KEY_SELECTED_DATE;
 
 
@@ -76,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private RecyclerView recyclerView;
     private TextView userName, emailId;
     private DrawerLayout mDrawerLayout;
-    private String dealerAddress;
+    private String dealerAddress,jobcard ,sparesList;
     private AlertDialog alertDialog;
     private JSONObject jsonObject;
     private ContextMenuDialogFragment mMenuDialogFragment;
@@ -107,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // initMenuFragment();
         gV1 = new ProjectVariables();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        lr = (LinearLayout) findViewById(R.id.lrSpares);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawerLayout.setDrawerListener(toggle);
@@ -117,7 +110,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         TextView nav_username = (TextView) hView.findViewById(R.id.nav_username);
         nav_username.setText(loginusername);
-        Log.d("ANUSHA ", "" + "MAINACTIVTY");
         lpref = MainActivity.this.getSharedPreferences("goWheelsVehicleIdPref", 0);
         leditor = lpref.edit();
        /* SharedPreferences logPerf = getSharedPreferences(gV1.LOGIN_STATUS, Context.MODE_PRIVATE);
@@ -199,23 +191,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        newTv=(TextView) menu.findItem(R.id.datetv);
         Date c = Calendar.getInstance().getTime();
         System.out.println("Current time => " + c);
-
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         String formattedDate = df.format(c);
         String selectedDate="";
 
         try {
             selectedDate = lpref.getString(KEY_SELECTED_DATE, null);
-            Log.d("ANUSHA ","@@@@ selectedDate"+selectedDate);
-            Log.d("ANUSHA ","@@@@ currentdate"+currentdate);
         }catch(Exception e){
-            Log.d("ANUSHA ","@@@@@ EXCEPTION "+e.toString());
         }
         if(!menuCalenderSelectonDate)
             menu.findItem(R.id.datetv).setTitle(formattedDate);
         else
             menu.findItem(R.id.datetv).setTitle(currentdate);
         menu.findItem(R.id.datebtn).setIcon(R.drawable.calendarwhite24);
+
+        leditor.putString(KEY_SAVED_DATE, menu.findItem(R.id.datetv).getTitle().toString());
+        leditor.commit();
 //        menu.findItem(R.id.alltv).setTitle("All");
 //        menu.findItem(R.id.alltv).setVisible(true);
         menu.findItem(R.id.datetv).setVisible(true);
@@ -267,11 +258,73 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             ft.replace(R.id.container, f);
             ft.commit();
             return true;
-        } else if (id == R.id.action_printer) {
+        }else if (id == R.id.action_printer) {
             Intent intent = new Intent(MainActivity.this, PrinterActivity.class);
             startActivity(intent);
             return true;
-        } else if (id == R.id.action_serviceassign) {
+        }else if (id == R.id.action_db) {
+            Fragment f = SparesListFragment.newInstance();
+            fragmentManager = getSupportFragmentManager();
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            ft.replace(R.id.container, f);
+            ft.commit();
+//            Intent intent = new Intent(MainActivity.this, SparesListActivity.class);
+//            startActivity(intent);
+           /* printerList = new ArrayList<String>();
+            File dbFile = getDatabasePath(DatabaseHelper.DATABASE_NAME);
+            LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
+
+            // Inflate the custom layout/view
+            final View customView = inflater.inflate(R.layout.services_popup,null);
+            try {
+                DatabaseHelper db = new DatabaseHelper(this);
+                Cursor cursor = db.getSparesDetails();
+                if (cursor != null) {
+                    if (cursor.getCount() > 0) {
+                        for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                            jobcard = cursor.getString(cursor.getColumnIndex(InfDbSpecs.JobcardNo));
+//                          sparesList = cursor.getString(cursor.getColumnIndex(InfDbSpecs.SpareList));
+//                          printerList.add(jobcard);
+                            printerList.add(sparesList);
+                        }
+                    }
+                }
+            }
+            catch(Exception e){
+            }
+
+            mPopupWindow = new PopupWindow(
+                    customView,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    true);
+
+            if(Build.VERSION.SDK_INT>=21){
+                mPopupWindow.setElevation(5.0f);
+            }
+
+            ImageButton closeButton = (ImageButton) customView.findViewById(R.id.ib_close);
+            GridView mobileNo=(GridView)customView.findViewById(R.id.gridview) ;
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_list_item_1, printerList);
+            mobileNo.setAdapter(adapter);
+            closeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // Dismiss the popup window
+                    mPopupWindow.dismiss();
+                }
+            });
+            mPopupWindow.showAtLocation(lr, Gravity.CENTER,0,0);*/
+            return true;
+        }else if (id == R.id.action_settings) {
+            Fragment f = SettingsFragment.newInstance();
+            fragmentManager = getSupportFragmentManager();
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            ft.replace(R.id.container, f);
+            ft.commit();
+            return true;
+        }else if (id == R.id.action_serviceassign) {
             Fragment f = UserWisePrevilegeFragment.newInstance();
             fragmentManager = getSupportFragmentManager();
             FragmentTransaction ft = fragmentManager.beginTransaction();
@@ -501,16 +554,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("ANUSHA "," ONRESUME "+comingfrom);
+        Date c = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        String formattedDate = df.format(c);
         //comingfrom="MAINACTIVITY"
-        if(comingfrom.equalsIgnoreCase("1") || comingfrom.equalsIgnoreCase("2") || comingfrom.equalsIgnoreCase("3")) {
+        if(comingfrom.equalsIgnoreCase("00") || comingfrom.equalsIgnoreCase("66") || comingfrom.equalsIgnoreCase("1") || comingfrom.equalsIgnoreCase("2") || comingfrom.equalsIgnoreCase("3")) {
             menuClick=false;
             Fragment f = JobCardReportsFragment.newInstance();
             FragmentManager fm = getSupportFragmentManager();
+
             FragmentTransaction ft = fm.beginTransaction();
             ft.replace(R.id.container, f);
             ft.commit();
             comingfrom="MAINACTIVITY";
-        }
+        }/*else if(!formattedDate.equals(lpref.getString(KEY_SAVED_DATE,null))){
+            finish();
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }*/
     }
 }

@@ -3,14 +3,14 @@ package com.myaccounts.vechicleserviceapp.Fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import com.google.android.material.tabs.TabLayout;
+import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -98,7 +98,6 @@ public class NewSparePartsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Log.d(TAG, "onCreateView: called");
-        Log.d("ANUSHA ", "onCreateView: called" + "NewSparePartsFragment");
         view = inflater.inflate(R.layout.new_spare_parts_fragment, container, false);
         SparePartrecyclerview = (RecyclerView) view.findViewById(R.id.SparePartrecyclerview);
 
@@ -176,7 +175,6 @@ public class NewSparePartsFragment extends Fragment {
                     SparePartEdt.setError(null);
                     qty = "1";
                     AddToGridView();
-                    PrepareItemDetailsList();
                 }
 //                FragmentTransaction ft = getFragmentManager().beginTransaction();
 //                ft.detach(NewSparePartsFragment.this).attach(NewSparePartsFragment.this).commit();
@@ -189,7 +187,6 @@ public class NewSparePartsFragment extends Fragment {
         sparePartsSelectedFragmentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("newfinalSparePart", "ANUSHA " + sparePartDetailsArrayList);
                 PrepareItemDetailsList();
                 if (sparePartDetailsArrayList == null) {
                     Toast.makeText(getContext(), "Please Add Spare Parts", Toast.LENGTH_SHORT).show();
@@ -336,15 +333,15 @@ public class NewSparePartsFragment extends Fragment {
             }
         }
 
-        if (sparePartDetailsArrayList.size() > 0) {
-            sessionManager.storeNoSpares("" + sparePartDetailsArrayList.size());
-            sessionManager.storeThirdSparePartsDetails(finalSparePartDetailList, "" + totalAmount);
-            //Log.d("finalSpa", finalSparePartDetailList);
-        }
-        if (sparePartDetailsArrayList.size() == 0) {
-            sessionManager.storeNoSpares("" + 0);
-            sessionManager.storeThirdSparePartsDetails(null, "" + 0);
-        }
+//        if (sparePartDetailsArrayList.size() > 0) {
+//            sessionManager.storeNoSpares("" + sparePartDetailsArrayList.size());
+//            sessionManager.storeThirdSparePartsDetails(finalSparePartDetailList, "" + totalAmount);
+//            //Log.d("finalSpa", finalSparePartDetailList);
+//        }
+//        if (sparePartDetailsArrayList.size() == 0) {
+//            sessionManager.storeNoSpares("" + 0);
+//            sessionManager.storeThirdSparePartsDetails(null, "" + 0);
+//        }
         Log.d("freeam", "" + totalFreeAmount);
 
         IdtotalRows.setText(String.valueOf(finalrows));
@@ -409,7 +406,6 @@ public class NewSparePartsFragment extends Fragment {
         SparePartrecyclerview.setItemAnimator(new DefaultItemAnimator());
         SparePartrecyclerview.setHasFixedSize(true);
         SparePartrecyclerview.setAdapter(sparePartIssueAdapter);
-//                Log.d("ANUSHA addlisttogrid"," "+sparePartDetailsArrayList.size());
         PrepareItemDetailsList();
         sparePartIssueAdapter.notifyDataSetChanged();
 
@@ -561,7 +557,6 @@ public class NewSparePartsFragment extends Fragment {
     }
 
     private void PrepareItemDetailsList() {
-        Log.d("ANUSHA addlisttogrid", " " + sparePartDetailsArrayList.size());
         try {
             finalSparePartDetailList = "";
             for (int j = 0; j < sparePartDetailsArrayList.size(); j++) {
@@ -625,11 +620,12 @@ public class NewSparePartsFragment extends Fragment {
                     finalSparePartDetailList = "";
                 }
             }
-            if (sparePartDetailsArrayList.size() == 0) {//added this condition after adding delete all items last item is not deleteing in shared preferences
+          //  if (sparePartDetailsArrayList.size() == 0) {//added this condition after adding delete all items last item is not deleteing in shared preferences
                 sessionManager.storeNoSpares("" + sparePartDetailsArrayList.size());
-                sessionManager.storeThirdSparePartsDetails(finalSparePartDetailList, "" + totalAmount);
+                sessionManager.storeThirdSparePartsDetails(finalSparePartDetailList, "" + totalAmount,String.format("%.0f", totalQty));
                 //Log.d("finalSpa", finalSparePartDetailList);
-            }
+            //}
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -718,7 +714,6 @@ public class NewSparePartsFragment extends Fragment {
 
                         documentTypes.setmSprStatus(object.getString("SprStatus"));//SprStatus
 
-                        Log.d("ANUSHA ", " ### SPARE STATUS " + object.getString("SprStatus"));
                         sparePartDetailsArrayList.add(documentTypes);
                     }
                 } catch (Exception e) {

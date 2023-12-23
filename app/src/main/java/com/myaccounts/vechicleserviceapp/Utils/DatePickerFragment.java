@@ -4,21 +4,17 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.DatePicker;
-import android.widget.TextView;
 
 import com.myaccounts.vechicleserviceapp.Fragments.JobCardReportsFragment;
-import com.myaccounts.vechicleserviceapp.Pojo.JobCardHistory;
 import com.myaccounts.vechicleserviceapp.R;
-import com.myaccounts.vechicleserviceapp.Reports.JobCardHistoryReport;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -110,7 +106,6 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         //currentdate = day + "-" + month + "-" + year;
         menuItem.setTitle(currentdate);
 
-        Log.d("ANUSHA ","@@@@ selectedDate DATEPICKER "+currentdate);
         sessionManager.storeSelectedDate(currentdate);
         onDateSetCompleted.onDateCompleted(year, month, day);
         menuCalenderSelectonDate=true;

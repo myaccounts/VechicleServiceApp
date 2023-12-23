@@ -20,19 +20,18 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.Html;
-import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
@@ -50,7 +49,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -1251,12 +1249,9 @@ public class MainJobCardFragment extends Fragment implements View.OnClickListene
                 float finalValue = mrp * Qty;
                 ET1.setmQryMrp(String.valueOf(finalValue));
             }
-            Log.d("Anusha "," "+sparePartDetailsArrayList.size());
             for(int i=0;i<sparePartDetailsArrayList.size();i++) {
-                Log.d("Anusha ", " " + sparePartDetailsArrayList.get(i).getmQTY());
                 Toast.makeText(context," "+sparePartDetailsArrayList.get(i).getmQTY()+sparePartDetailsArrayList.get(i).getmAVLQTY(),Toast.LENGTH_LONG).show();
             }
-//            Log.d("Anusha "," "+sparePartDetailsArrayList.get(0).getmQTY());
 
             if (IsItemAdded) {
 

@@ -4,14 +4,12 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -20,9 +18,6 @@ import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.myaccounts.vechicleserviceapp.Activity.MainActivity;
 import com.myaccounts.vechicleserviceapp.Fragments.DBManager;
-import com.myaccounts.vechicleserviceapp.Fragments.NewMainVehicleDetailsFragment;
-import com.myaccounts.vechicleserviceapp.Pojo.DocumentTypes;
-import com.myaccounts.vechicleserviceapp.Pojo.TechnicianTypes;
 import com.myaccounts.vechicleserviceapp.R;
 import com.myaccounts.vechicleserviceapp.Utils.AlertDialogManager;
 import com.myaccounts.vechicleserviceapp.Utils.AppUtil;
@@ -32,8 +27,6 @@ import com.myaccounts.vechicleserviceapp.Utils.JSONVariables;
 import com.myaccounts.vechicleserviceapp.Utils.OnServiceCallCompleteListener;
 import com.myaccounts.vechicleserviceapp.Utils.ProjectMethods;
 import com.myaccounts.vechicleserviceapp.Utils.ProjectVariables;
-import com.myaccounts.vechicleserviceapp.network.DatabaseHelper;
-import com.myaccounts.vechicleserviceapp.network.InfDbSpecs;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -194,7 +187,6 @@ public class LoginActivity extends AppCompatActivity {
                     try {
                         JSONObject object = jsonArray.getJSONObject(i);
                         String Result = object.getString("Result");
-                        Log.e("ANUSHA   ","result TECHNICIAN NAMES "+object);
                         if (Result.equalsIgnoreCase("No Details Found")) {
                             Toast.makeText(this, Result, Toast.LENGTH_SHORT).show();
 
@@ -238,6 +230,7 @@ public class LoginActivity extends AppCompatActivity {
                             GetTechnicianDetailsFromgeneralMaster();
                             ProjectMethods.setUserName(txtUserName.getText().toString());
                             Toast.makeText(LoginActivity.this, Remarks, Toast.LENGTH_SHORT).show();
+//                            MainActivity.comingfrom="00";
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
 
@@ -263,7 +256,6 @@ public class LoginActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject();
                     BackendServiceCall serviceCall = new BackendServiceCall(this, false);
                     jsonObject.accumulate("TypeName", "Technician");
-                    Log.d("ANUSHA ","Technician Name "+jsonObject.toString());
                     requestName = "GetTechnicianDetails";
                     Log.e("vehicccc","vehiclccc"+"GetTechnicianDetailsFromgeneralMaster"+requestName);
                     serviceCall.setOnServiceCallCompleteListener(new OnServiceCallCompleteListenerItems());

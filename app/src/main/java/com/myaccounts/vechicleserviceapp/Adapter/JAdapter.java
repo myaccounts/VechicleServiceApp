@@ -3,16 +3,14 @@ package com.myaccounts.vechicleserviceapp.Adapter;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.myaccounts.vechicleserviceapp.R;
@@ -57,8 +55,6 @@ public class JAdapter extends RecyclerView.Adapter<JAdapter.ViewHolder>{
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("ANUSHA ","+++ "+position);
-                Log.d("ANUSHA ","+++ "+listdata[position].getDescription());
                 mSet.add(listdata[position].getDescription());
                 String nameData = listdata[position].getDescription();
                 arrPackage.add(nameData);
@@ -78,12 +74,12 @@ public class JAdapter extends RecyclerView.Adapter<JAdapter.ViewHolder>{
     private void saveStringSet(Context ctx, HashSet<String> mSet) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(ctx);
         SharedPreferences.Editor editor = sp.edit();
-        editor.putStringSet("JESUS", mSet);
+        editor.putStringSet("saveStringSet", mSet);
         editor.apply();
     }
     public static Set<String> getSavedStringSets(Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        return sp.getStringSet("JESUS", null);
+        return sp.getStringSet("saveStringSet", null);
     }
 
 

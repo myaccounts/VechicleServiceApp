@@ -9,7 +9,7 @@
     android:orientation="vertical"
     app:ignore="NamespaceTypo">
 
-    <android.support.v4.widget.SwipeRefreshLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
                         android:layout_weight="1"
                         android:orientation="vertical">
 
-                        <android.support.design.widget.TextInputLayout
+                        <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:theme="@style/TextLabel">
@@ -58,9 +58,9 @@
                                 android:textSize="@dimen/textSize"
                                 android:textStyle="normal" />
 
-                        </android.support.design.widget.TextInputLayout>
+                        </com.google.android.material.textfield.TextInputLayout>
 
-                        <android.support.design.widget.TextInputLayout
+                        <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/TextInputLayout1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -81,9 +81,9 @@
                                 android:textSize="@dimen/textSize"
                                 android:textStyle="normal" />
 
-                        </android.support.design.widget.TextInputLayout>
+                        </com.google.android.material.textfield.TextInputLayout>
 
-                        <android.support.design.widget.TextInputLayout
+                        <com.google.android.material.textfield.TextInputLayout
 
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -101,10 +101,10 @@
                                 android:textSize="@dimen/textSize"
                                 android:textStyle="normal" />
 
-                        </android.support.design.widget.TextInputLayout>
+                        </com.google.android.material.textfield.TextInputLayout>
 
 
-                        <android.support.design.widget.TextInputLayout
+                        <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/TextInputLayout3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -123,9 +123,9 @@
                                 android:textSize="@dimen/textSize"
                                 android:textStyle="normal" />
 
-                        </android.support.design.widget.TextInputLayout>
+                        </com.google.android.material.textfield.TextInputLayout>
 
-                        <android.support.design.widget.TextInputLayout
+                        <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:theme="@style/TextAppearance">
@@ -147,14 +147,14 @@
                                 android:textSize="@dimen/textSize"
                                 android:textStyle="normal" />
 
-                        </android.support.design.widget.TextInputLayout>
+                        </com.google.android.material.textfield.TextInputLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
-                            <android.support.design.widget.TextInputLayout
+                            <com.google.android.material.textfield.TextInputLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="0.5"
@@ -179,7 +179,7 @@
                                     android:editable="false"
                                     android:focusable="false"/>
 
-                            </android.support.design.widget.TextInputLayout>
+                            </com.google.android.material.textfield.TextInputLayout>
 
                             <ImageButton
                                 android:id="@+id/IdModelImg"
@@ -190,7 +190,7 @@
                                 android:background="@android:color/transparent"
                                 android:src="@drawable/search_icon" />
 
-                            <android.support.design.widget.TextInputLayout
+                            <com.google.android.material.textfield.TextInputLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="0.5"
@@ -213,7 +213,7 @@
                                     android:textSize="@dimen/textSize"
                                     android:textStyle="normal" />
 
-                            </android.support.design.widget.TextInputLayout>
+                            </com.google.android.material.textfield.TextInputLayout>
 
                             <ImageButton
                                 android:id="@+id/IdMakeImg"
@@ -234,7 +234,7 @@
                         android:layout_weight="1"
                         android:orientation="vertical">
 
-                        <android.support.design.widget.TextInputLayout
+                        <com.google.android.material.textfield.TextInputLayout
 
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -255,9 +255,9 @@
                                 android:textSize="@dimen/textSize"
                                 android:textStyle="normal" />
 
-                        </android.support.design.widget.TextInputLayout>
+                        </com.google.android.material.textfield.TextInputLayout>
 
-                        <android.support.design.widget.TextInputLayout
+                        <com.google.android.material.textfield.TextInputLayout
 
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -275,9 +275,9 @@
                                 android:textSize="@dimen/textSize"
                                 android:textStyle="normal" />
 
-                        </android.support.design.widget.TextInputLayout>
+                        </com.google.android.material.textfield.TextInputLayout>
 
-                        <android.support.design.widget.TextInputLayout
+                        <com.google.android.material.textfield.TextInputLayout
 
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -296,9 +296,9 @@
                                 android:textSize="@dimen/textSize"
                                 android:textStyle="normal" />
 
-                        </android.support.design.widget.TextInputLayout>
+                        </com.google.android.material.textfield.TextInputLayout>
 
-                        <android.support.design.widget.TextInputLayout
+                        <com.google.android.material.textfield.TextInputLayout
 
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -316,7 +316,7 @@
                                 android:textSize="@dimen/textSize"
                                 android:textStyle="normal" />
 
-                        </android.support.design.widget.TextInputLayout>
+                        </com.google.android.material.textfield.TextInputLayout>
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -334,7 +334,7 @@
                             </Spinner>
                         </RelativeLayout>
 
-                        <android.support.design.widget.TextInputLayout
+                        <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:theme="@style/TextAppearance">
@@ -352,9 +352,9 @@
                                 android:textSize="@dimen/textSize"
                                 android:textStyle="normal" />
 
-                        </android.support.design.widget.TextInputLayout>
+                        </com.google.android.material.textfield.TextInputLayout>
 
-                        <android.support.design.widget.TextInputLayout
+                        <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:theme="@style/TextAppearance">
@@ -372,9 +372,9 @@
                                 android:textSize="@dimen/textSize"
                                 android:textStyle="normal" />
 
-                        </android.support.design.widget.TextInputLayout>
+                        </com.google.android.material.textfield.TextInputLayout>
 
-                        <android.support.design.widget.TextInputLayout
+                        <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColorHint="@color/black"
@@ -396,14 +396,14 @@
                                 android:textStyle="normal"
                                 android:visibility="gone" />
 
-                        </android.support.design.widget.TextInputLayout>
+                        </com.google.android.material.textfield.TextInputLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
-                            <android.support.design.widget.TextInputLayout
+                            <com.google.android.material.textfield.TextInputLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="0.5"
@@ -425,7 +425,7 @@
                                     android:textSize="@dimen/textSize"
                                     android:textStyle="normal" />
 
-                            </android.support.design.widget.TextInputLayout>
+                            </com.google.android.material.textfield.TextInputLayout>
 
                             <ImageButton
                                 android:id="@+id/IdVehicleTypeImg"
@@ -455,7 +455,7 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/textSize" />
 
-                    <android.support.v7.widget.RecyclerView
+                    <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/mWheelServiceRecyclerviewid"
                         android:layout_width="match_parent"
                         android:layout_height="300dp"
@@ -463,7 +463,7 @@
                         android:divider="@android:color/transparent"
                         android:listSelector="@color/black"
                         android:scrollbars="vertical"
-                        android:visibility="gone"></android.support.v7.widget.RecyclerView>
+                        android:visibility="gone"></androidx.recyclerview.widget.RecyclerView>
                 </LinearLayout>
 
                 <LinearLayout
@@ -516,7 +516,7 @@
 
                     </LinearLayout>
 
-                    <android.support.v7.widget.RecyclerView
+                    <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/SelectedServiceRecyclerviewid"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
@@ -525,9 +525,9 @@
                         android:divider="@android:color/transparent"
                         android:listSelector="@color/black"
                         android:scrollbars="vertical"
-                        android:visibility="gone"></android.support.v7.widget.RecyclerView>
+                        android:visibility="gone"></androidx.recyclerview.widget.RecyclerView>
 
-                    <android.support.v7.widget.RecyclerView
+                    <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/SelectedServiceRecyclerviewid1"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
@@ -535,10 +535,10 @@
                         android:background="@android:color/transparent"
                         android:divider="@android:color/transparent"
                         android:listSelector="@color/black"
-                        android:scrollbars="vertical"></android.support.v7.widget.RecyclerView>
+                        android:scrollbars="vertical"></androidx.recyclerview.widget.RecyclerView>
                 </LinearLayout>
 
-                <android.support.v4.widget.NestedScrollView
+                <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fillViewport="true"
@@ -577,14 +577,14 @@
                                 android:orientation="vertical"
                                 android:visibility="gone">
 
-                                <android.support.v7.widget.RecyclerView
+                                <androidx.recyclerview.widget.RecyclerView
                                     android:id="@+id/SubServiceRecyclerviewid"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_gravity="left"
                                     android:divider="@android:color/transparent"
                                     android:orientation="horizontal"
-                                    android:scrollbars="vertical"></android.support.v7.widget.RecyclerView>
+                                    android:scrollbars="vertical"></androidx.recyclerview.widget.RecyclerView>
                             </LinearLayout>
                         </HorizontalScrollView>
 
@@ -614,14 +614,14 @@
                                 android:orientation="vertical"
                                 android:visibility="gone">
 
-                                <android.support.v7.widget.RecyclerView
+                                <androidx.recyclerview.widget.RecyclerView
                                     android:id="@+id/SubServiceRecyclerview1"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_gravity="center"
                                     android:divider="@android:color/transparent"
                                     android:orientation="horizontal"
-                                    android:scrollbars="vertical"></android.support.v7.widget.RecyclerView>
+                                    android:scrollbars="vertical"></androidx.recyclerview.widget.RecyclerView>
                             </LinearLayout>
                         </HorizontalScrollView>
 
@@ -651,14 +651,14 @@
                                 android:orientation="vertical"
                                 android:visibility="gone">
 
-                                <android.support.v7.widget.RecyclerView
+                                <androidx.recyclerview.widget.RecyclerView
                                     android:id="@+id/SubServiceRecyclerview2"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_gravity="center"
                                     android:divider="@android:color/transparent"
                                     android:orientation="horizontal"
-                                    android:scrollbars="vertical"></android.support.v7.widget.RecyclerView>
+                                    android:scrollbars="vertical"></androidx.recyclerview.widget.RecyclerView>
                             </LinearLayout>
                         </HorizontalScrollView>
 
@@ -688,14 +688,14 @@
                                 android:orientation="vertical"
                                 android:visibility="gone">
 
-                                <android.support.v7.widget.RecyclerView
+                                <androidx.recyclerview.widget.RecyclerView
                                     android:id="@+id/SubServiceRecyclerview3"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_gravity="center"
                                     android:divider="@android:color/transparent"
                                     android:orientation="horizontal"
-                                    android:scrollbars="vertical"></android.support.v7.widget.RecyclerView>
+                                    android:scrollbars="vertical"></androidx.recyclerview.widget.RecyclerView>
                             </LinearLayout>
                         </HorizontalScrollView>
 
@@ -725,14 +725,14 @@
                                 android:orientation="vertical"
                                 android:visibility="gone">
 
-                                <android.support.v7.widget.RecyclerView
+                                <androidx.recyclerview.widget.RecyclerView
                                     android:id="@+id/SubServiceRecyclerview4"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_gravity="center"
                                     android:divider="@android:color/transparent"
                                     android:orientation="horizontal"
-                                    android:scrollbars="horizontal"></android.support.v7.widget.RecyclerView>
+                                    android:scrollbars="horizontal"></androidx.recyclerview.widget.RecyclerView>
                             </LinearLayout>
                         </HorizontalScrollView>
 
@@ -762,14 +762,14 @@
                                 android:orientation="vertical"
                                 android:visibility="gone">
 
-                                <android.support.v7.widget.RecyclerView
+                                <androidx.recyclerview.widget.RecyclerView
                                     android:id="@+id/SubServiceRecyclerview5"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_gravity="center"
                                     android:divider="@android:color/transparent"
                                     android:orientation="horizontal"
-                                    android:scrollbars="horizontal"></android.support.v7.widget.RecyclerView>
+                                    android:scrollbars="horizontal"></androidx.recyclerview.widget.RecyclerView>
                             </LinearLayout>
                         </HorizontalScrollView>
 
@@ -799,14 +799,14 @@
                                 android:orientation="vertical"
                                 android:visibility="gone">
 
-                                <android.support.v7.widget.RecyclerView
+                                <androidx.recyclerview.widget.RecyclerView
                                     android:id="@+id/SubServiceRecyclerview6"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_gravity="center"
                                     android:divider="@android:color/transparent"
                                     android:orientation="horizontal"
-                                    android:scrollbars="horizontal"></android.support.v7.widget.RecyclerView>
+                                    android:scrollbars="horizontal"></androidx.recyclerview.widget.RecyclerView>
                             </LinearLayout>
                         </HorizontalScrollView>
 
@@ -836,14 +836,14 @@
                                 android:orientation="vertical"
                                 android:visibility="gone">
 
-                                <android.support.v7.widget.RecyclerView
+                                <androidx.recyclerview.widget.RecyclerView
                                     android:id="@+id/SubServiceRecyclerview7"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_gravity="center"
                                     android:divider="@android:color/transparent"
                                     android:orientation="horizontal"
-                                    android:scrollbars="horizontal"></android.support.v7.widget.RecyclerView>
+                                    android:scrollbars="horizontal"></androidx.recyclerview.widget.RecyclerView>
                             </LinearLayout>
                         </HorizontalScrollView>
 
@@ -873,14 +873,14 @@
                                 android:orientation="vertical"
                                 android:visibility="gone">
 
-                                <android.support.v7.widget.RecyclerView
+                                <androidx.recyclerview.widget.RecyclerView
                                     android:id="@+id/SubServiceRecyclerview8"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_gravity="center"
                                     android:divider="@android:color/transparent"
                                     android:orientation="horizontal"
-                                    android:scrollbars="horizontal"></android.support.v7.widget.RecyclerView>
+                                    android:scrollbars="horizontal"></androidx.recyclerview.widget.RecyclerView>
                             </LinearLayout>
                         </HorizontalScrollView>
 
@@ -910,25 +910,25 @@
                                 android:orientation="vertical"
                                 android:visibility="gone">
 
-                                <android.support.v7.widget.RecyclerView
+                                <androidx.recyclerview.widget.RecyclerView
                                     android:id="@+id/SubServiceRecyclerview9"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_gravity="left"
                                     android:divider="@android:color/transparent"
                                     android:orientation="horizontal"
-                                    android:scrollbars="horizontal"></android.support.v7.widget.RecyclerView>
+                                    android:scrollbars="horizontal"></androidx.recyclerview.widget.RecyclerView>
                             </LinearLayout>
                         </HorizontalScrollView>
                     </LinearLayout>
-                </android.support.v4.widget.NestedScrollView>
+                </androidx.core.widget.NestedScrollView>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
 
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -953,9 +953,9 @@
                             android:textSize="@dimen/textSize"
                             android:textStyle="normal" />
 
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="top"
@@ -977,7 +977,7 @@
                             android:textSize="@dimen/textSize"
                             android:textStyle="normal" />
 
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <TextView
                         android:id="@+id/AvlQtyTv"
@@ -1191,7 +1191,7 @@
                         android:layout_height="0.2dp"
                         android:background="@color/viewcolour" />
 
-                    <android.support.v7.widget.RecyclerView
+                    <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/SparePartrecyclerview"
                         android:layout_width="match_parent"
                         android:layout_height="200sp"
@@ -1200,7 +1200,7 @@
                         android:listSelector="@color/black"
                         android:scrollbars="vertical">
 
-                    </android.support.v7.widget.RecyclerView>
+                    </androidx.recyclerview.widget.RecyclerView>
 
                     <LinearLayout
                         android:id="@+id/TotalLayout"
@@ -1376,7 +1376,7 @@
                     android:layout_marginBottom="5sp"
                     android:orientation="vertical">
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -1398,7 +1398,7 @@
                             android:textSize="@dimen/textSize"
                             android:textStyle="normal" />
 
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- <EditText
                          android:layout_width="match_parent"
@@ -1460,7 +1460,7 @@
         </ScrollView>
 
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -22,9 +22,9 @@ public class UploadimageServer extends AsyncTask<Void, Void, String> {
     private Context context;
     private ProgressDialog pdDialog;
 
-    public UploadimageServer(File f, String image, Uri fileUri, Context context) {
+    public UploadimageServer(File f, String Image, Uri fileUri, Context context) {
         this.f = f;
-        Image = image;
+        this.Image = Image;
         this.fileUri = fileUri;
         this.context = context;
 

@@ -41,9 +41,19 @@
         android:title="@string/printer"
         app:showAsAction="never" />
     <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_logout"
         android:orderInCategory="100"
         android:title="@string/logout"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_db"
+        android:orderInCategory="100"
+        android:title="show spares"
         app:showAsAction="never" />
 
 

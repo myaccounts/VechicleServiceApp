@@ -56,12 +56,10 @@ public class PayNowActivity2016 extends Activity {
             totalTv=(TextView)findViewById(R.id.totalTv);
             balanceTv=(TextView)findViewById(R.id.balTv);
 //            totalTv.setText(netAmount);
-            Log.d("ANUSHA ","netamount "+netAmount);
             balanceTv.setText("");
             balanceTv.setText("Balance : "+netAmount);
-            Log.d("ANUSHA ","netamount "+status);
             if(status.equalsIgnoreCase("TRUE"))
-            setTextSharedPreferencesValue();
+                setTextSharedPreferencesValue();
             cardEdt.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -153,7 +151,6 @@ public class PayNowActivity2016 extends Activity {
             });
 
         } catch (Exception e) {
-            Log.d("ANUSHA ","EXCEPTION "+e.toString());
         }
 
     }
@@ -309,7 +306,7 @@ public class PayNowActivity2016 extends Activity {
                 Toast.makeText(context,"Total Amount shoudn't be lesser than Pay Amount !",Toast.LENGTH_LONG).show();
 
             }if((CardAmt + CashAmt + UpiAmt +InvoiceAmt) == subtotal) {
-              //  upiEdt.setError("Cash amount shoudn't be greater than Pay Amount !");
+                //  upiEdt.setError("Cash amount shoudn't be greater than Pay Amount !");
 //                finish();
                 shredPrefencesSaving("cardEdt",cardEdt.getText().toString());
                 shredPrefencesSaving("cashEdt",cashEdt.getText().toString());
@@ -323,10 +320,6 @@ public class PayNowActivity2016 extends Activity {
                 itemIntent.putExtra("cashEdt", cashEdt.getText().toString());
                 itemIntent.putExtra("upiEdt", upiEdt.getText().toString());
                 itemIntent.putExtra("invEdt", invEdt.getText().toString());
-                Log.d("ANUSHA "," cardedt "+cardEdt.getText().toString());
-                Log.d("ANUSHA "," cashEdt "+cashEdt.getText().toString());
-                Log.d("ANUSHA "," upiEdt "+upiEdt.getText().toString());
-                Log.d("ANUSHA "," invEdt "+invEdt.getText().toString());
                 setResult(RESULT_OK, itemIntent);
                 finish();
 
@@ -439,7 +432,7 @@ public class PayNowActivity2016 extends Activity {
                 cashEdt.setError("Cash amount shoudn't be greater than Pay Amount !");
                 cashEdt.setText("");
                 cashEdt.requestFocus();
-             //   txtViwRCAmt.setText(strRCAmt);
+                //   txtViwRCAmt.setText(strRCAmt);
             }
             totalTv.setText("");
             balanceTv.setText("");
@@ -530,7 +523,6 @@ public class PayNowActivity2016 extends Activity {
             String balance=String.valueOf(balAmt);
             totalTv.setText("Total : "+total);
             balanceTv.setText("Balance : "+balance);
-            Log.d("ANUSHA ","total "+total);
             shredPrefencesSaving("cardEdt",cardEdt.getText().toString());
             shredPrefencesSaving("cashEdt",cashEdt.getText().toString());
             shredPrefencesSaving("upiEdt",upiEdt.getText().toString());
@@ -544,13 +536,9 @@ public class PayNowActivity2016 extends Activity {
     public void shredPrefencesSaving(String keyvalue,String value){
         editor.putString(keyvalue, value);
         editor.commit();
-        Log.d("ANUSHA ","___key"+keyvalue);
-        Log.d("ANUSHA ","___value"+value);
-        Log.d("ANUSHA ","___shared preferences value"+sharedpreferences.getString(keyvalue,null));
     }
     public String getshredPrefences(String keyvalue){
         String getSharedPreferencesValue=sharedpreferences.getString(keyvalue,null);
-        Log.d("ANUSHA ","___shared preferences value"+sharedpreferences.getString(keyvalue,null));
         return getSharedPreferencesValue;
     }
 }

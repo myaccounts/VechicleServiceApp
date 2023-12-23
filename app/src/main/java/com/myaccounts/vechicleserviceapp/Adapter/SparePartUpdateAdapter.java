@@ -1,19 +1,15 @@
 package com.myaccounts.vechicleserviceapp.Adapter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.myaccounts.vechicleserviceapp.Activity.SpareStatusUpdateActivity;
 import com.myaccounts.vechicleserviceapp.Pojo.SparePartDetails;
@@ -103,19 +99,16 @@ public class SparePartUpdateAdapter extends RecyclerView.Adapter<SparePartUpdate
                 public void onClick(View v) {
 
                     if(holder.chk_status.isChecked()){
-                        sparePartDetails.setSelected(true);
-//                        Log.d("ANUSHA "," Adapter "+holder.chk_status.isChecked());
+                        sparePartDetailsArrayList.get(position).setSelected(true);
                         Log.e("checked ",sparePartDetailsArrayList.get(position).getmSparePartID()+", "+sparePartDetailsArrayList.get(position).getSelected());
                         SpareStatusUpdateActivity.checkBoxStatus=true;
-                        Log.d("ANUSHA "," Adapter "+SpareStatusUpdateActivity.checkBoxStatus);
 
                     }
                     else
                     {
 
-                        sparePartDetails.setSelected(false);
+                        sparePartDetailsArrayList.get(position).setSelected(false);
                         SpareStatusUpdateActivity.checkBoxStatus=false;
-                        Log.d("ANUSHA "," Adapter "+SpareStatusUpdateActivity.checkBoxStatus);
                         Log.e("not checked ",sparePartDetailsArrayList.get(position).getmSparePartID());
                     }
 

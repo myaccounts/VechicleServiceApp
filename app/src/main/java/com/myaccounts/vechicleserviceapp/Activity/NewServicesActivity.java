@@ -115,8 +115,6 @@ public class NewServicesActivity extends Activity {
                     jsonObject.accumulate("VehicleId", newVehicleId);
                     BackendServiceCall serviceCall = new BackendServiceCall(NewServicesActivity.this, false);
                     requestName = "JCServices";
-                    Log.d("ANUSHA "," "+jsonObject.toString());
-                    Log.d("ANUSHA "," "+ProjectVariables.BASE_URL + ProjectVariables.NEW_GET_SERVICE_MASTER);
                     serviceCall.setOnServiceCallCompleteListener(new OnServiceCallCompleteListenerSpareImp());
                     serviceCall.makeJSONOArryPostRequest(ProjectVariables.BASE_URL + ProjectVariables.NEW_GET_SERVICE_MASTER, jsonObject, Request.Priority.HIGH);
                 } catch (Exception e) {

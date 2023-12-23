@@ -7,13 +7,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import com.google.android.material.textfield.TextInputLayout;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -22,15 +21,11 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -71,9 +66,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
@@ -140,8 +133,6 @@ public class CancelFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 //        Log.d(TAG, "onCreateView: called");
-        Log.d("ANUSHA ","___3"+"Oncreateview NewMainVehicleDetailFragment");
-        Log.d("ANUSHA ", "onCreateView: called"+"NewMainVehicleDetailsFragment");
         view = inflater.inflate(R.layout.fragment_cancel, container, false);
         context = getActivity();
         InitializeVariables();
@@ -170,7 +161,6 @@ public class CancelFragment extends Fragment implements View.OnClickListener {
             }
             Log.d("modeiddd", jobCardId);
             Log.d("modeiddd", ""+ModelId + "," + jobCardId + "," + vehicleNo +","+CustMobileNo+","+CustName+","+Place+","+user.get(SessionManager.KEY_BLOCK)+","+CustTimeIn);
-            Log.d("ANUSHA ", ""+ModelId + "," + jobCardId + "," + vehicleNo +","+CustMobileNo+","+CustName+","+Place+","+user.get(SessionManager.KEY_BLOCK)+","+CustTimeIn);
 
         } catch (NullPointerException e) {
         }
@@ -197,7 +187,6 @@ public class CancelFragment extends Fragment implements View.OnClickListener {
             } else {
                 if(userDeailsServiceCallCheck)
                     GetUserDetails();
-//                Toast.makeText(getActivity(),"ANUSHA",Toast.LENGTH_LONG).show();
                 //GetDetailsBasedOnVehicleNo();
             }
         } catch (NullPointerException e) {
@@ -543,17 +532,13 @@ public class CancelFragment extends Fragment implements View.OnClickListener {
         }
     }
     private void handleGetDetailsByVehicleNo(JSONArray jsonArray) {
-        Log.d("ANUSHA ", "jsonlength" + jsonArray.length());
         try {
             if (jsonArray.length() > 0) {
                 for (int i = 0; i < jsonArray.length(); i++) {
                     try {
                         JSONObject object = jsonArray.getJSONObject(i);
-                        Log.d("ANUSHA ", "jsonlength" + object.toString());
                     } catch (Exception e) {
-                        Log.d("ANUSHA ", "jsonlength" + e.toString());
                     }
-                    Log.d("ANUSHA ", "jsonlength" + jsonArray.toString());
                 }
 //            GetBlockDetailsFromgeneralMaster();
             }
@@ -573,7 +558,6 @@ public class CancelFragment extends Fragment implements View.OnClickListener {
                     serviceCall.makeJSONOArryPostRequest(ProjectVariables.BASE_URL + ProjectVariables.GetDetailsByVehicleNo, jsonObject, Request.Priority.HIGH);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Log.d("ANUSHA ","Exception "+e.toString());
                 }
             } else {
                 Toast.makeText(getActivity(), Constants.PLEASE_CHECK_YOUR_NETWORK_CONNECTION, Toast.LENGTH_SHORT).show();
@@ -623,7 +607,6 @@ public class CancelFragment extends Fragment implements View.OnClickListener {
                 } else {
                     Log.e("Executing block","I am here");
                     //   mCustomerId = jsonArray.getJSONObject(0).getString("CustomerId");
-                    Log.e("ANUSHA ",jsonObject.toString());
                     CustName = jsonArray.getJSONObject(0).getString("CustomerName");
                     Log.e("CustName",CustName);
                     CustVehiclemake = jsonArray.getJSONObject(0).getString("Make");
@@ -1042,7 +1025,6 @@ public class CancelFragment extends Fragment implements View.OnClickListener {
 
     private void handeCancelJobCard(JSONArray jsonArray) {
         try {
-            Log.d("ANUSHA "," "+jsonArray.getJSONObject(0).getString("Result"));
             if (jsonArray.length() > 0) {
                 String result = jsonArray.getJSONObject(0).getString("Result");
 //                    String JobCardNumber = jsonArray.getJSONObject(0).getString("JobCardNumber");
@@ -1064,7 +1046,6 @@ public class CancelFragment extends Fragment implements View.OnClickListener {
             }
         } catch (JSONException e) {
             e.printStackTrace();
-            Log.d("ANUSHA ","Exception "+e.toString());
         }
     }
 
@@ -1082,7 +1063,7 @@ public class CancelFragment extends Fragment implements View.OnClickListener {
                     toast.setGravity(Gravity.CENTER, 0, 0);
                     //toast.show();
                 } else {
-                    //[{"CustomerId":"CUS10208","CustomerName":"ANUSHA","Make":"HYUNDAI","MobileNo":"909090909090","Model":"I 20","ModelId":"VH10379","Result":"","VehicleNo":"AP179090909090","vehicletype":"Car"}]
+                    //[{"CustomerId":"CUS10208","CustomerName":"ahjah","Make":"HYUNDAI","MobileNo":"909090909090","Model":"I 20","ModelId":"VH10379","Result":"","VehicleNo":"AP179090909090","vehicletype":"Car"}]
 //                    mCustomerId = jsonArray.getJSONObject(0).getString("CustomerId");
                     String CustomerName = jsonArray.getJSONObject(0).getString("CustomerName");
                     String MobileNo = jsonArray.getJSONObject(0).getString("MobileNo");
@@ -1099,7 +1080,6 @@ public class CancelFragment extends Fragment implements View.OnClickListener {
             vehicleDetailsArrayList.add(vehicleDetails);
         } catch (Exception e) {
             e.printStackTrace();
-            Log.d("ANUSHA ","Exception @ "+e.toString());
         }
     }
 
@@ -1242,10 +1222,7 @@ public class CancelFragment extends Fragment implements View.OnClickListener {
     public void shredPrefencesSaving(String keyvalue,String value){
         editor.putString(keyvalue, value);
         editor.commit();
-        Log.d("ANUSHA ","___key"+keyvalue);
-        Log.d("ANUSHA ","___value"+value);
-        Log.d("ANUSHA ","___shared preferences value"+sharedpreferences.getString(keyvalue,null));
-    /*sessionManager.clearSession();
+     /*sessionManager.clearSession();
     sessionManager.storefirsFragmentDetails(VehicleNoEdt.getText().toString(),CustMobileNoEdt.getText().toString(),CustNameEdt.getText().toString(),PlaceEdt.getText().toString(),
             SpnBlockSelection.getSelectedItem().toString(),CustOdometerReadingEdt.getText().toString(),MileageEdt.getText().toString().trim(),
             AvgkmsperdayEdt.getText().toString().trim(),ModelId,CustVehiclemakemodelEdt.getText().toString().trim(),"",CustVehicleTypeEdt.getText().toString().trim());*/

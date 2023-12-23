@@ -3,8 +3,8 @@ package com.myaccounts.vechicleserviceapp.Utils;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
-import android.support.annotation.NonNull;
-import android.support.multidex.MultiDexApplication;
+import androidx.annotation.NonNull;
+import androidx.multidex.MultiDexApplication;
 import android.text.TextUtils;
 import android.util.Base64;
 

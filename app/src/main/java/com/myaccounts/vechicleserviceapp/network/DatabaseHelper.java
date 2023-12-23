@@ -6,16 +6,25 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.myaccounts.vechicleserviceapp.Utils.ProjectMethods;
+
 import java.sql.SQLException;
+
+import static com.myaccounts.vechicleserviceapp.network.InfDbSpecs.TABLE_EMAILID_DATA;
+import static com.myaccounts.vechicleserviceapp.network.InfDbSpecs.TABLE_PAYMENT_DETAILS;
+import static com.myaccounts.vechicleserviceapp.network.InfDbSpecs.TABLE_PRINTER_DATA;
 import static com.myaccounts.vechicleserviceapp.network.InfDbSpecs.TABLE_SERVICES_DATA;
+import static com.myaccounts.vechicleserviceapp.network.InfDbSpecs.TABLE_SPARES_DATA;
 //import static com.myaccounts.vechicleserviceapp.network.InfDbSpecs.TABLE_TECHNICIAN_DATA;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
+
     private final Context myContext;
-    public static final int DATABASE_VERSION = 43;
+    public static final int DATABASE_VERSION = 45;
     public static SQLiteDatabase db;
     private static DatabaseHelper mInstance;
-    public static final String DATABASE_NAME = "JTechnicianDB11";
+    public static final String DATABASE_NAME = "JSparesDB116";
     static String Lock = "dblock";
 
 
@@ -67,7 +76,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         try {
             db.execSQL(InfDbSpecs.STR_CREATE_TABLE_SERVICES_DATA);
-//            db.execSQL(InfDbSpecs.STR_CREATE_TABLE_TECHNICIAN_DATA);
+            db.execSQL(InfDbSpecs.STR_CREATE_TABLE_PRINTER_IP);
+            db.execSQL(InfDbSpecs.STR_CREATE_TABLE_PAYMENT_DETAILS);
+            db.execSQL(InfDbSpecs.STR_CREATE_TABLE_EMAIL_ID);
+            db.execSQL(InfDbSpecs.STR_CREATE_TABLE_SPARES_DATA);
 
         } catch (SQLiteException e) {
             e.printStackTrace();
@@ -111,7 +123,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private void CreateAllTables(SQLiteDatabase db) {
         try {
             db.execSQL(InfDbSpecs.STR_CREATE_TABLE_SERVICES_DATA);
-//            db.execSQL(InfDbSpecs.STR_CREATE_TABLE_TECHNICIAN_DATA);
+            db.execSQL(InfDbSpecs.STR_CREATE_TABLE_PRINTER_IP);
+            db.execSQL(InfDbSpecs.STR_CREATE_TABLE_PAYMENT_DETAILS);
+            db.execSQL(InfDbSpecs.STR_CREATE_TABLE_EMAIL_ID);
+            db.execSQL(InfDbSpecs.STR_CREATE_TABLE_SPARES_DATA);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -122,6 +137,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
 
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_SERVICES_DATA);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_PRINTER_DATA);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_PAYMENT_DETAILS);
 //            db.execSQL("DROP TABLE IF EXISTS " + TABLE_TECHNICIAN_DATA);
 
         } catch (Exception e) {
@@ -185,6 +202,153 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return mCursor;
         }
     }
+    public boolean insert_PrinterDetails(String printerIp, String printerName) {
+        synchronized (Lock) {
+            boolean Result = false;
+            try {
+                Delete_AllPrinterDetails(db);
+//                db.execSQL(InfDbSpecs.STR_CREATE_TABLE_PRINTER_IP);
+                ContentValues initialValues = new ContentValues();
+                initialValues.put(InfDbSpecs.PRINTER_NAME, printerName);
+                initialValues.put(InfDbSpecs.PRINTERIP, printerIp);
+
+                int update = 0;
+                try {
+//                    update = db.update(TABLE_SERVICES_DATA, initialValues, InfDbSpecs.BillPrintBodyRno + " = ? AND " + InfDbSpecs.BillPrintBodyPrinterName + " = ?", new String[]{String.valueOf(body.getBodyRno()), String.valueOf(body.getBodyPrinterName())});
+                    Result = true;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                if (update == 0) {
+                    db.insert(TABLE_PRINTER_DATA, null, initialValues);
+                    Result = true;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return Result;
+        }
+    }
+    public boolean insert_EmailidDetails(String vehicleNo, String filePath) {
+        synchronized (Lock) {
+            boolean Result = false;
+            try {
+                Delete_AllEmailidDetails(db);
+//                db.execSQL(InfDbSpecs.STR_CREATE_TABLE_PRINTER_IP);
+                ContentValues initialValues = new ContentValues();
+                initialValues.put(InfDbSpecs.VehicleNo, vehicleNo);
+                initialValues.put(InfDbSpecs.Filepath, filePath);
+
+                int update = 0;
+                try {
+//                    update = db.update(TABLE_SERVICES_DATA, initialValues, InfDbSpecs.BillPrintBodyRno + " = ? AND " + InfDbSpecs.BillPrintBodyPrinterName + " = ?", new String[]{String.valueOf(body.getBodyRno()), String.valueOf(body.getBodyPrinterName())});
+                    Result = true;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                if (update == 0) {
+                    db.insert(TABLE_EMAILID_DATA, null, initialValues);
+                    Result = true;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return Result;
+        }
+    }
+    public boolean insert_SpareDetails(String jobcardId, String sparesList) {
+        synchronized (Lock) {
+            boolean Result = false;
+            try {
+//                Delete_AllSparesDetails(db);
+//                db.execSQL(InfDbSpecs.STR_CREATE_TABLE_PRINTER_IP);
+                ContentValues initialValues = new ContentValues();
+                initialValues.put(InfDbSpecs.JobcardNo, jobcardId);
+                initialValues.put(InfDbSpecs.SpareList, sparesList);
+
+                int update = 0;
+                try {
+//                    update = db.update(TABLE_SERVICES_DATA, initialValues, InfDbSpecs.BillPrintBodyRno + " = ? AND " + InfDbSpecs.BillPrintBodyPrinterName + " = ?", new String[]{String.valueOf(body.getBodyRno()), String.valueOf(body.getBodyPrinterName())});
+                    Result = true;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                if (update == 0) {
+                    db.insert(TABLE_SPARES_DATA, null, initialValues);
+                    Result = true;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return Result;
+        }
+    }
+
+    private void Delete_AllSparesDetails(SQLiteDatabase db) {
+        try {
+            db.execSQL("DELETE FROM " + TABLE_SPARES_DATA + "");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void Delete_AllEmailidDetails(SQLiteDatabase db) {
+        try {
+            db.execSQL("DELETE FROM " + TABLE_EMAILID_DATA + "");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public Cursor getEmailidDetails() {
+        synchronized (Lock) {
+            String Qry = "SELECT * from " + TABLE_EMAILID_DATA ;//+ " where " + InfDbSpecs.SERVICEID + " = \"" + serviceId + "\"  COLLATE NOCASE ";
+            Cursor mCursor = getReadableDatabase().rawQuery(Qry, null);
+            return mCursor;
+        }
+    }
+
+    public Cursor getPrinterDetails() {
+        synchronized (Lock) {
+            String Qry = "SELECT * from " + TABLE_PRINTER_DATA ;//+ " where " + InfDbSpecs.SERVICEID + " = \"" + serviceId + "\"  COLLATE NOCASE ";
+            Cursor mCursor = getReadableDatabase().rawQuery(Qry, null);
+            return mCursor;
+        }
+    }
+    public boolean insert_PaymentDetails(String paymentId, String customerMobileNo,String customerEmailId) {
+        synchronized (Lock) {
+            boolean Result = false;
+            try {
+//                Delete_AllPaymentDetails(db);
+//                db.execSQL(InfDbSpecs.STR_CREATE_TABLE_PRINTER_IP);
+                ContentValues initialValues = new ContentValues();
+                initialValues.put(InfDbSpecs.PAYMENTID, paymentId);
+                initialValues.put(InfDbSpecs.CUSTOMER_NAME, customerEmailId);
+                initialValues.put(InfDbSpecs.CUSTOMER_MOBILENUMBER, customerMobileNo);
+
+                int update = 0;
+                try {
+//                    update = db.update(TABLE_PAYMENT_DETAILS, initialValues, InfDbSpecs.BillPrintBodyRno + " = ? AND " + InfDbSpecs.BillPrintBodyPrinterName + " = ?", new String[]{String.valueOf(body.getBodyRno()), String.valueOf(body.getBodyPrinterName())});
+                    Result = true;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                if (update == 0) {
+                    db.insert(TABLE_PAYMENT_DETAILS, null, initialValues);
+                    Result = true;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return Result;
+        }
+    }
+    public Cursor getPaymentDetails() {
+        synchronized (Lock) {
+            String Qry = "SELECT * from " + TABLE_PAYMENT_DETAILS ;//+ " where " + InfDbSpecs.SERVICEID + " = \"" + serviceId + "\"  COLLATE NOCASE ";
+            Cursor mCursor = getReadableDatabase().rawQuery(Qry, null);
+            return mCursor;
+        }
+    }
     /*public Cursor getTechnicianDetails(String technicianId) {
         synchronized (Lock) {
 //            String Qry = "SELECT * FROM " + TABLE_TECHNICIAN_DATA + " Order By " + InfDbSpecs.TECHNICIANID + "," + InfDbSpecs.KEY_ROWID;
@@ -204,5 +368,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             e.printStackTrace();
         }
     }*/
+    public void Delete_AllPrinterDetails(SQLiteDatabase db) {
+        try {
+            db.execSQL("DELETE FROM " + TABLE_PRINTER_DATA + "");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
+    public Cursor getSparesDetails() {
+        synchronized (Lock) {
+            String Qry = "SELECT * from " + TABLE_SPARES_DATA ;//+ " where " + InfDbSpecs.SERVICEID + " = \"" + serviceId + "\"  COLLATE NOCASE ";
+            Cursor mCursor = getReadableDatabase().rawQuery(Qry, null);
+            return mCursor;
+        }
+    }
 }

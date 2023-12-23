@@ -1,35 +1,24 @@
 package com.myaccounts.vechicleserviceapp.Activity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.icu.util.EthiopicCalendar;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.AppCompatImageView;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -37,21 +26,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
-import com.myaccounts.vechicleserviceapp.Activity.NewJobCardDetailsMain;
-import com.myaccounts.vechicleserviceapp.Activity.NewServicesActivity;
-import com.myaccounts.vechicleserviceapp.Adapter.JobCardReportsAdapter;
-import com.myaccounts.vechicleserviceapp.Adapter.NewServiceMasterIssueAdapter;
-import com.myaccounts.vechicleserviceapp.Adapter.NewServiceUpdateAdapter;
-import com.myaccounts.vechicleserviceapp.Adapter.SparePartIssueAdapter;
 import com.myaccounts.vechicleserviceapp.Adapter.SparePartUpdateAdapter;
-import com.myaccounts.vechicleserviceapp.Fragments.JobCardReportsFragment;
-import com.myaccounts.vechicleserviceapp.Fragments.NewSparePartsFragment;
-import com.myaccounts.vechicleserviceapp.Pojo.EditServiceDetails;
-import com.myaccounts.vechicleserviceapp.Pojo.JobCardDetails;
-import com.myaccounts.vechicleserviceapp.Pojo.NewServiceMasterDetails;
 import com.myaccounts.vechicleserviceapp.Pojo.SparePartDetails;
 import com.myaccounts.vechicleserviceapp.R;
 import com.myaccounts.vechicleserviceapp.Utils.AlertDialogManager;
@@ -63,18 +41,14 @@ import com.myaccounts.vechicleserviceapp.Utils.Enums;
 import com.myaccounts.vechicleserviceapp.Utils.JSONVariables;
 import com.myaccounts.vechicleserviceapp.Utils.MyMessageObject;
 import com.myaccounts.vechicleserviceapp.Utils.OnServiceCallCompleteListener;
-import com.myaccounts.vechicleserviceapp.Utils.ProjectMethods;
 import com.myaccounts.vechicleserviceapp.Utils.ProjectVariables;
 import com.myaccounts.vechicleserviceapp.Utils.SessionManager;
-import com.theartofdev.edmodo.cropper.CropImage;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import butterknife.BindView;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -125,7 +99,6 @@ public class SpareStatusUpdateActivity extends AppCompatActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.e(TAG, "onCreate: called");
-        Log.e("ANUSHA ", "Service onCreate: called");
         setContentView(R.layout.activity_spare_status_update);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -152,9 +125,7 @@ public class SpareStatusUpdateActivity extends AppCompatActivity {
                         selectStatus = true;
                     }
                 }
-                Log.d("ANUSHA "," if condition outside selectStatus "+selectStatus);
                 if(selectStatus) {
-                        Log.e("ANUSHA ", " if condition inside status true" + checkBoxStatus + "size" + sparePartDetailsArrayList.size());
                         AlertDialog.Builder builder = new AlertDialog.Builder(SpareStatusUpdateActivity.this);
                         builder.setCancelable(false);
                         builder.setTitle("Updated");
@@ -188,7 +159,6 @@ public class SpareStatusUpdateActivity extends AppCompatActivity {
                         AlertDialog alert = builder.create();
                         alert.show();
                     } else {
-                        Log.e("ANUSHA ", " else condition" + checkBoxStatus);
                         Toast.makeText(SpareStatusUpdateActivity.this, "Please Select At least One Spare", Toast.LENGTH_SHORT).show();
                     }
 
@@ -264,13 +234,14 @@ public class SpareStatusUpdateActivity extends AppCompatActivity {
                             Log.e("sending",jobcardId);
                             Log.e("sending",sparePartDetailsArrayList.get(i).getmSparePartID());
                             Log.e("sending", status);
-                            Log.d("ANUSHA "," "+jsonObject.toString());
                             BackendServiceCall serviceCall = new BackendServiceCall(this, false);
                             requestName = "UpdateSpareStatus";
                             serviceCall.setOnServiceCallCompleteListener(new OnServiceCallCompleteListenerImpl());
                             serviceCall.makeJSONOArryPostRequest(ProjectVariables.BASE_URL + ProjectVariables.UpdateSpareStatus, jsonObject, Request.Priority.HIGH);
                             Log.e("UpdateSpareStatusdetail", "" + jsonObject);
-                            Log.d("ANUSHA "," "+ProjectVariables.BASE_URL + ProjectVariables.UpdateSpareStatus);
+
+
+
                         }
                     } else {
                         Log.e("updtSpareDetsArrList", "" + sparePartDetailsArrayList.size());
@@ -595,7 +566,6 @@ public class SpareStatusUpdateActivity extends AppCompatActivity {
                         Log.e("UOMName",object.getString("UOMName"));
 
                         documentTypes.setmAVLQTY(object.getString("AvailQty"));
-                        Log.e("ANUSHA",object.getString("AvailQty"));
                         String status = (object.getString("Status"));
                         if (status.equals("true"))
                         {
@@ -630,11 +600,9 @@ public class SpareStatusUpdateActivity extends AppCompatActivity {
                 jsonObject = new JSONObject();
                 jsonObject.accumulate("JobCardId", jobcardId);
                 Log.e("Jobcardid ",jobcardId);
-                Log.d("ANUSHA ",jsonObject.toString());
                 BackendServiceCall serviceCall = new BackendServiceCall(this, false);
                 Log.d("servicecall", "" + serviceCall);
                 requestName = "GetSparesAgstJobCard";
-                Log.d("ANUSHA ",ProjectVariables.BASE_URL + ProjectVariables.GetEditSparesDetails);
                 serviceCall.setOnServiceCallCompleteListener(new OnServiceCallCompleteListenerReportsImpl());
                 serviceCall.makeJSONOArryPostRequest(ProjectVariables.BASE_URL + ProjectVariables.GetEditSparesDetails, jsonObject, Request.Priority.HIGH);
             } catch (Exception e) {

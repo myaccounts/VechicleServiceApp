@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -103,10 +104,8 @@ public class DiscoveryActivity extends Activity implements View.OnClickListener,
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent();
-
         HashMap<String, String> item = mPrinterList.get(position);
         intent.putExtra(getString(R.string.title_target), item.get("Target"));
-
         setResult(RESULT_OK, intent);
 
         finish();

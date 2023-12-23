@@ -2,14 +2,12 @@ package com.myaccounts.vechicleserviceapp.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
-import com.myaccounts.vechicleserviceapp.MainActivity;
 import com.myaccounts.vechicleserviceapp.R;
 
 public class VechicleMasterActivity extends AppCompatActivity implements View.OnClickListener {

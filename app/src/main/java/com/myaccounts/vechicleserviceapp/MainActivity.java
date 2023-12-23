@@ -11,38 +11,33 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.support.v7.widget.Toolbar;
+import com.google.android.material.navigation.NavigationView;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -66,10 +61,6 @@ import com.google.gson.GsonBuilder;
 import com.myaccounts.vechicleserviceapp.Activity.DocumentListActivity;
 import com.myaccounts.vechicleserviceapp.Activity.DrawingSignatureActivity;
 import com.myaccounts.vechicleserviceapp.Activity.GeneralMasterActivity;
-import com.myaccounts.vechicleserviceapp.Activity.NewJobCardDetailsMain;
-import com.myaccounts.vechicleserviceapp.Activity.ServiceStatusUpdateActivity;
-import com.myaccounts.vechicleserviceapp.Activity.SparePartEstAgstCustomerActivity;
-import com.myaccounts.vechicleserviceapp.Activity.SpareStatusUpdateActivity;
 import com.myaccounts.vechicleserviceapp.Fragments.SparePartEstAgstJobCard;
 import com.myaccounts.vechicleserviceapp.Activity.SparePartIssueActivity;
 import com.myaccounts.vechicleserviceapp.Activity.SparePartMasterActivity;
@@ -544,8 +535,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     e.printStackTrace();
 
                 }
-
-
                 return true;
             case R.id.action_logout:
                 try {

@@ -1,11 +1,9 @@
 package com.myaccounts.vechicleserviceapp.Adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -13,16 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.myaccounts.vechicleserviceapp.Activity.NewJobCardDetailsMain;
 import com.myaccounts.vechicleserviceapp.Pojo.NewServiceMasterDetails;
-import com.myaccounts.vechicleserviceapp.Pojo.ServiceMaster;
-import com.myaccounts.vechicleserviceapp.Pojo.SparePartDetails;
 import com.myaccounts.vechicleserviceapp.R;
 
 import java.util.ArrayList;
@@ -94,13 +87,6 @@ public class NewServiceMasterIssueAdapter extends RecyclerView.Adapter<NewServic
 //            holder.ServiceAvlQtyTv.setText(String.valueOf(serviceDetails.getmAvlQty()));
 //            holder.ServiceIssueTypeTv.setText(String.valueOf(serviceDetails.getmIssueType()));
             issueTypeSelectedString=String.valueOf(serviceDetails.getmIssueType());
-            Log.d("ANUSHA ", "+++++ "+issueTypeSelectedString);
-            Log.d("ANUSHA ", "+++++ "+serviceDetails.getmIssueType());
-            for(int i=0;i<issueType.length;i++)
-            {
-                Log.d("ANUSHA ", "+++++ string "+issueType[i]);
-                Log.d("ANUSHA ", "+++++ pos "+i);
-            }
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.spinner_item, issueType);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
               holder.ServiceIssueTypeSpinner.setAdapter(adapter);
@@ -116,7 +102,6 @@ public class NewServiceMasterIssueAdapter extends RecyclerView.Adapter<NewServic
                           issueTypeString = issueType[position];
                           JJJJJ=parent.getItemAtPosition(position).toString();
 //                          if(sparePartDetailsArrayList.size()>0)
-                          Log.d("ANUSHA ", "+++++"+JJJJJ+" "+sparePartDetailsArrayList.get(position).getmIssueType());
 //                                  +" "+serviceDetails.getRowNo()+" "+sparePartDetailsArrayList.get(serviceDetails.getRowNo()).getmIssueType());
                           holder.ServiceIssueTypeTv.setText(JJJJJ);
                           serviceDetails.setmIssueType(JJJJJ);
@@ -230,19 +215,11 @@ public class NewServiceMasterIssueAdapter extends RecyclerView.Adapter<NewServic
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             try{
                 JJJJJ=adapterView.getItemAtPosition(i).toString();
-//                          if(sparePartDetailsArrayList.size()>0)
-                Log.d("ANUSHA ", "+++++"+JJJJJ);
-                Log.d("ANUSHA ", "+++++"+getAdapterPosition());
-//                Log.d("ANUSHA ", "+++++"+JJJJJ+" "+sparePartDetailsArrayList.get(i).getmIssueType());
-//                                  +" "+serviceDetails.getRowNo()+" "+sparePartDetailsArrayList.get(serviceDetails.getRowNo()).getmIssueType());
-
                 if(jRecyclarObj!=null){
                     jRecyclarObj.onItemSelected(adapterView,getAdapterPosition(),view,spinnerTouched,JJJJJ);
-//                    jRecyclarObj.getDetails(adapterView,getAdapterPosition(),view,"JESUS",JJJJJ);
                 }
 
             }catch (Exception e){
-                Log.d("ANUSHA "," "+e.toString());
             }
         }
 

@@ -1,6 +1,6 @@
 package com.myaccounts.vechicleserviceapp.Utils;
 
-import android.support.multidex.BuildConfig;
+import androidx.multidex.BuildConfig;
 import android.util.Log;
 
 public class AppLog {

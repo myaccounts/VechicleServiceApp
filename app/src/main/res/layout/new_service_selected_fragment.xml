@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -20,7 +20,7 @@
             android:weightSum="5"
             tools:ignore="MissingConstraints">
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
@@ -44,9 +44,9 @@
                     android:textSize="@dimen/textSize"
                     android:textStyle="normal" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
@@ -69,7 +69,7 @@
                     android:textSize="@dimen/textSize"
                     android:textStyle="normal" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Spinner
                 android:id="@+id/MainServiceServiceIssueTypeSpinner"
@@ -370,7 +370,7 @@
                     android:layout_height="0.2dp"
                     android:background="@color/viewcolour" />
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/ServiceMasterRecyclerview"
                     android:layout_width="match_parent"
                     android:layout_height="200sp"
@@ -379,7 +379,7 @@
                     android:listSelector="@color/black"
                     android:scrollbars="vertical">
 
-                </android.support.v7.widget.RecyclerView>
+                </androidx.recyclerview.widget.RecyclerView>
 
                 <LinearLayout
                     android:id="@+id/TotalLayout"
@@ -586,7 +586,7 @@
 
         </LinearLayout>
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/SelectedServiceRecyclerviewid"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -595,7 +595,7 @@
             android:divider="@android:color/transparent"
             android:listSelector="@color/black"
             android:scrollbars="vertical"
-            android:visibility="gone"></android.support.v7.widget.RecyclerView>
+            android:visibility="gone"></androidx.recyclerview.widget.RecyclerView>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -625,7 +625,7 @@
                 android:textSize="16sp" />
 
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/SelectedServiceRecyclerviewid1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -636,11 +636,11 @@
                 android:fadeScrollbars="false"
                 android:listSelector="@color/black"
                 android:scrollbars="vertical"
-                android:visibility="visible"></android.support.v7.widget.RecyclerView>
+                android:visibility="visible"></androidx.recyclerview.widget.RecyclerView>
 
 
         </RelativeLayout>
 
     </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

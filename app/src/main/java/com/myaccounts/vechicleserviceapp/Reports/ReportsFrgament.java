@@ -2,12 +2,12 @@ package com.myaccounts.vechicleserviceapp.Reports;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
+import com.google.android.material.tabs.TabLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.widget.Toolbar;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,10 +55,11 @@ public class ReportsFrgament extends Fragment {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new JobCardHistoryReport(), "Job Card History");
         adapter.addFragment(new VehicleHistoryReport(), "Vehicle History");
+        adapter.addFragment(new TATReport(), "TAT Report");
         /*adapter.addFragment(new SparePartConsumptionReport(), "Spare Part Legder");
         adapter.addFragment(new EstimationReport(), "Estimation Report");
-        adapter.addFragment(new SparePartIssueReport(), "Spare Part Issue");
-        adapter.addFragment(new TATReport(), "TAT Report");*/
+        adapter.addFragment(new SparePartIssueReport(), "Spare Part Issue");*/
+
         viewPager.setAdapter(adapter);
     }
 
@@ -81,8 +82,8 @@ public class ReportsFrgament extends Fragment {
                     VehicleHistoryReport Details = new VehicleHistoryReport();
                     return Details;
                 case 2:
-                    SparePartConsumptionReport consumptionReport = new SparePartConsumptionReport();
-                    return consumptionReport;
+                    TATReport tatReport = new TATReport();
+                    return tatReport;
                 case 3:
                     EstimationReport estimationReport = new EstimationReport();
                     return estimationReport;
@@ -90,8 +91,8 @@ public class ReportsFrgament extends Fragment {
                     SparePartIssueReport issueReport = new SparePartIssueReport();
                     return issueReport;
                 case 5:
-                    TATReport tatReport = new TATReport();
-                    return tatReport;
+                    SparePartConsumptionReport consumptionReport = new SparePartConsumptionReport();
+                    return consumptionReport;
 
             }
             return mFragmentList.get(position);

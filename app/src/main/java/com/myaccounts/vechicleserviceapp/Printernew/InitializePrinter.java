@@ -17,6 +17,9 @@ import java.util.ArrayList;
 
 public class InitializePrinter {
     public static final String TARGET = "Target";
+    public static final String PRINT_IP = "PRINTIP";
+    public static final String PRINT_NAME = "PRINTERNAME";
+    public static final String OTP = "OTP";
     private static Activity mContext = null;
     private static ReceiveListener mReceiveListener;
     private Printer mPrinter = null;

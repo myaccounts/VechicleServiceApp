@@ -1,17 +1,15 @@
 package com.myaccounts.vechicleserviceapp.Adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-import com.myaccounts.vechicleserviceapp.Activity.DocumentListActivity;
 import com.myaccounts.vechicleserviceapp.Pojo.DocumentTypes;
 import com.myaccounts.vechicleserviceapp.R;
 import java.util.ArrayList;

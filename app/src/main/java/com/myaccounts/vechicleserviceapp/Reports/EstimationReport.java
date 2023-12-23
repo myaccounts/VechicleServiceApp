@@ -6,13 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
-import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
@@ -235,7 +234,6 @@ public class EstimationReport extends Fragment implements View.OnClickListener {
                     jsonObject.accumulate("CustomerId", VehicleNo);
                     jsonObject.accumulate("FromDate", SelectedFromDate);
                     jsonObject.accumulate("ToDate", SelectedToDate);
-                    Log.d("ANUSHA "," "+jsonObject.toString());
                     BackendServiceCall serviceCall = new BackendServiceCall(getActivity(), false);
                     requestName = "GetEstimationReport";
                     serviceCall.setOnServiceCallCompleteListener(new OnServiceCallCompleteListenerUserImpl());
@@ -296,14 +294,12 @@ public class EstimationReport extends Fragment implements View.OnClickListener {
 
     private void handeServiceMasterDetails(JSONArray jsonArray) {
         try {
-            Log.d("ANUSHA "," "+jsonArray);
             if (jsonArray.length() > 0) {
                 estimationHistoryArrayList.clear();
                 for (int i = 0; i < jsonArray.length(); i++) {
                     try {
                         JSONObject object = jsonArray.getJSONObject(i);
                         String Result = object.getString("Result");
-                        Log.d("ANUSHA "," "+Result);
                         if (Result.equalsIgnoreCase("No Details Found")) {
                             Toast.makeText(getActivity(), Result, Toast.LENGTH_SHORT).show();
                         } else {

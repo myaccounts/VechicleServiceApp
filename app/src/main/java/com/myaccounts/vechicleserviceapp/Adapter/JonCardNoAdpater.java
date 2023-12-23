@@ -54,7 +54,6 @@ public class JonCardNoAdpater extends ArrayAdapter<JobCardDetails> {
                 holder = (JonCardNoAdpater.ViewHolder) convertView.getTag();
             }
             JobCardDetails supplierData = supplierDataArrayList.get(position);
-            Log.d("ANUSHA ", "supplierData" + supplierData.toString());
             holder.Id_jobcardNo.setText(supplierData.getModel());
             holder.IdCustomerTv.setText(supplierData.getCustomerName());
             holder.IdMobileTv.setText(supplierData.getMobileNo());

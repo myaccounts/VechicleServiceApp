@@ -3,9 +3,11 @@ package com.myaccounts.vechicleserviceapp.Utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.net.Uri;
 import android.util.Log;
 
 
+import java.io.File;
 import java.util.HashMap;
 
 public class SessionManager {
@@ -18,6 +20,7 @@ public class SessionManager {
     public static final String KEY_INDATE = "JCDate";
 
     public static final String KEY_SELECTED_DATE = "date";
+    public static final String KEY_SAVED_DATE = "saveddate";
 
     public static final String KEY_VEHICLE_ID = "ModelNo";
     public static final String KEY_VEHICLE_MAKE = "Make";
@@ -25,14 +28,27 @@ public class SessionManager {
     public static final String KEY_JOBCARD_JCDATE = "JCDate";
     public static final String KEY_JOBCARD_JCTIME = "JCTime";
 
+    public static final String KEY_CAPTURE_IMAGE1="JobCard_Image1";
+    public static final String KEY_CAPTURE_IMAGE1_LOCAL="local_image1";
+
+    public static final String KEY_SIGNATURE_IMAGE1_LOCAL="local_signature";
+
+    public static final String KEY_SIGNATURE_IMAGE1="Sigature_Image1";
+
     public static final String KEY_VEHICLE_NO = "vehicleNo";
     public static final String KEY_MOBILE_NO = "mobileNumber";
+
+    public static final String KEY_SIGNATURE_FILE_PATH = "signature_filepath";
 
     public static final String KEY_Remarks_CheckList = "ChecklistRemarks";
 
     public static final String KEY_CUSTOMER_NAME = "customerName";
     public static final String KEY_CONTACT_NO = "contactNo";
 //    public static final String KEY_NAME = "name";due to bugs with instead of name using customer_name
+    public static final String KEY_SIGNATURE_FILE="FILE_NAME";
+    public static final String KEY_IMAGE="IMAGE";
+    public static final String KEY_URI="URI";
+
     public static final String KEY_PLACE = "place";
     public static final String KEY_BLOCK = "block";
     public static final String KEY_TECHINICIANNAME = "technicianName";
@@ -58,6 +74,8 @@ public class SessionManager {
     private static final String PREF_NAME = "goWheelsPref";
     private static final String PREF_LOGIN = "goWheelsVehicleIdPref";
 
+    public static final String KEY_SERVICES_QTY="servicesQty";
+    public static final String KEY_SPAREPARTS_QTY="sparepartsQty";
 
     SharedPreferences pref, lpref;
     Editor editor, leditor;
@@ -78,17 +96,12 @@ public class SessionManager {
     }
 
     public void storeVehicleId(String vehicleId, String make) {
-        Log.d("ANUSHA "," ************ "+vehicleId);
-        Log.d("ANUSHA "," ************ "+make);
         leditor.putString(KEY_VEHICLE_ID, vehicleId);
         leditor.putString(KEY_VEHICLE_MAKE, make);
         leditor.commit();
     }
 
     public void storeSelectedDate(String date) {
-        Log.d("ANUSHA "," ************ "+date);
-        Log.d("ANUSHA ","@@@@ selectedDate storeSelectedDate "+date);
-//        Log.d("ANUSHA "," ************ "+make);
         leditor.putString(KEY_SELECTED_DATE, date);
         leditor.commit();
     }
@@ -110,6 +123,29 @@ public class SessionManager {
         leditor.putString(KEY_MOBILE_NO, mobileNumber);
         leditor.putString(KEY_CUSTOMER_NAME, customerName);
         leditor.putString(KEY_TECHINICIANNAME, technicianName);
+
+        leditor.commit();
+    }
+
+    public void storeSignatureDetails(File f, String image, Uri fileUri) {
+
+        leditor.putString(KEY_SIGNATURE_FILE, f.getAbsolutePath());
+        leditor.putString(KEY_IMAGE, image);
+        leditor.putString(KEY_URI, fileUri.toString());
+        leditor.commit();
+    }
+    public HashMap<String, String> getstoreSignatureDetails() {
+        HashMap<String, String> user = new HashMap<String, String>();
+
+        user.put(KEY_SIGNATURE_FILE, lpref.getString(KEY_SIGNATURE_FILE, null));
+        user.put(KEY_IMAGE, lpref.getString(KEY_IMAGE, null));
+        user.put(KEY_URI, lpref.getString(KEY_URI, null));
+        return user;
+    }
+
+    public void storeSignatureFilePath(String signatureFilePath) {
+
+        leditor.putString(KEY_SIGNATURE_FILE_PATH, signatureFilePath);
         leditor.commit();
     }
 
@@ -129,40 +165,32 @@ public class SessionManager {
         leditor.putString(KEY_VEHICLE_TYPE, vehicleType);
         leditor.putString(KEY_VEHICLE_ID, modelId);
 
-        Log.d("ANUSHA "," "+"model "+block);
-        Log.d("ANUSHA "," "+"model "+lpref.getString(KEY_VEHICLE_ID,null));
-        Log.d("ANUSHA "," "+"model "+lpref.getString(KEY_BLOCK,null));
-        Log.d("ANUSHA "," "+"model "+lpref.getString(KEY_TECHINICIANNAME,null));
         leditor.commit();
     }
 
     public void storeRemarksCheckListDetails(String vehicleNo){
         leditor.putString(KEY_Remarks_CheckList, vehicleNo);
-        Log.d("ANUSHA "," "+"model "+lpref.getString(KEY_Remarks_CheckList,null));
         leditor.commit();
     }
 
-    public void storeSecondFragmentDetails(String finalServiceDetailsDetailList, String totalAmount,String ServiceId) {
-        Log.d("ANUSHA "," "+"storeSecondFragmentDetails "+finalServiceDetailsDetailList);
+    public void storeSecondFragmentDetails(String finalServiceDetailsDetailList, String totalAmount,String ServiceId, String totalServiceQty) {
         leditor.putString(KEY_SERVICE_DETAILS_LIST, finalServiceDetailsDetailList);
         leditor.putString(KEY_SERVICE_DETAILS_TOTAL_AMOUNT, totalAmount);
+        leditor.putString(KEY_SERVICES_QTY, totalServiceQty);
 //        leditor.putString(KEY_SERVICEID,ServiceId);
-        Log.d("ANUSHA "," "+"storeSecondFragmentDetails "+pref.getString(KEY_SERVICE_DETAILS_LIST,null));
         leditor.commit();
+
     }
     public void storeSecondFragmentFreeDetails(String finalServiceFreeAmount){
-        Log.d("ANUSHA "," *** "+"storeSecondFragmentDetails finalServiceFreeAmount"+finalServiceFreeAmount);
         leditor.putString(KEY_SERVICE_DETAILS_FREE_AMOUNT, finalServiceFreeAmount);
         leditor.commit();
-        Log.d("ANUSHA "," *** "+"storeSecondFragmentDetails finalServiceFreeAmount"+pref.getString(KEY_SERVICE_DETAILS_FREE_AMOUNT,null));
     }
 
-    public void storeThirdSparePartsDetails(String finalSparePartDetailList, String totalAmount) {
-        Log.d("ANUSHA "," "+"storeThirdSparePartsDetails "+finalSparePartDetailList);
+    public void storeThirdSparePartsDetails(String finalSparePartDetailList, String totalAmount, String qtySpares) {
         leditor.putString(KEY_SPARE_PARTS_DETAILS_LIST, finalSparePartDetailList);
         leditor.putString(KEY_SPARES_DETAILS_TOTAL_AMOUNT, totalAmount);
-        Log.d("ANUSHA "," "+"storeThirdSparePartsDetails "+pref.getString(KEY_SPARE_PARTS_DETAILS_LIST,null));
-       // leditor.putString(KEY_SPAREID,spareId);
+        leditor.putString(KEY_SPAREPARTS_QTY, qtySpares);
+        // leditor.putString(KEY_SPAREID,spareId);
         leditor.commit();
     }
 
@@ -195,7 +223,12 @@ public class SessionManager {
         leditor.commit();
 
     }
+    public HashMap<String, String> getSignatureFilepath() {
+        HashMap<String, String> user = new HashMap<String, String>();
 
+        user.put(KEY_SIGNATURE_FILE_PATH, lpref.getString(KEY_SIGNATURE_FILE_PATH, null));
+        return user;
+    }
 
     public HashMap<String, String> getVehicleDetails() {
         HashMap<String, String> user = new HashMap<String, String>();
@@ -233,6 +266,10 @@ public class SessionManager {
         user.put(KEY_MOBILE_NO, lpref.getString(KEY_MOBILE_NO, null));
         user.put(KEY_JOBCARD_JCDATE, lpref.getString(KEY_JOBCARD_JCDATE, null));
         user.put(KEY_JOBCARD_JCTIME, lpref.getString(KEY_JOBCARD_JCTIME, null));
+        user.put(KEY_SERVICES_QTY, lpref.getString(KEY_SERVICES_QTY, null));
+        user.put(KEY_SPAREPARTS_QTY, lpref.getString(KEY_SPAREPARTS_QTY, null));
+
+
 
 //        user.put(KEY_NAME, pref.getString(KEY_NAME, null));
 //        user.put(KEY_EMAIL, pref.getString(KEY_EMAIL, null));
@@ -283,6 +320,55 @@ public class SessionManager {
         String selectedStr=lpref.getString(KEY_SLECTED_STRING, null);
         return selectedStr;
     }
+//    storeSignatureImage
+    public void storeSignatureImage(String capture_image1) {
+        leditor.putString(KEY_SIGNATURE_IMAGE1,capture_image1);
+        leditor.commit();
 
+    }
+    public HashMap<String, String> getSignatureImage() {
+        HashMap<String, String> user2= new HashMap<String, String>();
+
+        user2.put(KEY_SIGNATURE_IMAGE1,lpref.getString(KEY_SIGNATURE_IMAGE1, null));
+        return user2;
+    }
+    public void storeCaptureImage(String capture_image1) {
+        leditor.putString(KEY_CAPTURE_IMAGE1,capture_image1);
+        leditor.commit();
+
+    }
+    public HashMap<String, String> getCaptureImage() {
+        HashMap<String, String> user2= new HashMap<String, String>();
+
+        user2.put(KEY_CAPTURE_IMAGE1,lpref.getString(KEY_CAPTURE_IMAGE1, null));
+        return user2;
+    }
+
+    public void storeCaptureImage1LocalPath(String capture_image1) {
+        leditor.putString(KEY_CAPTURE_IMAGE1_LOCAL,capture_image1);
+        leditor.commit();
+    }
+    public HashMap<String, String> getCaptureImage1LocalPath() {
+        HashMap<String, String> user22= new HashMap<String, String>();
+
+        user22.put(KEY_CAPTURE_IMAGE1_LOCAL,lpref.getString(KEY_CAPTURE_IMAGE1_LOCAL, null));
+        return user22;
+    }
+
+    public void storeSignatureImage1LocalPath(String absolutePath) {
+        leditor.putString(KEY_SIGNATURE_IMAGE1_LOCAL,absolutePath);
+        leditor.commit();
+    }
+    public HashMap<String, String> getSignatureImage1LocalPath() {
+        HashMap<String, String> user22= new HashMap<String, String>();
+
+        user22.put(KEY_SIGNATURE_IMAGE1_LOCAL,lpref.getString(KEY_SIGNATURE_IMAGE1_LOCAL, null));
+        return user22;
+    }
+
+    public void storeUpdatedRemarks(String remarks) {
+        leditor.putString(KEY_REMARKS,remarks);
+        leditor.commit();
+    }
 
 }

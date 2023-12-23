@@ -5,6 +5,7 @@
     android:background="@color/white"
     android:orientation="vertical">
     <LinearLayout
+        android:id="@+id/lrReports"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -44,6 +45,43 @@
                 android:layout_height="match_parent"
                 android:background="@color/black" />
 
+            <LinearLayout
+                android:id="@+id/kmstechnician_lyt"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:orientation="horizontal">
+            <TextView
+                android:id="@+id/IdKmReading"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:gravity="center"
+                android:text="Kms"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textSizeReports" />
+
+            <View
+                android:layout_width="0.01dp"
+                android:layout_height="match_parent"
+                android:background="@color/black" />
+
+            <TextView
+                android:id="@+id/IdTechnician"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:gravity="center"
+                android:text="Technician"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textSizeReports" />
+
+            <View
+                android:layout_width="0.01dp"
+                android:layout_height="match_parent"
+                android:background="@color/black" />
+
+            </LinearLayout>
             <TextView
                 android:id="@+id/IdDateTv"
                 android:layout_width="0dp"

@@ -12,6 +12,7 @@ public class EstDetails {
     private String mPayModeAmountInvoice="";
     private String mPayModeAmountOther="";
     private String mPayModeAmount1="";
+    private String mRemarks="";
 
     public String getmGrossAmount() {
         return mGrossAmount;
@@ -101,6 +102,14 @@ public class EstDetails {
     public void setmPayModeAmount1(String mPayModeAmount1) {
         this.mPayModeAmount1 = mPayModeAmount1;
     }
+    public String getmRemarks() {
+        return mRemarks;
+    }
+
+    public void setmRemarks(String mRemarks) {
+        this.mRemarks = mRemarks;
+    }
+
 
 
 }

@@ -1,25 +1,18 @@
 package com.myaccounts.vechicleserviceapp.Adapter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
+import androidx.annotation.NonNull;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.TextView;
 
-import com.myaccounts.vechicleserviceapp.Pojo.VehicleTypes;
 import com.myaccounts.vechicleserviceapp.Pojo.VehicleTypes;
 import com.myaccounts.vechicleserviceapp.R;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Locale;
 
 public class VehicleAdpater extends ArrayAdapter<VehicleTypes> {

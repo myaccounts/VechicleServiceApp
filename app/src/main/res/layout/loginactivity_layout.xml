@@ -25,7 +25,7 @@
             android:textStyle="bold"
             android:layout_marginBottom="24dp"
             android:layout_gravity="center_horizontal" />
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilusername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,9 +40,9 @@
             android:maxLines="1"
             android:text="ssadmin"
             android:singleLine="true" />
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilpassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -57,8 +57,8 @@
             android:inputType="textPassword"
             android:maxLines="1"
             android:singleLine="true" />
-    </android.support.design.widget.TextInputLayout>
-        <android.support.v7.widget.AppCompatButton
+    </com.google.android.material.textfield.TextInputLayout>
+        <androidx.appcompat.widget.AppCompatButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"

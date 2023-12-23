@@ -1,7 +1,5 @@
 package com.myaccounts.vechicleserviceapp.Pojo;
 
-import android.support.v4.app.Fragment;
-
 public class JobCardHistory {
     private String mJobCardNo="";
     private String mDate="";
@@ -12,6 +10,8 @@ public class JobCardHistory {
     private String mserviceCharge="";
     private String Status="";
     private String Rows="";
+    private String Technician ="";
+    private String KmReading = "";
     private int Sno=0;
 
     public int getSno() {
@@ -95,4 +95,19 @@ public class JobCardHistory {
     }
 
 
+    public String getTechnician() {
+        return Technician;
+    }
+
+    public void setTechnician(String technician) {
+        Technician = technician;
+    }
+
+    public String getKmReading() {
+        return KmReading;
+    }
+
+    public void setKmReading(String kmReading) {
+        KmReading = kmReading;
+    }
 }

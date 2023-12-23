@@ -21,7 +21,8 @@ public class JSONVariables {
     public static String SUserId = "SUserId";
     public static String CounterId = "CounterId";
     public static String ServiceDetails = "ServiceDetails";
-    public static String JCImage = "JCImage";
+    public static String JCImage = "JobCard_Image1";
+    public static String JCSignature="Sigature_Image1";
     public static String Documents = "Documents";
     public static String CustName = "CustName";
     public static String CustEmailId = "CustEmailId";

@@ -5,24 +5,21 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import com.google.android.material.tabs.TabLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.myaccounts.vechicleserviceapp.Fragments.CancelFragment;
-import com.myaccounts.vechicleserviceapp.Fragments.NewMainVehicleDetailsFragment;
 import com.myaccounts.vechicleserviceapp.R;
 import com.myaccounts.vechicleserviceapp.Utils.ProjectMethods;
 import com.myaccounts.vechicleserviceapp.Utils.SessionManager;
@@ -68,7 +65,6 @@ public class CancelJobCardDetails extends AppCompatActivity {
         setContentView(R.layout.new_job_card_details_main);
         Intent intent = getIntent();
         type = intent.getStringExtra("new");
-        Log.d("ANUSHA ","___3"+intent.getStringExtra("jobcardNo")+","+type);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -111,9 +107,6 @@ public class CancelJobCardDetails extends AppCompatActivity {
             serviceDetails = user.get(SessionManager.KEY_SERVICE_DETAILS_LIST);
             newsparePartsDetails = user.get(SessionManager.KEY_SPARE_PARTS_DETAILS_LIST);
             noOfServices = user.get(SessionManager.KEY_NO_OF_SERVICES);
-            Log.d("dddddddd", vehicleNo);
-
-            Log.d("ANUSHA ", " "+contactNo);
             TimeIn=user.get(SessionManager.KEY_JOBCARD_JCTIME);
             DateIN=user.get(SessionManager.KEY_JOBCARD_JCDATE);
             dateAndTimeTV.setText(DateIN + ", " + TimeIn);
@@ -123,7 +116,6 @@ public class CancelJobCardDetails extends AppCompatActivity {
         if(type!=null) {
             if (type.equalsIgnoreCase("new"))
                 dateAndTimeTV.setText(ProjectMethods.getBusinessDate() + ", " + ProjectMethods.GetCurrentTime());
-            Log.e("ANUSHA "," "+ProjectMethods.getBusinessDate()+ ", " + ProjectMethods.GetCurrentTime());
         }
 //        nm = new NewMainVehicleDetailsFragment();
 //        vehicleNo = nm.vehicleNo;
@@ -197,11 +189,6 @@ public class CancelJobCardDetails extends AppCompatActivity {
                 position = 1;
             }
             SharedPreferences sharedpreferences = getSharedPreferences("Mypref", Context.MODE_PRIVATE);
-            String jesus=sharedpreferences.getString("VehicleNo",null);
-            if(position ==1 && jesus!=null)
-                disable(tabLayout,false);
-            else
-                disable(tabLayout,true);
             viewPager.setCurrentItem(position);
         } catch (NullPointerException e) {
             viewPager.setCurrentItem(0);
@@ -214,7 +201,6 @@ public class CancelJobCardDetails extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
                 boolean clickable;
-                Log.d("ANUSHA ", "tabselection called "+position);
                 sessionManager = new SessionManager(getApplicationContext());
                 HashMap<String, String> user = sessionManager.getVehicleDetails();
                 /*if(position==2 || position ==3 || position == 4){
@@ -245,7 +231,6 @@ public class CancelJobCardDetails extends AppCompatActivity {
                 vehicleType = user.get(SessionManager.KEY_VEHICLE_TYPE);
                 selectedBlock = user.get(SessionManager.KEY_BLOCK);
                 Log.d("fffffff", odoReading + vehicleModelId);
-                Log.d("ANUSHA ", " "+block);
                     /*if(type !=null && type.equalsIgnoreCase("new") &&
                             NewMainVehicleDetailsFragment.vehicleNo.isEmpty()){
                         disable(tabLayout,false);
@@ -396,7 +381,6 @@ public class CancelJobCardDetails extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            Log.d("ANUSHA ", "position "+" "+mFragmentList.get(position));
 
             return mFragmentList.get(position);
         }
@@ -508,13 +492,6 @@ public class CancelJobCardDetails extends AppCompatActivity {
         make = user.get(SessionManager.KEY_MAKE);
         vehicleType = user.get(SessionManager.KEY_VEHICLE_TYPE);
         selectedBlock = user.get(SessionManager.KEY_BLOCK);
-        Log.d("fffffff", odoReading + vehicleModelId);
-        Log.d("ANUSHA ", " " + vehicleId);
-        Log.d("ANUSHA ", " " + name);
-        Log.d("ANUSHA ", " " + contactNo);
-        Log.d("ANUSHA ", " " + place);
-        Log.d("ANUSHA ", " " + model);
-        Log.d("ANUSHA ", " " + block);
 
         if (vehicleNo == null || name == null || contactNo == null) {
             validationCheck=false;
@@ -532,7 +509,6 @@ public class CancelJobCardDetails extends AppCompatActivity {
                 }
             }
         }else {
-            Log.d("ANUSHA ", " nextTabSelectionValidation" + "else");
             //get tab view
             ViewGroup vg = (ViewGroup) tabLayout.getChildAt(0);
 //get number of tab

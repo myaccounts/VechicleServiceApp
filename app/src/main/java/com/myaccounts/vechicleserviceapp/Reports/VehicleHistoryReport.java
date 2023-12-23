@@ -5,15 +5,16 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
-import android.text.Html;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,21 +22,18 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
-import com.myaccounts.vechicleserviceapp.Activity.JobCardNoActivity;
 import com.myaccounts.vechicleserviceapp.Activity.VehicleNoActivity;
-import com.myaccounts.vechicleserviceapp.Adapter.JobCardHistoryAdpater;
 import com.myaccounts.vechicleserviceapp.Adapter.VehicleHistoryAdapter;
 import com.myaccounts.vechicleserviceapp.Pojo.JobCardHistory;
-import com.myaccounts.vechicleserviceapp.Pojo.UserList;
 import com.myaccounts.vechicleserviceapp.R;
 import com.myaccounts.vechicleserviceapp.Utils.AppUtil;
 import com.myaccounts.vechicleserviceapp.Utils.BackendServiceCall;
@@ -54,6 +52,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,8 +60,10 @@ import butterknife.ButterKnife;
 import static android.app.Activity.RESULT_OK;
 
 public class VehicleHistoryReport extends Fragment implements View.OnClickListener {
+
+    private static final String TAG = "vehicle_history" ;
+    ImageView refresh_vehicle_history;
     private Context context;
-    private LayoutInflater inflater;
     View view;
     @BindView(R.id.IdJobCardHistoryRecyclerview)
     RecyclerView mVehicleHistoryRecyclerview;
@@ -75,16 +76,12 @@ public class VehicleHistoryReport extends Fragment implements View.OnClickListen
     @BindView(R.id.DateSelectionLinearLayout)
     LinearLayout DateSelectionLinearLayout;
     private VehicleHistoryAdapter vehicleHistoryAdapter;
-
     private String requestName;
     private ArrayList<JobCardHistory> jobCardHistoryArrayList;
-    private ArrayList<UserList> usersList = new ArrayList<>();
-    private String selectUser, taskToId;
-    private String finalselectedServiceList = "";
-    CheckBox checkBox;
     private ProgressDialog pDialog;
     private int month, day, year;
     private String CustFromDate, CustToDate;
+
     public static VehicleHistoryReport newInstance() {
         Bundle args = new Bundle();
         VehicleHistoryReport fragment = new VehicleHistoryReport();
@@ -100,12 +97,16 @@ public class VehicleHistoryReport extends Fragment implements View.OnClickListen
         setHasOptionsMenu(true);
         ButterKnife.bind(this, view);
         context = getActivity();
+
+        refresh_vehicle_history = view.findViewById(R.id.refresh_vehicle_history);
+
         inputJobcardSearchEdt.setHint("Vehicle No");
         inputJobcardSearchEdt.setOnClickListener(this);
         jobCardHistoryArrayList = new ArrayList<>();
         // GetJobCardHistoryList();
         mFrmDateTv.setText(ProjectMethods.GetCurrentDate());
         mToDateTv.setText(ProjectMethods.GetCurrentDate());
+
         inputJobcardSearchEdt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -118,12 +119,13 @@ public class VehicleHistoryReport extends Fragment implements View.OnClickListen
             @Override
             public void afterTextChanged(Editable s) {
                 try {
-                    if (jobCardHistoryArrayList != null) {
-
-
+                    if (jobCardHistoryArrayList != null)
+                    {
                         filter(s.toString());
                     }
-                } catch (Exception e) {
+                }
+                catch (Exception e)
+                {
                     e.printStackTrace();
                 }
             }
@@ -153,7 +155,7 @@ public class VehicleHistoryReport extends Fragment implements View.OnClickListen
                                 }
                                 String date= ""+fd+"-"+fm+"-"+year;
                                 mFrmDateTv.setText(date);
-                              //  mFrmDateTv.setText((dayOfMonth < 10 ? ("0" + dayOfMonth) : (dayOfMonth)) + "-" + (monthOfYear < 10 ? ("0" + monthOfYear) : (monthOfYear)) + "-" + year);
+                                //  mFrmDateTv.setText((dayOfMonth < 10 ? ("0" + dayOfMonth) : (dayOfMonth)) + "-" + (monthOfYear < 10 ? ("0" + monthOfYear) : (monthOfYear)) + "-" + year);
                                 //mFrmDateTv.setText(dayOfMonth + "-" + (monthOfYear < 10 ? ("0" + monthOfYear) : (monthOfYear)) + "-" + year);
                             }
                         }, year, month, day);
@@ -178,7 +180,7 @@ public class VehicleHistoryReport extends Fragment implements View.OnClickListen
                                 }
                                 String date= ""+fd+"-"+fm+"-"+year;
                                 mToDateTv.setText(date);
-                               // mToDateTv.setText((dayOfMonth < 10 ? ("0" + dayOfMonth) : (dayOfMonth)) + "-" + (monthOfYear < 10 ? ("0" + monthOfYear) : (monthOfYear)) + "-" + year);
+                                // mToDateTv.setText((dayOfMonth < 10 ? ("0" + dayOfMonth) : (dayOfMonth)) + "-" + (monthOfYear < 10 ? ("0" + monthOfYear) : (monthOfYear)) + "-" + year);
                                 //mToDateTv.setText(dayOfMonth + "-" + (monthOfYear < 10 ? ("0" + monthOfYear) : (monthOfYear)) + "-" + year);
                             }
                         }, year, month, day);
@@ -186,8 +188,53 @@ public class VehicleHistoryReport extends Fragment implements View.OnClickListen
             }
         });
 
+        refresh_vehicle_history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(inputJobcardSearchEdt.getText().toString().equals(""))
+                {
+                    Toast.makeText(getContext(),"Please Select a vehicle number.",Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    GetJobCardHistoryList();
+                    // getVehicleHistoryDetails(inputJobcardSearchEdt.getText().toString(),mFrmDateTv.getText().toString(),mToDateTv.getText().toString());
+                }
+            }
+        });
 
         return view;
+    }
+
+    private void getVehicleHistoryDetails(String vehicleNo, String From, String To)
+    {
+
+        /*Log.e(TAG, "getVehicleHistoryDetails: " + vehicleNo + " " + From + " " + To );
+
+        ApiService api = RetroClient.getApiService();
+
+        VehicleHistoryRequestModel requestModel = new VehicleHistoryRequestModel(From,To,vehicleNo);
+
+        Call<List<VehicleHistoryResponseModel>> call = api.getVehicleDetails(requestModel);
+
+        call.enqueue(new Callback<List<VehicleHistoryResponseModel>>() {
+            @Override
+            public void onResponse(Call<List<VehicleHistoryResponseModel>> call, Response<List<VehicleHistoryResponseModel>> response) {
+
+                if (response.isSuccessful())
+                {
+                    Log.e(TAG, "onResponse: " + response.body().toString() );
+
+                    data = response.body();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<VehicleHistoryResponseModel>> call, Throwable throwable) {
+
+            }
+        });*/
     }
 
     private void filter(String text) {
@@ -208,7 +255,8 @@ public class VehicleHistoryReport extends Fragment implements View.OnClickListen
             String frmDate = mFrmDateTv.getText().toString();
             String toDate = mToDateTv.getText().toString();
             String VehicleNo = inputJobcardSearchEdt.getText().toString();
-            if (frmDate.length() > 0) {
+            if (frmDate.length() > 0)
+            {
                 SelectedFromDate = frmDate;
             } else {
                 SelectedFromDate = "";
@@ -218,17 +266,18 @@ public class VehicleHistoryReport extends Fragment implements View.OnClickListen
             } else {
                 SelectedToDate = "";
             }
-            pDialog = new ProgressDialog(getActivity(),
-                    R.style.AppTheme_Dark_Dialog);
+            pDialog = new ProgressDialog(getActivity(), R.style.AppTheme_Dark_Dialog);
             pDialog.setIndeterminate(true);
             pDialog.setMessage("Please Wait..");
             pDialog.show();
-            if (AppUtil.isNetworkAvailable(getActivity())) {
+
+            if (AppUtil.isNetworkAvailable(getActivity()))
+            {
                 try {
                     JSONObject jsonObject = new JSONObject();
-                    jsonObject.accumulate("VehicleNo",VehicleNo);
-                    jsonObject.accumulate("FromDate",SelectedFromDate);
-                    jsonObject.accumulate("ToDate",SelectedToDate);
+                    jsonObject.accumulate("VehicleNo", VehicleNo);
+                    jsonObject.accumulate("FromDate", SelectedFromDate);
+                    jsonObject.accumulate("ToDate", SelectedToDate);
                     BackendServiceCall serviceCall = new BackendServiceCall(getActivity(), false);
                     requestName = "VehicleHistory";
                     serviceCall.setOnServiceCallCompleteListener(new OnServiceCallCompleteListenerUserImpl());
@@ -290,7 +339,6 @@ public class VehicleHistoryReport extends Fragment implements View.OnClickListen
 
     private void handeServiceMasterDetails(JSONArray jsonArray) {
         try {
-
             if (jsonArray.length() > 0) {
                 jobCardHistoryArrayList.clear();
                 for (int i = 0; i < jsonArray.length(); i++) {
@@ -309,6 +357,8 @@ public class VehicleHistoryReport extends Fragment implements View.OnClickListen
                             serviceMaster.setMserviceCharge(object.getString("ServiceCharge"));
                             serviceMaster.setStatus(object.getString("Status"));
                             serviceMaster.setRows(object.getString("SlNo"));
+                            serviceMaster.setKmReading(object.getString("KMReading"));
+                            serviceMaster.setTechnician(object.getString("TechName"));
                             jobCardHistoryArrayList.add(serviceMaster);
                         }
                     } catch (Exception e) {
@@ -318,7 +368,7 @@ public class VehicleHistoryReport extends Fragment implements View.OnClickListen
 
             }
 
-            vehicleHistoryAdapter = new VehicleHistoryAdapter(getActivity(), R.layout.jobcard_history_row_item, jobCardHistoryArrayList);
+            vehicleHistoryAdapter = new VehicleHistoryAdapter(getActivity(), R.layout.jobcard_history_row_item, jobCardHistoryArrayList,inputJobcardSearchEdt.getText().toString());
             GridLayoutManager gridLayoutManager1 = new GridLayoutManager(getActivity(), 1);
             mVehicleHistoryRecyclerview.setLayoutManager(gridLayoutManager1);
             mVehicleHistoryRecyclerview.setItemAnimator(new DefaultItemAnimator());
@@ -335,37 +385,49 @@ public class VehicleHistoryReport extends Fragment implements View.OnClickListen
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 100) {
-            if (data != null && resultCode == RESULT_OK) {
+
+        if (requestCode == 100)
+        {
+            if (data != null && resultCode == RESULT_OK)
+            {
                 VehicleNoInformation(data);
             }
-        }else if (requestCode == 38 && data != null && resultCode == RESULT_OK) {
+        }
+        else if (requestCode == 38 && data != null && resultCode == RESULT_OK)
+        {
             RemoveData();
         }
     }
 
-    private void VehicleNoInformation(Intent data) {
+    private void VehicleNoInformation(Intent data)
+    {
         try {
 
             String CustName = data.getStringExtra("CustName");
             String CustMobNo = data.getStringExtra("CustMobNo");
             String VehicleNo = data.getStringExtra("VehicleNo");
             inputJobcardSearchEdt.setText(VehicleNo);
-            if (inputJobcardSearchEdt.getText().toString() != "") {
 
-                DateSelectionLinearLayout.setVisibility(View.GONE);
+            if (!inputJobcardSearchEdt.getText().toString().equals(""))
+            {
+
+                //  DateSelectionLinearLayout.setVisibility(View.GONE);
             }
 
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
-
         }
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        getActivity().getMenuInflater().inflate(R.menu.menu_reports, menu);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+        {
+            Objects.requireNonNull(getActivity()).getMenuInflater().inflate(R.menu.menu_reports, menu);
+        }
         menu.findItem(R.id.datetv).setTitle("");
         menu.findItem(R.id.datebtn).setIcon(0);
         menu.findItem(R.id.datebtn).setEnabled(false);
@@ -379,38 +441,46 @@ public class VehicleHistoryReport extends Fragment implements View.OnClickListen
         switch (item.getItemId()) {
             case R.id.refreshbtn:
 
-                try {
-                    if(Validate()) {
+                try
+                {
+                    if(Validate())
+                    {
                         GetJobCardHistoryList();
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-
                 }
-
-
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
                 return true;
-            case R.id.deletebtn:
-                try {
-                    if(jobCardHistoryArrayList.size()>0) {
-                        CustomDailog("Vehicle History", "Do You Want to Delete  Vehicle History Details?", 38, "Delete");
 
-                    }else{
+            case R.id.deletebtn:
+
+                try {
+                    if(jobCardHistoryArrayList.size() > 0)
+                    {
+                        CustomDailog("Vehicle History", "Do You Want to Delete  Vehicle History Details?", 38, "Delete");
+                    }
+                    else
+                    {
                         inputJobcardSearchEdt.setText("");
                         DateSelectionLinearLayout.setVisibility(View.VISIBLE);
                         Toast.makeText(getActivity(), "No Data", Toast.LENGTH_SHORT).show();
                     }
-                } catch (Exception e) {
+                }
+                catch (Exception e)
+                {
                     e.printStackTrace();
-
                 }
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    private boolean Validate() {
+    private boolean Validate()
+    {
         boolean result = true;
         CustFromDate = mFrmDateTv.getText().toString().trim();
         CustToDate = mToDateTv.getText().toString().trim();
@@ -434,26 +504,32 @@ public class VehicleHistoryReport extends Fragment implements View.OnClickListen
 
     }
 
-    private void CustomDailog(String Title, String msg, int value, String btntxt) {
-        try {
+    private void CustomDailog(String Title, String msg, int value, String btntxt)
+    {
+        try
+        {
             MyMessageObject.setMyTitle(Title);
             MyMessageObject.setMyMessage(msg);
             MyMessageObject.setMessageType(Enums.MyMesageType.YesNo);
             Intent intent = new Intent(getActivity(), CustomDialogClass.class);
             intent.putExtra("msgbtn", btntxt);
             startActivityForResult(intent, value);
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
     }
 
     private void RemoveData() {
-        try{
+        try
+        {
             inputJobcardSearchEdt.setText("");
             DateSelectionLinearLayout.setVisibility(View.VISIBLE);
             jobCardHistoryArrayList.clear();
             vehicleHistoryAdapter.notifyDataSetChanged();
-        }catch (Exception e){
+        }
+        catch (Exception e){
             e.printStackTrace();
         }
 

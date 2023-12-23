@@ -4,17 +4,16 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -22,8 +21,6 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.myaccounts.vechicleserviceapp.Adapter.DocumentListAdapter;
-import com.myaccounts.vechicleserviceapp.Adapter.SelectedServiceAdpater;
-import com.myaccounts.vechicleserviceapp.LoginSetUp.LoginActivity;
 import com.myaccounts.vechicleserviceapp.Pojo.DocumentTypes;
 import com.myaccounts.vechicleserviceapp.R;
 import com.myaccounts.vechicleserviceapp.Utils.AlertDialogManager;
@@ -36,9 +33,7 @@ import com.myaccounts.vechicleserviceapp.Utils.ProjectVariables;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class DocumentListActivity extends Activity implements View.OnClickListener {
     DocumentListAdapter documentListAdapter;

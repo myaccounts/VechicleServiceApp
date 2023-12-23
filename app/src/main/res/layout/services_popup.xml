@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none"
+    android:adjustViewBounds="true"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:id="@+id/rl_custom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="2dp"
+        android:background="@color/white"
+        >
+        <LinearLayout
+            android:id="@+id/layout_reasons"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:orientation="vertical"
+            android:layout_marginLeft="10sp"
+            android:layout_marginTop="40dp"
+            android:weightSum="1"
+            android:gravity="center">
+
+
+            <GridView
+                android:id="@+id/gridview"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:columnWidth="200dp"
+                android:numColumns="2"
+                android:verticalSpacing="10dp"
+                android:horizontalSpacing="10dp"
+                android:stretchMode="columnWidth"
+                android:gravity="center" />
+        </LinearLayout>
+        <LinearLayout
+            android:weightSum="2"
+            android:id="@+id/btn_read_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_reasons"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+            <Button
+                android:layout_weight="1"
+                android:id = "@+id/read_signature"
+                android:text = "VIEW SIGNATURE"
+                android:visibility="gone"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content" />
+            <Button
+                android:layout_weight="1"
+                android:id = "@+id/read_captureImage"
+                android:text = "VIEW CAPTUREIMAGE"
+                android:visibility="gone"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:weightSum="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_read_layout"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/signimageView"
+                android:layout_width="200dp"
+                android:layout_height="100dp" />
+            <ImageView
+                android:id="@+id/captureimageView"
+                android:layout_width="200dp"
+                android:layout_height="100dp"
+                />
+        </LinearLayout>
+
+    </RelativeLayout>
+</ScrollView>

@@ -28,7 +28,7 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColorHint="#000"
@@ -43,9 +43,9 @@
                             android:textColor="#000"
                             android:textStyle="normal" />
 
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/TextInputLayout1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -69,9 +69,9 @@
                             android:textSize="@dimen/textSize"
                             android:textStyle="normal" />
 
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
 
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -93,9 +93,9 @@
                             android:textSize="@dimen/textSize"
                             android:textStyle="normal" />
 
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
 
 
                         android:layout_width="match_parent"
@@ -118,9 +118,9 @@
                             android:textSize="@dimen/textSize"
                             android:textStyle="normal" />
 
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/TextInputLayout3"
 
                         android:layout_width="match_parent"
@@ -145,7 +145,7 @@
                             android:textSize="@dimen/textSize"
                             android:textStyle="normal" />
 
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
 
                 </LinearLayout>
@@ -157,7 +157,7 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
 
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -179,9 +179,9 @@
                             android:textSize="@dimen/textSize"
                             android:textStyle="normal" />
 
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
 
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -200,7 +200,7 @@
                             android:textSize="@dimen/textSize"
                             android:textStyle="normal" />
 
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <!--<android.support.design.widget.TextInputLayout
 
@@ -229,7 +229,7 @@
                         android:orientation="horizontal">
 
 
-                        <android.support.design.widget.TextInputLayout
+                        <com.google.android.material.textfield.TextInputLayout
 
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -248,7 +248,7 @@
                                 android:textSize="@dimen/textSize"
                                 android:textStyle="normal" />
 
-                        </android.support.design.widget.TextInputLayout>
+                        </com.google.android.material.textfield.TextInputLayout>
 
 
                         <TextView
@@ -279,7 +279,7 @@
                                 android:textColor="#000"
                                 android:textSize="@dimen/textSize"
                                 android:textStyle="normal" />
-                        <android.support.design.widget.TextInputLayout
+                        <com.google.android.material.textfield.TextInputLayout
 
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -298,7 +298,7 @@
                                 android:textSize="@dimen/textSize"
                                 android:textStyle="normal" />
 
-                        </android.support.design.widget.TextInputLayout>
+                        </com.google.android.material.textfield.TextInputLayout>
 
                         <ImageButton
                             android:id="@+id/AddImgBtn"
@@ -311,7 +311,7 @@
 
             </LinearLayout>
 
-            <android.support.v7.widget.AppCompatButton
+            <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Add"
@@ -477,7 +477,7 @@
                     android:layout_height="0.2dp"
                     android:background="@color/viewcolour" />
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/SparePartrecyclerview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -486,7 +486,7 @@
                     android:listSelector="@color/black"
                     android:scrollbars="vertical">
 
-                </android.support.v7.widget.RecyclerView>
+                </androidx.recyclerview.widget.RecyclerView>
 
 
             </LinearLayout>

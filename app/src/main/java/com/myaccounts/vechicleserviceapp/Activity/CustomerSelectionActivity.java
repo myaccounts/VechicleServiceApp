@@ -139,7 +139,6 @@ public class CustomerSelectionActivity extends Activity {
                     if (Result.equalsIgnoreCase("No Data Found")) {
                         Toast.makeText(CustomerSelectionActivity.this, Result, Toast.LENGTH_SHORT).show();
                     } else {
-                        Log.d("ANUSHA "," "+object.toString());
                         CustomerList userList = new CustomerList();
                         userList.setCustomerId(object.getString("CustomerId"));
                         userList.setCustomerName(object.getString("CustomerName"));

@@ -7,10 +7,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
@@ -69,6 +69,9 @@ public class DrawingSignatureActivity extends Activity implements View.OnClickLi
                     if (isReadStorageAllowed()) {
                         if (saveScreen(hbView, DrawingSignatureActivity.this)) {
                             Toast.makeText(DrawingSignatureActivity.this, "Save drawing succeed!", Toast.LENGTH_SHORT).show();
+//                            finish();
+                            Intent itemIntent = new Intent();
+                            setResult(200, itemIntent);
                             finish();
                         } else {
                             Toast.makeText(DrawingSignatureActivity.this, "Save drawing fail. Please check your SD card", Toast.LENGTH_SHORT).show();

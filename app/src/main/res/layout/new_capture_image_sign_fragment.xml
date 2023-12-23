@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -15,12 +15,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/submitId">
 
-    <android.support.v4.widget.SwipeRefreshLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -168,6 +168,7 @@
                     android:id="@+id/ImgBackLinerLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="2"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -186,6 +187,7 @@
                         android:layout_width="150dp"
                         android:layout_height="150dp"
                         android:layout_weight="1"
+                        android:background="@drawable/background_line"
                         android:visibility="gone" />
                 </LinearLayout>
 
@@ -219,6 +221,32 @@
                         android:text="Signature"
                         android:textAllCaps="true"
                         android:textColor="@color/colorPrimary" />
+                    <Button
+                        android:id="@+id/IdImageViewCaptureBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginRight="5sp"
+                        android:layout_marginBottom="10sp"
+                        android:layout_weight="1"
+                        android:visibility="gone"
+                        android:background="@drawable/btnoutlinebackground"
+                        android:text="View Capture Image"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorPrimary" />
+                    <Button
+                        android:id="@+id/IdImageViewSignatureBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10sp"
+                        android:layout_marginRight="5sp"
+                        android:visibility="gone"
+                        android:layout_marginBottom="10sp"
+                        android:layout_weight="1"
+                        android:background="@drawable/btnoutlinebackground"
+                        android:text="View Signature Image"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorPrimary" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -229,7 +257,7 @@
                     android:orientation="vertical"
                     tools:ignore="MissingConstraints">
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -252,7 +280,7 @@
                             android:textSize="@dimen/textSize"
                             android:textStyle="normal" />
 
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- <EditText
                          android:layout_width="match_parent"
@@ -310,9 +338,9 @@
         </ScrollView>
 
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

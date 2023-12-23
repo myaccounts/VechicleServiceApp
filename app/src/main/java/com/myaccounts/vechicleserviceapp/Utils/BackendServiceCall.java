@@ -58,6 +58,7 @@ public class BackendServiceCall {
             if (AppUtil.isNetworkAvailable(mContext)) {
                 // Tag used to cancel the request
                 String tag_json_obj = "json_obj_req";
+//                Log.e("backend servise jcimage"+TAG, url+jsonObject.toString());
                 pDialog = new ProgressDialog(mContext);
                 pDialog.setMessage("Loading Please Wait....");
                 pDialog.setCancelable(false);
@@ -84,11 +85,10 @@ public class BackendServiceCall {
 
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            VolleyLog.d(TAG, "Error: " + error.getMessage());
+                            VolleyLog.d(TAG, "Error: " + error.getMessage()+"Error Code->"+error.networkResponse.statusCode);
                             // hide the progress dialog
                             pDialog.dismiss();
-
-                          //  mListener.onErrorResponse(error);
+                            mListener.onErrorResponse(error);
                         }
                     }) {
                         @Override
@@ -107,6 +107,7 @@ public class BackendServiceCall {
                    // setRefreshing(boolean);
                     e.printStackTrace();
                 }
+
             } else {
 //            throw new RuntimeException(DEVICE_OFFLINE_MESSAGE);
             }

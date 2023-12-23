@@ -5,23 +5,22 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import com.google.android.material.textfield.TextInputLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -48,19 +47,17 @@ import com.epson.epos2.printer.Printer;
 import com.epson.epos2.printer.PrinterStatusInfo;
 import com.epson.epos2.printer.ReceiveListener;
 import com.lvrenyang.pos.Cmd;
-import com.myaccounts.vechicleserviceapp.Activity.CancelJobCardDetails;
 import com.myaccounts.vechicleserviceapp.Activity.CustomerSelectionActivity;
 import com.myaccounts.vechicleserviceapp.Activity.GeneralServiceActivity;
 import com.myaccounts.vechicleserviceapp.Activity.JobCardNoActivity;
 import com.myaccounts.vechicleserviceapp.Activity.MainActivity;
-import com.myaccounts.vechicleserviceapp.Activity.NewJobCardDetailsMain;
 import com.myaccounts.vechicleserviceapp.Activity.PayNowActivity2016;
-import com.myaccounts.vechicleserviceapp.Activity.ServiceStatusUpdateActivity;
 import com.myaccounts.vechicleserviceapp.Activity.SparePartsActivity;
-import com.myaccounts.vechicleserviceapp.Activity.SpareStatusUpdateActivity;
 import com.myaccounts.vechicleserviceapp.Adapter.GeneralServiceEstimationAdapter;
 import com.myaccounts.vechicleserviceapp.Adapter.NewServiceUpdateAdapter;
 import com.myaccounts.vechicleserviceapp.Adapter.SparePrtEstimationAdapter;
+import com.myaccounts.vechicleserviceapp.LoginSetUp.LoginActivity;
+import com.myaccounts.vechicleserviceapp.Pojo.CompanyDetails;
 import com.myaccounts.vechicleserviceapp.Pojo.EstDetails;
 import com.myaccounts.vechicleserviceapp.Pojo.EstimationPrintList;
 import com.myaccounts.vechicleserviceapp.Pojo.NewServiceMasterDetails;
@@ -68,7 +65,6 @@ import com.myaccounts.vechicleserviceapp.Pojo.ServiceList;
 import com.myaccounts.vechicleserviceapp.Pojo.SparePartEstDetails;
 import com.myaccounts.vechicleserviceapp.Pojo.SparePartEstimation;
 import com.myaccounts.vechicleserviceapp.Printernew.InitializePrinter;
-import com.myaccounts.vechicleserviceapp.Printernew.ShowMsg;
 import com.myaccounts.vechicleserviceapp.R;
 import com.myaccounts.vechicleserviceapp.Utils.AidlUtil;
 import com.myaccounts.vechicleserviceapp.Utils.AppUtil;
@@ -81,6 +77,8 @@ import com.myaccounts.vechicleserviceapp.Utils.OnServiceCallCompleteListener;
 import com.myaccounts.vechicleserviceapp.Utils.ProjectMethods;
 import com.myaccounts.vechicleserviceapp.Utils.ProjectVariables;
 import com.myaccounts.vechicleserviceapp.exception.CustomExceptionHandler;
+import com.myaccounts.vechicleserviceapp.network.DatabaseHelper;
+import com.myaccounts.vechicleserviceapp.network.InfDbSpecs;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -89,28 +87,20 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Objects;
-import java.util.Timer;
-import java.util.TimerTask;
 //import java.util.logging.Handler;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import static android.app.Activity.RESULT_OK;
-import static android.content.Context.LAYOUT_INFLATER_SERVICE;
-import static com.myaccounts.vechicleserviceapp.R.id.CustMobileNoEdt;
-import static com.myaccounts.vechicleserviceapp.R.id.FreeTotalTv;
-import static com.myaccounts.vechicleserviceapp.R.id.IdJobCardNoEdt;
-import static com.myaccounts.vechicleserviceapp.R.id.jobCardNoEdt;
 import static com.myaccounts.vechicleserviceapp.R.id.jobcardId;
 import static com.myaccounts.vechicleserviceapp.R.id.mSerTotalValtv;
-import static com.myaccounts.vechicleserviceapp.R.id.mobileNoEdt;
-import static com.myaccounts.vechicleserviceapp.R.id.mrpEdt;
 
 public class SparePartEstAgstJobCard extends Fragment implements View.OnClickListener,ReceiveListener {
     private static int nFontStyle;
@@ -210,14 +200,14 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
     private LinearLayoutManager mLinearLayoutManager;
     float totalAmount, totalQty,totalFreeAmount;
     String TotalGrossAmt, TotalQtyValue, TotalRows;
-    private String selectedString, VehicleNo,JCDate,ModelNo;
+    private String selectedString, VehicleNo,JCDate,ModelNo,JCTime,JCRemarks;
     private int position, GeneralPosition;
     private String requestName;
     private String finalItemDetailList = "", finalServiceDetails = "";
     private ProgressDialog pDialog;
     private ProgressDialog progressDialog;
     private boolean printIsDone = false;
-    float finalAmt = 0.0f;
+    float finalAmt = 0.00f;
     public static final String TAG ="JobCard";
     private ArrayList<String> printerList;
     private Printer mPrinter = null;
@@ -226,6 +216,8 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
     private String TodayDate,printDate,printPhoneNumber,printCustomerName,printVehicleRegNumber,printVehicleModelNumber,printNetAmount,printCashAmount,printCardAmount,printUpiAmount;
     private NewServiceUpdateAdapter newServiceupdateAdapter;
     private RecyclerView ServiceMasterRecyclerview;
+    private String printerIp,printerName;
+    private ArrayList<CompanyDetails> companyDetailsArrayList;
 
     public static SparePartEstAgstJobCard newInstance() {
         Bundle args = new Bundle();
@@ -252,6 +244,7 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
         generailServiceDetailsArrayList = new ArrayList<>();
         sparePartEstimationArrayList = new ArrayList<>();
         estimationPrintListArrayList = new ArrayList<>();
+        companyDetailsArrayList = new ArrayList<>();
         JobCardNoEdt.setOnClickListener(this);
         SparePartEdt.setOnClickListener(this);
         CustomerNameEdt.setOnClickListener(this);
@@ -477,7 +470,6 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
             finalAmt1=finalAmt-DiscountValue;
             NetAmt.setText(String.valueOf(finalAmt1));
 //            finalAmtTv.setText(NetAmt.getText().toString());
-            Log.d("ANUSHA "," "+DiscountValue);
 //            call paynow popup
             // user typed: start the timer
             /*Timer timer = new Timer();
@@ -611,6 +603,7 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
     }
 
     private void dateFormat() {
+
         try {
             final Calendar c = Calendar.getInstance();
             SimpleDateFormat ss = new SimpleDateFormat("dd-MM-yyyy");
@@ -658,6 +651,7 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
                     Intent payIntent = new Intent(getActivity(), PayNowActivity2016.class);
                     payIntent.putExtra("Amount",NetAmt.getText().toString());
                     payIntent.putExtra("Jobcard",JobCardNoEdt.getText().toString());
+                    payIntent.putExtra("mobileNo",MobileNoEdt.getText().toString());
                     payIntent.putExtra("SavingValues", savingState);
                     startActivityForResult(payIntent, 222);
 
@@ -677,7 +671,7 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
                     break;
                 case R.id.IdGeneralServiceEdt:
                     Intent generalService = new Intent(getActivity(), GeneralServiceActivity.class);
-                    generalService.putExtra("jobCardId",JobCardNoEdt.getText().toString());
+                    generalService.putExtra("jobCardId","74E299180213");
                     startActivityForResult(generalService, 104);
                     break;
                 case R.id.IdAddImgbtn:
@@ -792,17 +786,12 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
             sparepartvalue = Float.valueOf(totalValue);
             generalservicevalue = Float.valueOf(GenSerAnt);
             generalservicefreevalue=Float.valueOf(GenSerFreeAmt);
-            Log.d("ANUSHA "," finalrows s generalservicefreevalue "+generalservicefreevalue);
-            Log.d("ANUSHA "," finalrows s sparepartvalue "+sparepartvalue);
-            Log.d("ANUSHA "," finalrows s generalservicevalue "+generalservicevalue);
             finalAmt += sparepartvalue + generalservicevalue;//
             finalAmtTv.setText(String.valueOf(String.format("%.2f",finalAmt)));
-            Log.d("ANUSHA "," finalrows s "+finalAmt);
             NetAmt.setText(finalAmtTv.getText().toString().trim());
 //            NetAmt.setText(String.valueOf(String.format("%.2f",finalAmt)));
         }catch (Exception e){
             e.printStackTrace();
-            Log.d("ANUSHA ", " &&&&& " + e.toString());
         }
     }
 
@@ -823,7 +812,6 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
         try {
             float mrp = 0.0f, Qty = 0.0f;
             int selectedPosition = getItemExistency(SP.getmSparePartID());
-            Log.d("ANUSHA ","JESUS "+selectedPosition);
             boolean IsItemAdded = false;
             if (selectedPosition == -1) {
                 sparePartEstDetailsArrayList.add(SP);
@@ -924,10 +912,32 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
         } else if (requestCode == 33 && data != null && resultCode == RESULT_OK) {
             EditData();
         }else if (requestCode == 38&& data != null && resultCode == RESULT_OK) {
+//            MainActivity.comingfrom="66";
             PrepareSparePartEstList();
         }else if (requestCode == 39&& data != null && resultCode == RESULT_OK) {
             DeleteServiceDetails();
+        }else if(requestCode == 99 && data !=null && resultCode == RESULT_OK){
+            PrintDetails();
         }
+    }
+
+    private void PrintDetails() {
+        try {
+            DatabaseHelper db = new DatabaseHelper(context);
+            Cursor cursor = db.getPrinterDetails();
+            if (cursor != null) {
+                if (cursor.getCount() > 0) {
+                    cursor.moveToFirst();
+                    printerName = cursor.getString(cursor.getColumnIndex(InfDbSpecs.PRINTER_NAME));
+                    printerIp = cursor.getString(cursor.getColumnIndex(InfDbSpecs.PRINTERIP));
+
+                }
+            }
+        }
+        catch(Exception e){
+        }
+        String TransactionNo="";
+        Print_BillFormat(TransactionNo);
     }
 
     private void PayNowInformation(Intent data) {
@@ -951,11 +961,8 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
                 invEdtValue=Integer.parseInt(invEdt);
 
             totalAmtFromPayNow=cardEdtValue+cashEdtValue+upiEdtValue+invEdtValue;
-            Log.d("ANUSHA "," SP cardedt "+cardEdt);
-            Log.d("ANUSHA "," SP cashEdt "+cashEdt);
-            Log.d("ANUSHA "," SP upiEdt "+upiEdt);
-            Log.d("ANUSHA "," SP invEdt "+invEdt);
-            Log.d("ANUSHA "," SP totalAmtFromPayNow "+totalAmtFromPayNow);
+
+            CustomDailog("Total Cost", "Do You Want to Print Bill?", 99, "PRINT", 0);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -993,7 +1000,6 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
             try {
                 float mrp = 0.0f, Qty = 0.0f;
                 int selectedPosition = getItemExistencyJ(serviceList.getSubServiceId());
-                Log.d("ANUSHA ","JESUS "+selectedPosition);
                 boolean IsItemAdded = false;
                 if (selectedPosition == -1) {
                     generailServiceDetailsArrayList.add(serviceList);
@@ -1030,9 +1036,6 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
                 e.printStackTrace();
             }
 //            generailServiceDetailsArrayList.add(serviceList);
-           /* for(int i=0;i<generailServiceDetailsArrayList.size();i++){
-                Log.d("ANUSHA "," "+generailServiceDetailsArrayList.get(i).getSubServiceName());
-            }*/
             finalCalculateData();
         } catch (Exception e) {
             e.printStackTrace();
@@ -1141,12 +1144,10 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
             float finalamt = 0.0f;
             for (int i = 0; i < generailServiceDetailsArrayList.size(); i++) {
                 finalrows++;
-                Log.d("ANUSHA "," finalrows "+generailServiceDetailsArrayList.size()+" "+generailServiceDetailsArrayList.get(i).getmIssueType());
                 TotalGrossAmt = generailServiceDetailsArrayList.get(i).getServiceCharge();
                 TotalQtyValue = generailServiceDetailsArrayList.get(i).getmQty();
                 if(generailServiceDetailsArrayList.get(i).getmIssueType().equalsIgnoreCase("Free")) {
                     totalFreeAmount += Float.parseFloat(TotalQtyValue) * Float.parseFloat(generailServiceDetailsArrayList.get(i).getmTotalVal());
-                    Log.d("ANUSHA "," finalrows "+totalFreeAmount);
                 }else {
                     finalamt = Float.parseFloat(TotalQtyValue) * Float.parseFloat(TotalGrossAmt);
                     if (TotalQtyValue.length() != 0) {
@@ -1165,7 +1166,6 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
             GenSerFreeAmount.setText(String.format("%.2f", totalFreeAmount));
             finalCalculateData();
         }catch (Exception e){
-            Log.d("ANUSHA ", " &&&&& " + e.toString());
         }
     }
 
@@ -1246,6 +1246,8 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.action_save:
+//                GetCompanyDetailsToPrint(); //testing purpose added here
+//                PreparePrintList();
                 if(Validate()) {
                     try {
                         CustomDailog("Spare Part Estimation", "Do You Want to Save Details?", 38, "SAVE", 0);
@@ -1255,9 +1257,15 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
                     }
                 }
                 return true;
-            case R.id.action_printer:
-                String TransactionNo="";
-                Print_BillFormat(TransactionNo);
+
+            case R.id.action_printer_image:
+                try {
+                    CustomDailog("Spare Part Estimation", "Do You Want to Print Details?", 99, "PRINT", 0);
+                } catch (Exception e) {
+                    e.printStackTrace();
+
+                }
+
                 return true;
 
             default:
@@ -1266,22 +1274,22 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
     }
     private void Print_BillFormat(String GinvNo) {
         try {
-            PreparePrintList();
-            Log.d("ANUSHA "," INSIDE BILL FORMAT "+ProjectMethods.getBillPrinterType());
-//            PrintEpson_fM30_Printer();
-            if (ProjectMethods.getBillPrinterType() == Enums.Printers.EPSON) {
-//                PrintEpson_fM30_Printer();
+//            PreparePrintList();
+            GetCompanyDetailsToPrint();
+            PrintEpson_fM30_Printer();
+            /*if (printerName == Enums.Printers.EPSON.toString()) {
+                PrintEpson_fM30_Printer();
                 DateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
                 Date currentdate = new Date();
                 TodayDate = (df.format(currentdate));
                 print(TodayDate);
-            }else if (ProjectMethods.getBillPrinterType() == Enums.Printers.EPSON_M30) {
+            }else if (printerName == Enums.Printers.EPSON_M30.toString()) {
                 PrintEpson_fM30_Printer();
-              /*  DateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+              *//*  DateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
                 Date currentdate = new Date();
                 String TodayDate = (df.format(currentdate));
-                print(TodayDate);*/
-            }/* else if (ProjectMethods.getBillPrinterType() == Enums.Printers.MAESTROS) {
+                print(TodayDate);*//*
+            }*//* else if (ProjectMethods.getBillPrinterType() == Enums.Printers.MAESTROS) {
                 PrintMaestrosPrinter();
             } else if (ProjectMethods.getBillPrinterType() == Enums.Printers.SCANTECH) {
                 PrintScantechPrinter();
@@ -1289,14 +1297,12 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
                 PrintSunmiPrinter();
             }*/
             if (GinvNo != null) {
-                Log.d("ANUSHA "," BILL SAVED SUCCESS "+GinvNo);
-//                showDialog(WholeSaleBilling.this, getResources().getString(R.string.bill_saved_success_txt) + GinvNo, true);
+ //                showDialog(WholeSaleBilling.this, getResources().getString(R.string.bill_saved_success_txt) + GinvNo, true);
                 GinvNo = null;
 //                ProjectMethodes.DeleteFolder(WholeSaleBilling.this);
 //                ProjectMethodes.BackupDatabase(WholeSaleBilling.this);
             } else {
-                Log.d("ANUSHA "," BILL SAVEING FAILED ");
-//                showDialog(WholeSaleBilling.this, getResources().getString(R.string.bill_saved_failed_txt), false);
+ //                showDialog(WholeSaleBilling.this, getResources().getString(R.string.bill_saved_failed_txt), false);
                 GinvNo = null;
             }
 
@@ -1339,7 +1345,6 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
     private void PrintEpson_fM30_Printer(String _GinvNo) {
         try {
             Log.v("Result3", "Now Trying to connect");
-            Log.d("ANUSHA ", "PrinterEpson_f30_Printer");
             String boldText="";
             if (!Connect_Epson_M_30_Printer()) {
                 finalizeObject();
@@ -1398,15 +1403,16 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
 
     private void PrintEpson_fM30_Printer() {
         try {
-            Log.d("ANUSHA "," BILL SAVED SUCCESS TRY BLOCK ");
             Log.v("Result3", "Now Trying to connect");
-//            Log.d("ANUSHA "," BILL SAVED SUCCESS TRY BLOCK "+Connect_Epson_M_30_Printer());
 //            if (!Connect_Epson_M_30_Printer()) {
 //                finalizeObject();
 //                return;
 //            }
+
             mPrinter = new Printer(Printer.TM_M30, 0, context);
-            mPrinter.connect("BT:00:01:90:76:09:FC", Printer.PARAM_DEFAULT);
+//            mPrinter.connect("BT:00:01:90:84:FD:9", Printer.PARAM_DEFAULT);
+//                        mPrinter.connect("BT:00:01:90:77:25:00", Printer.PARAM_DEFAULT);
+            mPrinter.connect(printerIp, Printer.PARAM_DEFAULT);
             mPrinter.clearCommandBuffer();
             mPrinter.setReceiveEventListener(null);
 
@@ -1435,7 +1441,6 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
             After_Epson_M_30_Print();
         } catch (Exception e) {
             e.printStackTrace();
-            Log.d("ANUSHA "," BILL SAVED SUCCESS CATCH BLOCK "+e.toString());
             Log.v("PrintEpson_fM30_Printer", "QuickBilling");
         }
     }
@@ -1453,15 +1458,15 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
         }
     }
 
-    private boolean Connect_Epson_M_30_Printer() {
+    private boolean Connect_Epson_M_30_Printer()
+    {
         try {
             mPrinter = new Printer(Printer.TM_M30, 0, context);
             mPrinter.connect(ProjectMethods.get_BillPrinterIP(), Printer.PARAM_DEFAULT);
-//            mPrinter.beginTransaction();
-            Log.d("ANUSHA "," BILL SAVED SUCCESS TRY BLOCK Connect_Epson_M_30_Printer");
+            mPrinter.beginTransaction();
+
         } catch (Exception e) {
 
-            Log.d("ANUSHA "," BILL SAVED SUCCESS CATCH BLOCK Connect_Epson_M_30_Printer "+e.toString());
             return false;
         }
         mPrinter.setReceiveEventListener(this);
@@ -1551,7 +1556,7 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
         try {
             printerList = new ArrayList<String>();
             int NoOfCols = 0;
-            String BillPrintType = ProjectMethods.getBillPrinterType().toString();
+            String BillPrintType = printerName;
             String CounrterValue = "";
 
             if (BillPrintType == Enums.Printers.SUNMI_28_COLUMN.toString()) {
@@ -1567,14 +1572,41 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
             } else if (BillPrintType == Enums.Printers.SCANTECH.toString()) {
                 NoOfCols = 48;
             } else {
-                NoOfCols = 40;
+                NoOfCols = 48;
             }
 //            printerList.add("CompName");
-            printerList.add(AddSpace("MRF Tyres And Service", NoOfCols, Enums.AlignAt.Middle));
-            printerList.add(AddSpace(" VIJAYA TYRES ",NoOfCols, Enums.AlignAt.Middle));
+            for (int j = 0; j < companyDetailsArrayList.size(); j++) {
+                if (companyDetailsArrayList.get(j).getCompanyName() != null) {
+                    printerList.add(AddSpace(companyDetailsArrayList.get(j).getCompanyName(), NoOfCols, Enums.AlignAt.Middle));
+
+                }
+                if (companyDetailsArrayList.get(j).getVATRegNo() != null) {
+                    printerList.add(AddSpace(" GSTNO : " + companyDetailsArrayList.get(j).getVATRegNo(), NoOfCols, Enums.AlignAt.Middle));
+                }
+                if (companyDetailsArrayList.get(j).getCompCity() != null && companyDetailsArrayList.get(j).getZip() != null) {
+                    printerList.add(AddSpace(" "+companyDetailsArrayList.get(j).getCompCity()+" - "+ companyDetailsArrayList.get(j).getZip()+" ", NoOfCols, Enums.AlignAt.Middle));
+                }
+                if (companyDetailsArrayList.get(j).getCompPlace() != null) {
+                    printerList.add(AddSpace(" "+companyDetailsArrayList.get(j).getCompPlace(), NoOfCols, Enums.AlignAt.Middle));
+                }
+                if (companyDetailsArrayList.get(j).getCompState() != null && companyDetailsArrayList.get(j).getCountry() != null) {
+                    printerList.add(AddSpace("State: "+companyDetailsArrayList.get(j).getCompState()+" Country: "+companyDetailsArrayList.get(j).getCountry(), NoOfCols, Enums.AlignAt.Middle));
+                }
+                if (companyDetailsArrayList.get(j).getPhone1() != null) {
+                    printerList.add(AddSpace("Landline: "+companyDetailsArrayList.get(j).getPhone1(), NoOfCols, Enums.AlignAt.Middle));
+                }
+                if (companyDetailsArrayList.get(j).getPhone2() != null) {
+                    printerList.add(AddSpace("Phone: "+companyDetailsArrayList.get(j).getPhone2(), NoOfCols, Enums.AlignAt.Middle));
+                }
+
+
+            }
+//            printerList.add(AddSpace("MRF Tyres And Service", NoOfCols, Enums.AlignAt.Middle));
+//            printerList.add(AddSpace(" VIJAYA TYRES ",NoOfCols, Enums.AlignAt.Middle));
 //            printerList.add(AddSpace(" UNDI ROAD, Near BYPASS " ,NoOfCols,Enums.AlignAt.Middle));
-            printerList.add(AddSpace(" BHIMAVARAM- 534202 ", NoOfCols, Enums.AlignAt.Middle));
-            printerList.add(AddSpace("Phone: 8816 250 617", NoOfCols, Enums.AlignAt.Middle));
+//            printerList.add(AddSpace(" GSTNO : "+"37ACOPV7275N1ZD",NoOfCols,Enums.AlignAt.Middle));
+//            printerList.add(AddSpace(" BHIMAVARAM- 534202 ", NoOfCols, Enums.AlignAt.Middle));
+//            printerList.add(AddSpace("Phone: 8816 250 617", NoOfCols, Enums.AlignAt.Middle));
             printerList.add(ProjectMethods.GetLine(NoOfCols));
 
 
@@ -1590,29 +1622,30 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
             String hour=(gcalendar.get(Calendar.HOUR) + ":");
             String minute=(gcalendar.get(Calendar.MINUTE) + ":");
             String second=(gcalendar.get(Calendar.SECOND)+"");
-
-            String BilldateandTime = AddSpace("Date: " +printDate+","+hour+minute+second, 50, Enums.AlignAt.Left);
+            DateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+            Date currentdate = new Date();
+            printDate = (df.format(currentdate));
+            String BilldateandTime = AddSpace("Date: " +JCDate+","+JCTime, 50, Enums.AlignAt.Left);
             String VehicleNumber = AddSpace("Vehicle Regd  No:"+ printVehicleRegNumber, 50, Enums.AlignAt.Left);
 
-            String CustName1 = AddSpace("Date: " +printDate+","+hour+minute+second, 40, Enums.AlignAt.Left);
+            String CustName1 = AddSpace("Date: " +JCDate+","+JCTime, 40, Enums.AlignAt.Left);
             String MobNo1 = AddSpace("Vehicle Regd  No:"+ printVehicleRegNumber, 40, Enums.AlignAt.Left);
             String CustName = AddSpace("Name: " +printCustomerName, 40, Enums.AlignAt.Left);
             String MobNo = AddSpace("Phone No :" + printPhoneNumber, 24, Enums.AlignAt.Left);
             String VehicleModel=AddSpace("Vehicle Model:"+ModelNo,40,Enums.AlignAt.Left);
-
+            String InvNumber=AddSpace("Invoice Number:"+jobcardId,40,Enums.AlignAt.Left);
             /*printerList.add(ginvNo_A_Value + Space + BillDate);
             printerList.add(CustName + Space + MobNo);*/
             printerList.add(CustName1);
+            printerList.add(InvNumber);
             printerList.add(MobNo1);
+            printerList.add(VehicleModel);
             printerList.add(CustName);
             printerList.add(MobNo);
-            printerList.add(VehicleModel);
+
+
             printerList.add(ProjectMethods.GetLine(NoOfCols));
-//            String ServiceList = AddSpace("Service Done:", 22, Enums.AlignAt.Left);
-//            String ServicesNames=AddSpace(,18,Enums.AlignAt.Left);
-//            printerList.add(ServiceList);
             //************************************Body Part Start**************************************************
-//            printerList.add(ProjectMethods.GetLine(ServiceList.length()));
             int NextLineSpace = 0;
             int SnoLen = 2;
             int NameLen = 14 + intExtraCols;
@@ -1632,17 +1665,37 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
 
             String strNextLineSpace = AddSpace("", NextLineSpace, Enums.AlignAt.Right);
 
-            String HeaderSNo = AddSpace("SN", SnoLen, Enums.AlignAt.Left);
+//            String HeaderSNo = AddSpace("SN", SnoLen, Enums.AlignAt.Left);
             String HeaderItemName = AddSpace("Service Name", NameLen, Enums.AlignAt.Left) + " ";
-//            String HeaderQty = AddSpace("Qty", QtyLen, Enums.AlignAt.Right) + " ";
-//            String HeaderMRP = AddSpace("MRP", UOMLen, Enums.AlignAt.Right);
-
-
-            String HeaderAmount = AddSpace("Amount", AmtLen, Enums.AlignAt.Right);
+            String HeaderQty = AddSpace("Qty", QtyLen, Enums.AlignAt.Left) +" ";
+//            String HeaderUOM = AddSpace("Rate", UOMLen, Enums.AlignAt.Right);
+            String HeaderMRP = AddSpace("Rate", MRPLen, Enums.AlignAt.Middle);
+            String HeaderAmount = AddSpace("Total", AmtLen, Enums.AlignAt.Right);
             // String HeaderAmount = AddSpace("Value(AED)", AmtLen, Enums.AlignAt.Right);
-            if (SnoLen > 0) {
+
+          /*  if (SnoLen > 0) {
                 HeaderSNo += " ";
             }
+            if (UOMLen > 0) {
+                HeaderUOM += " ";
+            }*/
+//            String ServiceList = AddSpace("Service Done:", 22, Enums.AlignAt.Left);
+//            String ServicesNames=AddSpace(,18,Enums.AlignAt.Left);
+//            printerList.add(ServiceList);
+            //************************************Body Part Start**************************************************
+//            printerList.add(ProjectMethods.GetLine(ServiceList.length()));
+            String ServicesList = AddSpace("Services Details:", 22, Enums.AlignAt.Left);
+            printerList.add(ServicesList);
+            printerList.add(ProjectMethods.GetLine(NoOfCols));
+            SnoLen = 0;
+            UOMLen = 3;
+            NameLen = NameLen - 1;
+
+            if (NoOfCols < 40) {
+                NameLen = NoOfCols - SnoLen - 2;
+                NextLineSpace = NoOfCols - QtyLen - UOMLen - MRPLen - AmtLen - 1;
+            }
+            printerList.add(HeaderItemName +HeaderQty + HeaderMRP + HeaderAmount);
             /*if (UOMLen > 0) {
                 HeaderUOM += " ";
             }*/
@@ -1652,54 +1705,99 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
 //            String SParePartList = AddSpace("SparePartList List:" +mJobCardNo, 22, Enums.AlignAt.Left);
 //            printerList.add(SParePartList);
             for (int i = 0; i < generailServiceDetailsArrayList.size(); i++) {
+                String BodyItemName = AddSpace(generailServiceDetailsArrayList.get(i).getSubServiceName(), NameLen, Enums.AlignAt.Left) + " ";
+                String BodyQty = AddSpace(String.valueOf(generailServiceDetailsArrayList.get(i).getmQty()), QtyLen, Enums.AlignAt.Left) ;
+                String BodyMRP = AddSpace(String.valueOf(generailServiceDetailsArrayList.get(i).getServiceCharge()), MRPLen, Enums.AlignAt.Middle)+" ";
+                String BodyAmount;
+                float totalVal=0.00f;
+                if(generailServiceDetailsArrayList.get(i).getmIssueType().equals("Paid")) {
+                    totalVal=Float.parseFloat(generailServiceDetailsArrayList.get(i).getmTotalVal());
+                    BodyAmount = AddSpace(String.format("%.2f", totalVal), AmtLen, Enums.AlignAt.Right);
+                }else
+                    BodyAmount="Free";
+
+            /*for (int i = 0; i < generailServiceDetailsArrayList.size(); i++) {
+                String BodyItemName = AddSpace(generailServiceDetailsArrayList.get(i).getSubServiceName(), NameLen, Enums.AlignAt.Left) + " ";
+                String BodyQty = AddSpace(String.valueOf(generailServiceDetailsArrayList.get(i).getmQty()), QtyLen, Enums.AlignAt.Right) + " ";
+                String BodyMRP = AddSpace(String.valueOf(generailServiceDetailsArrayList.get(i).getServiceCharge()), 10, Enums.AlignAt.Right) + " ";
+                String BodyAmount;
+                float totalVal=0.00f;
+                if(generailServiceDetailsArrayList.get(i).getmIssueType().equals("Paid")) {
+                    totalVal=Float.parseFloat(generailServiceDetailsArrayList.get(i).getmTotalVal());
+                    BodyAmount = AddSpace(String.format("%.2f", totalVal), 10, Enums.AlignAt.Right);
+                }else
+                    BodyAmount="Free";*/
+
+                printerList.add(BodyItemName +  BodyQty + BodyMRP + BodyAmount);
 //                String BodySNo = AddSpace(String.valueOf(i + 1), SnoLen, Enums.AlignAt.Right);
-                String strName = AddSpace(generailServiceDetailsArrayList.get(i).getSubServiceName(),40, Enums.AlignAt.Left);
+//                String strName = AddSpace(generailServiceDetailsArrayList.get(i).getSubServiceName(),40, Enums.AlignAt.Left);
 //                String BodyItemName = AddSpace(strName, NameLen, Enums.AlignAt.Left) + " ";
 //                String BodyQty = AddSpace(String.valueOf(generailServiceDetailsArrayList.get(i).getmQty()), QtyLen, Enums.AlignAt.Right) + " ";
                 // String BodyUOM = AddSpace(String.valueOf(generailServiceDetailsArrayList.get(i).getUomName()), UOMLen, Enums.AlignAt.Right);
 //                String BodyMRP = AddSpace(generailServiceDetailsArrayList.get(i).getServiceCharge(), MRPLen, Enums.AlignAt.Right) + " ";
-                String BodyMRP;
-                if(generailServiceDetailsArrayList.get(i).getmIssueType().equals("Paid")) {
-                    float totalVal=Float.parseFloat(generailServiceDetailsArrayList.get(i).getmTotalVal());
-                    BodyMRP = AddSpace(String.valueOf(totalVal), MRPLen, Enums.AlignAt.Right);
-                }else
-                 BodyMRP="Free";
+
 
 //                String BodyAmount = AddSpace(String.valueOf(generailServiceDetailsArrayList.get(i).getmTotalVal()), AmtLen, Enums.AlignAt.Right);
-                Log.d("ANUSHA "," **** BodyMRP "+BodyMRP);
                 /*if (SnoLen > 0) {
                     BodySNo += " ";
                 }*/
                /* if (UOMLen > 0) {
                     BodyUOM += " ";
                 }*/
-                printerList.add(strName + BodyMRP);
+
 //                printerList.add(BodySNo + BodyItemName + BodyQty + BodyMRP + BodyAmount);
 
 
                 //  *****************To Print Item Name In Two Lines with alignment dont delete****************
-                if (strName.length() > NameLen) {
-                    strName = strName.substring(NameLen, strName.length());
-                    if (strName.length() > 2) {
+                if (BodyItemName.length() > NameLen) {
+                    BodyItemName = BodyItemName.substring(NameLen, BodyItemName.length());
+                    if (BodyItemName.length() > 2) {
                         //  PrintList_DailySalesSummary.add(AddSpace("", BodySNo.length(), Enums.AlignAt.Left) + AddSpace(strName, BodyItemName.length(), Enums.AlignAt.Left) + AddSpace("", BodyQty.length(), Enums.AlignAt.Left) + AddSpace("", BodyMRP.length(), Enums.AlignAt.Left) + AddSpace("", BodyAmount.length(), Enums.AlignAt.Left));
                     }
                 }
             }
+            String GenSerAmt="";
+            if(!GenSerTotAmt.getText().toString().isEmpty()){
+                GenSerAmt=(GenSerTotAmt.getText().toString());
+            }
+            if(!GenSerAmt.isEmpty()){
+                String ServiceTotalText=(AddSpace("Service Total:", 14, Enums.AlignAt.Left));
+                String space=AddSpace("         ", 10, Enums.AlignAt.Middle);
+                String space1=AddSpace("         ", 9, Enums.AlignAt.Middle);
+                String ServiceTotalValue=(AddSpace(GenSerAmt, 10, Enums.AlignAt.Right) + " ");
+                printerList.add(ServiceTotalText +space+space1+ServiceTotalValue);
+                printerList.add(ProjectMethods.GetLine(NoOfCols));
+            }
+
+            String HeaderItemName1 = AddSpace("Spare Part", NameLen, Enums.AlignAt.Left) + " ";
+            String HeaderQty1 = AddSpace("Qty", QtyLen, Enums.AlignAt.Left) + " ";
+//            String HeaderUOM = AddSpace("Rate", UOMLen, Enums.AlignAt.Right);
+            String HeaderMRP1 = AddSpace("Rate", MRPLen, Enums.AlignAt.Middle);
+            String HeaderAmount1 = AddSpace("Total", AmtLen, Enums.AlignAt.Right);
+
+
             //************************************Body Part End**************************************************
-            String SparesList = AddSpace("Spare Parts:", 22, Enums.AlignAt.Left);
+            String SparesList = AddSpace("Spares Details:", 22, Enums.AlignAt.Left);
 //            String ServicesNames=AddSpace(,18,Enums.AlignAt.Left);
             printerList.add(SparesList);
-            printerList.add(ProjectMethods.GetLine(SparesList.length()));
+            printerList.add(ProjectMethods.GetLine(NoOfCols));
+            String headline=HeaderItemName1 + HeaderQty1 + HeaderMRP1 + HeaderAmount1;
+            float bodyMRPFloat=0.00f,bodyMRPToatlFloat=0.00f;
             for (int i = 0; i < sparePartEstDetailsArrayList.size(); i++) {
+                if(i==0)
+                    printerList.add(headline);
 //                String BodySNo = AddSpace(String.valueOf(i + 1), SnoLen, Enums.AlignAt.Right);
-                String strName = AddSpace(sparePartEstDetailsArrayList.get(i).getmSparePartName(),40,Enums.AlignAt.Left);
+                int nameLength=sparePartEstDetailsArrayList.get(i).getmSparePartName().length();
+                String strName = AddSpace(sparePartEstDetailsArrayList.get(i).getmSparePartName(),NameLen,Enums.AlignAt.Left)+" ";
 //                String BodyItemName = AddSpace(strName, NameLen, Enums.AlignAt.Left) + " ";
-//                String BodyQty = AddSpace(String.valueOf(sparePartEstDetailsArrayList.get(i).getmQty()), QtyLen, Enums.AlignAt.Right) + " ";
+                String BodyQty = AddSpace(String.valueOf(sparePartEstDetailsArrayList.get(i).getmQty()), QtyLen, Enums.AlignAt.Left);
                 // String BodyUOM = AddSpace(String.valueOf(sparePartEstDetailsArrayList.get(i).getUomName()), UOMLen, Enums.AlignAt.Right);
-//                String BodyMRP = AddSpace(String.valueOf(sparePartEstDetailsArrayList.get(i).getmMrp()), MRPLen, Enums.AlignAt.Right) + " ";
-                String BodyMRP = AddSpace(String.valueOf(sparePartEstDetailsArrayList.get(i).getmTotalValue()), MRPLen, Enums.AlignAt.Right) + " ";
-//
-                printerList.add(strName+BodyMRP);
+                bodyMRPFloat=Float.parseFloat(sparePartEstDetailsArrayList.get(i).getmMrp());
+                String BodyMRP1 = AddSpace(String.valueOf(sparePartEstDetailsArrayList.get(i).getmMrp()), MRPLen, Enums.AlignAt.Middle) + " ";//String.format("%.2f", sparePartEstDetailsArrayList.get(i).getmTotalValue()
+
+                bodyMRPToatlFloat=Float.parseFloat(sparePartEstDetailsArrayList.get(i).getmTotalValue());
+                String BodyMRP = AddSpace(String.format("%.2f", bodyMRPToatlFloat), AmtLen, Enums.AlignAt.Right);
+                printerList.add(strName  + BodyQty + BodyMRP1 + BodyMRP);
 
 
                 //  *****************To Print Item Name In Two Lines with alignment dont delete****************
@@ -1710,54 +1808,108 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
                     }
                 }
             }
-
-            printerList.add(ProjectMethods.GetLine(NoOfCols));
+            String GenSparesAmt="";
+            if(!TotalAmtTv.getText().toString().isEmpty()){
+                GenSparesAmt=(TotalAmtTv.getText().toString());
+            }
+            if(!GenSparesAmt.isEmpty()){
+                String SparesTotalText=(AddSpace("Spares Total:", 15, Enums.AlignAt.Left));
+                String space=AddSpace("         ", 10, Enums.AlignAt.Middle);
+                String space1=AddSpace("         ", 9, Enums.AlignAt.Middle);
+                String SparesTotalValue=(AddSpace(GenSparesAmt, 10, Enums.AlignAt.Right) + " ");
+                printerList.add(SparesTotalText+space+space1+SparesTotalValue);
+                printerList.add(ProjectMethods.GetLine(NoOfCols));
+            }//TotalAmtTv
+//            printerList.add(ProjectMethods.GetLine(NoOfCols));
             String discountAmount=DiscountAmt.getText().toString();
             String netAmount=NetAmt.getText().toString();
-
+            String grossAmount=finalAmtTv.getText().toString();
+            if(!grossAmount.isEmpty()){
+                String TotalText=(AddSpace("Total:", 10, Enums.AlignAt.Left));
+                String space=AddSpace("         ", 9, Enums.AlignAt.Middle);
+                String space1=AddSpace("         ", 10, Enums.AlignAt.Middle);
+                String TotalValue=(AddSpace(grossAmount, 15, Enums.AlignAt.Right)+" ");
+                printerList.add(TotalText+space+space1+TotalValue);
+                printerList.add(ProjectMethods.GetLine(NoOfCols));
+            }
             if(!discountAmount.isEmpty()) {
-                String DiscountText=(AddSpace("Discount:", 40, Enums.AlignAt.Left));
-                String DiscountValue=(AddSpace(discountAmount, MRPLen, Enums.AlignAt.Right) + " ");
-                printerList.add(DiscountText+DiscountValue);
+                String DiscountText=(AddSpace("Discount:", 10, Enums.AlignAt.Left));
+                String space=AddSpace("         ", 9, Enums.AlignAt.Middle);
+                String space1=AddSpace("         ", 10, Enums.AlignAt.Middle);
+                String DiscountValue=(AddSpace(discountAmount, 15, Enums.AlignAt.Right)+" ");
+                printerList.add(DiscountText+space+space1+DiscountValue);
                 printerList.add(ProjectMethods.GetLine(NoOfCols));
             }
 
             if(!netAmount.isEmpty()){
-                String NetAmountText=(AddSpace("Net Amount:", 40, Enums.AlignAt.Left));
-                String NetValue=(AddSpace(netAmount, MRPLen, Enums.AlignAt.Right) + " ");
-                printerList.add(NetAmountText+NetValue);
+                String NetAmountText=(AddSpace("Net Amount:", 12, Enums.AlignAt.Left));
+                String space=AddSpace("         ", 10, Enums.AlignAt.Middle);
+                String space1=AddSpace("         ", 9, Enums.AlignAt.Middle);
+                String NetValue=(AddSpace(netAmount, 15, Enums.AlignAt.Right)+" ");
+                printerList.add(NetAmountText+space+space1+NetValue);
                 printerList.add(ProjectMethods.GetLine(NoOfCols));
             }
-            printerList.add(AddSpace("Received:", 22, Enums.AlignAt.Left));
+            printerList.add(AddSpace("Mode of Payment:", 22, Enums.AlignAt.Left));
             printerList.add(ProjectMethods.GetLine(NoOfCols));
             if(!cashEdt.isEmpty()) {
                 String cashText=(AddSpace("Cash:", 10, Enums.AlignAt.Left));//cardEdt="0",cashEdt="0",upiEdt="0"
-                String cashValue=(AddSpace(cashEdt, MRPLen, Enums.AlignAt.Left));//cardEdt="0",cashEdt="0",upiEdt="0"
+                String cashValue=(AddSpace(cashEdt, 10, Enums.AlignAt.Left));//cardEdt="0",cashEdt="0",upiEdt="0"
                 printerList.add(cashText+cashValue);
             }
             if(!cardEdt.isEmpty()) {
                 String cardText=(AddSpace("Card:" , 10, Enums.AlignAt.Left));
-                String cardValue=(AddSpace(cardEdt, MRPLen, Enums.AlignAt.Left));
+                String cardValue=(AddSpace(cardEdt, 10, Enums.AlignAt.Left));
                 printerList.add(cardText+cardValue);
             }
             if(!upiEdt.isEmpty()) {
                 String upiText=(AddSpace("UPI:", 10, Enums.AlignAt.Left));
-                String upiValue=(AddSpace(upiEdt, MRPLen, Enums.AlignAt.Left));
+                String upiValue=(AddSpace(upiEdt, 10, Enums.AlignAt.Left));
                 printerList.add(upiText+upiValue);
             }
             if(!invEdt.isEmpty()) {
                 String invoiceText=(AddSpace("Invoice:", 10, Enums.AlignAt.Left));
-                String invoiceValue=(AddSpace(invEdt, MRPLen, Enums.AlignAt.Left));
+                String invoiceValue=(AddSpace(invEdt, 10, Enums.AlignAt.Left));
                 printerList.add(invoiceText+invoiceValue);
 
             }
+            float taxableCalValue=0.00f;
+            taxableCalValue=(Float.parseFloat(netAmount)*100)/118;
+            DecimalFormat twoDForm = new DecimalFormat("#.##");
+            double finaltaxableAmt= Double.valueOf(twoDForm.format(taxableCalValue));
+            String taxableText=(AddSpace("Taxable Amount:", 16, Enums.AlignAt.Left));
+            String taxableValue=(AddSpace(String.valueOf(finaltaxableAmt), 10, Enums.AlignAt.Left));
+            printerList.add(taxableText+taxableValue);
+
+            float gstCalValue=0.0f;
+            gstCalValue=((Float.parseFloat(netAmount))-taxableCalValue)/2;
+            String gstText=(AddSpace("CGST 9%:", 13, Enums.AlignAt.Left));
+            String gstTextValue=(AddSpace(String.valueOf(gstCalValue), 10, Enums.AlignAt.Left));
+            printerList.add(gstText+gstTextValue);
+
+            String sgstText=(AddSpace("SGST 9%:", 13, Enums.AlignAt.Left));
+            String sgstTextValue=(AddSpace(String.valueOf(gstCalValue), 10, Enums.AlignAt.Left));
+            printerList.add(sgstText+sgstTextValue);
+            String RemarksStr="";
+            if(!RemarksEdt.getText().toString().equals("Remarks"))
+                RemarksStr=RemarksStr+RemarksEdt.getText().toString();
+            for (int i = 0; i < estDetailsArrayList.size(); i++) {
+                RemarksStr=estDetailsArrayList.get(i).getmRemarks();
+
+            }
+            if(!RemarksStr.isEmpty()){
+                printerList.add(ProjectMethods.GetLine(NoOfCols));
+                String remarksText=(AddSpace("Remarks :", 9, Enums.AlignAt.Left));
+                String remarksValue=(AddSpace(RemarksStr, 50, Enums.AlignAt.Left));
+                printerList.add(remarksText+remarksValue);
+            }
+
             printerList.add(AddSpace("THANK YOU VISIT AGAIN", NoOfCols, Enums.AlignAt.Middle));
             printerList.add(" ");
             printerList.add(" ");
+            /*Log.d("ANUSHA "," ****ServiceEstimationJobcard Print copy ");
             for(int i=0;i<printerList.size();i++){
                 Log.d("ANUSHA "," **** "+printerList.get(i).toString());
-            }
-
+            }*/
             //************************************Footer Part End**************************************************
         } catch (Exception e) {
             e.printStackTrace();
@@ -1775,7 +1927,7 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
     private void PrepareSparePartEstList() {
 
         try {
-
+            finalItemDetailList = "";
             PrepareItemDetails();
             PrepareGeneralServiceDetails();
             sparePartEstimationArrayList.clear();
@@ -1808,11 +1960,6 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
             invEdtValue=Float.valueOf(invEdt);
         if(!NetAmt.getText().toString().isEmpty()) {
             totalAmtFromPayNow = cardEdtValue + cashEdtValue + upiEdtValue + invEdtValue;
-            Log.d("ANUSHA ", " SP cardedt " + cardEdt);
-            Log.d("ANUSHA ", " SP cashEdt " + cashEdt);
-            Log.d("ANUSHA ", " SP upiEdt " + upiEdt);
-            Log.d("ANUSHA ", " SP invEdt " + invEdt);
-            Log.d("ANUSHA ", " SP totalAmtFromPayNow " + totalAmtFromPayNow);
             float NetAmountValue = 0.0F;
             if (!NetAmt.getText().toString().isEmpty())
                 NetAmountValue = Float.parseFloat(NetAmt.getText().toString());
@@ -1960,12 +2107,12 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
             String mTotQtyServ=GenSerTotQty.getText().toString().trim();
             int finalTotalQty=Integer.parseInt(mTotQty)+Integer.parseInt(mTotQtyServ);
             String DiscountType="A",DiscountAmtText="0",DiscountPerText="0";
-            mCustomerName=CustomerNameEdt.getText().toString().trim();
-            if(mCustomerName.length()>0){
+            mCustomerName=CustNameEdt.getText().toString().trim();
+            /*if(mCustomerName.length()>0){
                 mCustomerID=CustomerNameEdt.getTag().toString().trim();
             }else{
                 mCustomerID="";
-            }
+            }*/
             EstimationPrintList estimationPrintList=new EstimationPrintList();
             estimationPrintList.setJobCardNo(mJobCardNo);
             estimationPrintList.setmDate(EstimationDate);
@@ -1988,14 +2135,14 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
             if (AppUtil.isNetworkAvailable(getActivity())) {
                 try {
                     JSONObject jsonObject = new JSONObject();
-                    jsonObject.accumulate("EstDate",EstimationDate);
+                    jsonObject.accumulate("EstDate",ProjectMethods.GetCustomerCurrentTime());
                     jsonObject.accumulate("UserId", ProjectMethods.getUserId());
                     jsonObject.accumulate("MobileNo",MobileNoEdt.getText().toString());
                     jsonObject.accumulate("Remarks",RemarksEdt.getText().toString().trim());
                     jsonObject.accumulate("Type",selectedString);
-                    jsonObject.accumulate("JobCardId",JobCardNoEdt.getText().toString());
+                    jsonObject.accumulate("JobCardId",mJobCardNo);
                     jsonObject.accumulate("ItemDetails",finalItemDetailList);
-                    jsonObject.accumulate("CustomerName",CustNameEdt.getText().toString());
+                    jsonObject.accumulate("CustomerName",mCustomerName);
                     jsonObject.accumulate("CustomerID",mCustomerID);
                     jsonObject.accumulate("TotQty",finalTotalQty);
                     jsonObject.accumulate("TotAmount",finalAmtTv.getText().toString());
@@ -2034,14 +2181,17 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
                     jsonObject.accumulate("PayModeAmount1","0");
 
                     Log.e("SparePartEstd ", " SparePartJSON_Obj " + jsonObject);
-//                    String TransactionNo="0";
-//                    Print_BillFormat(TransactionNo);
+                    String TransactionNo="0";
+                    Print_BillFormat(TransactionNo);
                     writeToFile(jsonObject.toString(),getContext(),JobCardNoEdt.getText().toString(),"estimate");
                     BackendServiceCall serviceCall = new BackendServiceCall(getActivity(), false);
                     requestName = "SaveSparePartEstiDetails";
                     serviceCall.setOnServiceCallCompleteListener(new OnServiceCallCompleteListenerSaveImpl());
                     serviceCall.makeJSONOArryPostRequest(ProjectVariables.BASE_URL + ProjectVariables.SaveSparePartEstiDetails, jsonObject, Request.Priority.HIGH);
                 } catch (Exception e) {
+                    //This is some error point to check
+                    Toast.makeText(requireActivity(),e.getMessage(),Toast.LENGTH_LONG).show();
+                    pDialog.dismiss();
                     e.printStackTrace();
                 }
             } else {
@@ -2085,23 +2235,24 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
         Log.e(TAG, "JobInformation: "  + data );
 
         String jobCardN = data.getStringExtra("JoBCardNo");
+//        String jobCardN = "74E299230006";//"65E299210068";//74E299230006
         String CustName = data.getStringExtra("CustName");
         String CustMobNo = data.getStringExtra("CustMobNo");
         JCDate = data.getStringExtra("JCDate");
+        JCTime=data.getStringExtra("JCTime");
         ModelNo=data.getStringExtra("ModelNo");
         VehicleNo = data.getStringExtra("VehicleNo");
+        JCRemarks=data.getStringExtra("JCRemarks");
         printVehicleRegNumber=data.getStringExtra("VehicleNo");
         String TechnicianName = data.getStringExtra("TechnicianName");
         JobCardNoEdt.setText(jobCardN);
         CustNameEdt.setText(CustName);
         MobileNoEdt.setText(CustMobNo);
         ReceiptDateEdt.setText(JCDate);
+        RemarksEdt.setText(JCRemarks);
         techEditText.setText(TechnicianName);
-        Log.d("ANUSHA "," *** FRAG "+VehicleNo);
-        Log.d("ANUSHA "," *** FRAG printVehicleRegNumber "+printVehicleRegNumber);
-        Log.d("ANUSHA "," *** FRAG CustName "+CustName);
         printCustomerName=data.getStringExtra("CustName");
-        Log.d("ANUSHA "," *** FRAG printCustomerName "+printCustomerName);
+        printPhoneNumber=data.getStringExtra("CustMobNo");
 //            savingState="FALSE";
         if(JobCardNoEdt.getText().toString()!=""){
             GetEditServiceDetails();
@@ -2129,7 +2280,6 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
                 try {
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.accumulate("JobCardId", jobcardId);
-                    Log.d("ANUSHA ", " " + jsonObject);
                     BackendServiceCall serviceCall = new BackendServiceCall(getActivity(), false);
                     requestName = "GetEstimationDetails";
                     serviceCall.setOnServiceCallCompleteListener(new OnServiceCallCompleteListenerSaveImpl());
@@ -2158,7 +2308,6 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
                 try {
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.accumulate("JobCardId", jobcardId);
-                    Log.d("ANUSHA ", " " + jsonObject);
                     BackendServiceCall serviceCall = new BackendServiceCall(getActivity(), false);
                     requestName = "GetJobCardDetailsReport";
                     serviceCall.setOnServiceCallCompleteListener(new OnServiceCallCompleteListenerSaveImpl());
@@ -2186,7 +2335,6 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
                 try {
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.accumulate("JobCardId", jobcardId);
-                    Log.d("ANUSHA ", " &&&&& " + jsonObject);
                     BackendServiceCall serviceCall = new BackendServiceCall(getActivity(), false);
                     requestName = "GetServicesAgstJobCard";
                     serviceCall.setOnServiceCallCompleteListener(new OnServiceCallCompleteListenerSaveImpl());
@@ -2214,8 +2362,6 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
                 try {
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.accumulate("JoBcardNo",jobcardId);
-                    Log.d("ANUSHA "," "+jsonObject);
-                    Log.d("ANUSHA ", " &&&&& " + jsonObject);
                     BackendServiceCall serviceCall = new BackendServiceCall(getActivity(), false);
                     requestName = "GetNewJobCardSpeDetails";
                     serviceCall.setOnServiceCallCompleteListener(new OnServiceCallCompleteListenerSaveImpl());
@@ -2287,7 +2433,7 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
                 try {
                     pDialog.dismiss();
                     handeSaveDetails(jsonArray);
-
+                    MainActivity.comingfrom="66";
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -2318,6 +2464,13 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }else if (requestName.equalsIgnoreCase("GetCompanyDetails")) {
+                try {
+                    pDialog.dismiss();
+                    companyDetails(jsonArray);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
 
@@ -2327,8 +2480,49 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
         }
     }
 
+    private void companyDetails(JSONArray jsonArray) {
+        Log.e("handeEditServicecalled", "handeEditServiceDetails called" + jsonArray.length());
+//        mswiperefreshlayout.setRefreshing(false);
+        if (jsonArray.length() > 0) {
+            if (companyDetailsArrayList == null) {
+                companyDetailsArrayList = new ArrayList<>();
+            }
+            companyDetailsArrayList.clear();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                try {
+                    JSONObject object = jsonArray.getJSONObject(i);
+                    String Result = object.getString("Result");
+                    if (Result.equalsIgnoreCase("No Records Found")) {//excep
+                        Toast.makeText(getActivity(), Result, Toast.LENGTH_SHORT).show();
+//                        ((NewJobCardDetailsMain)getActivity()).serviceMasterArrayList.clear();
+                    } else {
+                        CompanyDetails documentTypes = new CompanyDetails();
+                        documentTypes.setCompAddress(object.getString("CompAddress"));
+                        documentTypes.setCompCity(object.getString("CompCity"));
+                        documentTypes.setCompPlace(object.getString("CompPlace"));
+                        documentTypes.setCompState(object.getString("CompState"));
+                        documentTypes.setCompanyName(object.getString("CompanyName"));
+                        documentTypes.setCountry(object.getString("Country"));
+                        documentTypes.setEMail(object.getString("EMail"));
+                        documentTypes.setPhone1(object.getString("Phone1"));
+                        documentTypes.setPhone2(object.getString("Phone2"));
+                        documentTypes.setVATRegNo(object.getString("VATRegNo"));
+//                        documentTypes.setmSubServiceName(object.getString("SubServiceName"));
+                        documentTypes.setZip(object.getString("Zip"));
+                        companyDetailsArrayList.add(documentTypes);
+                        PreparePrintList();
+
+//                        ((NewJobCardDetailsMain)getActivity()).serviceMasterArrayList.add(documentTypes);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
+
     private void handeGetEstimationDetails(JSONArray jsonArray) {
-        Log.d("ANUSHA "," handeGetEstimationDetails "+jsonArray);
         if (jsonArray.length() > 0) {
             estDetailsArrayList.clear();
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -2352,6 +2546,7 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
                         documentTypes.setmPayModeAmountInvoice(object.getString("PayModeAmountInvoice"));
                         documentTypes.setmPayModeAmountOther(object.getString("PayModeAmountOther"));
                         documentTypes.setmPayModeAmount1(object.getString("PayModeAmount1"));
+                        documentTypes.setmRemarks(object.getString("Remarks"));
                         estDetailsArrayList.add(documentTypes);
                     }
                 } catch (Exception e) {
@@ -2368,14 +2563,12 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
             for (int i = 0; i < jsonArray.length(); i++) {
                 try {
                     JSONObject object = jsonArray.getJSONObject(i);
-                    Log.d("ANUSHA ", " &&&&& " + object.toString());
                     String Result = object.getString("Result");
                     if (Result.equalsIgnoreCase("No Records Found") ||
                             Result.equalsIgnoreCase("No Details Found")) {
                         Toast.makeText(getActivity(), Result, Toast.LENGTH_SHORT).show();
                         sparePartEstDetailsArrayList.clear();
                     } else {
-                        Log.d("ANUSHA ", " &&&&& " + object);
                         SparePartEstDetails documentTypes = new SparePartEstDetails();
                         documentTypes.setmSparePartName(object.getString("SPNAME"));
                         documentTypes.setmSparePartID(object.getString("SpareId"));
@@ -2388,7 +2581,6 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Log.d("ANUSHA ", " &&&&& " + e.toString());
                 }
             }
 
@@ -2399,7 +2591,6 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
     }
 
     private void handeSaveDetails(JSONArray jsonArray) {
-        Log.d("ANUSHA "," SaveSparePartEstiDetails response "+jsonArray);
         try {
             if (jsonArray.length() > 0) {
                 try {
@@ -2410,7 +2601,7 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
                         Toast.makeText(getActivity(), Result, Toast.LENGTH_SHORT).show();
                     }else{
                         String TransactionNo="0";
-                        Print_BillFormat(TransactionNo);
+//                        Print_BillFormat(TransactionNo);
 
                         clearData();
                         Toast.makeText(getActivity(), Result, Toast.LENGTH_SHORT).show();
@@ -2439,8 +2630,7 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
             for (int i = 0; i < jsonArray.length(); i++) {
                 try {
                     JSONObject object = jsonArray.getJSONObject(i);
-                    Log.d("ANUSHA ", " &&&&& " + object);
-//                    {"IssueType":"Paid","Qty":"1","Rate":"250","Remarks":"","Result":null,"SerStatus":"true","ServiceId":"SR10062","ServiceName":"Checkups","SlNo":"1","Status":"true","SubServiceId":"SRT10134","SubServiceName":"ALIGNMENT","TotValue":"250"}
+                   //                    {"IssueType":"Paid","Qty":"1","Rate":"250","Remarks":"","Result":null,"SerStatus":"true","ServiceId":"SR10062","ServiceName":"Checkups","SlNo":"1","Status":"true","SubServiceId":"SRT10134","SubServiceName":"ALIGNMENT","TotValue":"250"}
                     String Result = object.getString("Result");
                     if (Result.equalsIgnoreCase("No Records Found")) {//excep
                         Toast.makeText(getActivity(), Result, Toast.LENGTH_SHORT).show();
@@ -2448,7 +2638,6 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
                         generailServiceDetailsArrayList.clear();
                     } else {
                         ServiceList documentTypes = new ServiceList();
-                        Log.d("ANUSHA ", " " + object.toString());
                         documentTypes.setmIssueType(object.getString("IssueType"));
                         documentTypes.setmQty(object.getString("Qty"));
                         documentTypes.setServiceCharge(object.getString("Rate"));
@@ -2466,7 +2655,6 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Log.d("ANUSHA ", " &&&&& " + e.toString());
                 }
             }
             AddListToGridService();
@@ -2527,12 +2715,10 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
 
         public GenerateReceiptTask(String systemDate) {
             ginvNo_A = systemDate;
-            Log.d("ANUSHA "," systemDate "+systemDate);
         }
 
         @Override
         protected Void doInBackground(Void... params) {
-            Log.d("ANUSHA "," doInBackground ");
             Thread.setDefaultUncaughtExceptionHandler(new CustomExceptionHandler());
             return null;
         }
@@ -2540,7 +2726,6 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            Log.d("ANUSHA "," onPreExecute ");
             progressDialog = new ProgressDialog(getActivity());
             progressDialog.setCancelable(false);
             progressDialog.setIndeterminate(true);
@@ -2620,9 +2805,28 @@ public class SparePartEstAgstJobCard extends Fragment implements View.OnClickLis
         super.onResume();
 
         context=getActivity();
-        Log.d("ANUSHA "," &&&& EXCEPTION ONRESUME "+context);
-        Log.d("ANUSHA "," &&&& EXCEPTION ONRESUME "+ MainActivity.comingfrom);
         MainActivity.comingfrom="MAINACTIVITY";
-        Log.d("ANUSHA "," &&&& EXCEPTION ONRESUME "+ MainActivity.comingfrom);
+    }
+
+    private void GetCompanyDetailsToPrint() {
+        try {
+            if (AppUtil.isNetworkAvailable(getActivity())) {
+                try {
+                    JSONObject jsonObject = new JSONObject();
+                    BackendServiceCall serviceCall = new BackendServiceCall(getActivity(), false);
+                    jsonObject.accumulate("CompId", "C001");
+                    requestName = "GetCompanyDetails";
+                    serviceCall.setOnServiceCallCompleteListener(new OnServiceCallCompleteListenerSaveImpl());
+                    serviceCall.makeJSONOArryPostRequest(ProjectVariables.BASE_URL + ProjectVariables.GetCompanyDetails, jsonObject, Request.Priority.HIGH);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+
+                Toast.makeText(getActivity(), Constants.PLEASE_CHECK_YOUR_NETWORK_CONNECTION, Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -3,16 +3,15 @@ package com.myaccounts.vechicleserviceapp.Fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import com.google.android.material.tabs.TabLayout;
+import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,8 +29,6 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.myaccounts.vechicleserviceapp.Activity.NewServicesActivity;
-import com.myaccounts.vechicleserviceapp.Adapter.JListner;
-import com.myaccounts.vechicleserviceapp.Adapter.NewServiceMasterAdapter;
 import com.myaccounts.vechicleserviceapp.Adapter.NewServiceMasterIssueAdapter;
 import com.myaccounts.vechicleserviceapp.Pojo.NewServiceMasterDetails;
 import com.myaccounts.vechicleserviceapp.Pojo.ServiceMaster;
@@ -46,7 +43,6 @@ import com.myaccounts.vechicleserviceapp.Utils.MyMessageObject;
 import com.myaccounts.vechicleserviceapp.Utils.OnServiceCallCompleteListener;
 import com.myaccounts.vechicleserviceapp.Utils.ProjectVariables;
 import com.myaccounts.vechicleserviceapp.Utils.SessionManager;
-import com.myaccounts.vechicleserviceapp.network.DatabaseHelper;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import org.json.JSONArray;
@@ -139,9 +135,7 @@ public class LatestNewServiceSelectedFragment extends Fragment {
             makemodel=user.get(SessionManager.KEY_VEHICLE_MAKE);
             jobCardId = user.get(SessionManager.KEY_JOBCARD_ID);
 
-            Log.d("ANUSHA ","1____"+"Oncreateview modelId"+modelId+" "+makemodel+jobCardId);
         } catch (NullPointerException e) {
-            Log.d("ANUSHA ","1____"+"Oncreateview modelId"+"EXCEPTION"+e.toString());
         }
 
         jobCardId = user.get(SessionManager.KEY_JOBCARD_ID);
@@ -195,12 +189,9 @@ public class LatestNewServiceSelectedFragment extends Fragment {
 //
 //            Log.d("modeiddd", modelId + "," + jobCardId);
                     Log.d("modeiddd", jobCardId);//lpref.getString(KEY_VEHICLE_ID,null)
-                    Log.d("ANUSHA ","1____"+"Oncreateview modelId"+modelId+" "+makemodel);
-                    Log.d("ANUSHA ","1____"+"Oncreateview modelId"+ModelId+" "+makemodel);
+
                 } catch (NullPointerException e) {
-                    Log.d("ANUSHA ","1____"+"Oncreateview modelId"+"EXCEPTION"+e.toString());
                 }
-                Log.d("ANUSHA ","2____"+"Edit text onclick "+modelId+"}}"+makemodel);
                 if(modelId !=null){
                     Intent intent = new Intent(getActivity(), NewServicesActivity.class);
                     startActivityForResult(intent, 103);
@@ -271,7 +262,6 @@ public class LatestNewServiceSelectedFragment extends Fragment {
                 try{
                     PrepareItemDetailsList("C");
                 }catch (Exception e){
-                    Log.d("ANUSHA "," "+e.toString());
                 }
             }
 
@@ -322,8 +312,6 @@ public class LatestNewServiceSelectedFragment extends Fragment {
                 jsonObject.accumulate("VehicleId", newVehicleIdLocal);
                 BackendServiceCall serviceCall = new BackendServiceCall(getActivity(), false);
                 requestName = "JCServices";
-                Log.d("ANUSHA "," "+jsonObject.toString());
-                Log.d("ANUSHA "," "+ProjectVariables.BASE_URL + ProjectVariables.NEW_GET_SERVICE_MASTER);
                 serviceCall.setOnServiceCallCompleteListener(new OnServiceCallCompleteListenerReportsImpl());
                 serviceCall.makeJSONOArryPostRequest(ProjectVariables.BASE_URL + ProjectVariables.NEW_GET_SERVICE_MASTER, jsonObject, Request.Priority.HIGH);
             } catch (Exception e) {
@@ -341,7 +329,6 @@ public class LatestNewServiceSelectedFragment extends Fragment {
         float mrp = 0.0f, freeMrp = 0.0f, Qty = 0.0f;
 
         try {
-            Log.d("ANUSHA ","+++"+" INSIDE ADDTOGRIDVIEW "+issueTypeStringLocal);
 
                 Log.d("issuetype", issueTypeStringLocal);//{"Rate":"50","Result":null,"ServiceId":"SR10062","ServiceName":"Checkups","SubServiceId":"SRT10145","SubServiceName":"1 PUNTCHER CHECK UP"}
                 NewServiceMasterDetails newServiceMasterDetails = new NewServiceMasterDetails();
@@ -350,23 +337,17 @@ public class LatestNewServiceSelectedFragment extends Fragment {
 
                 if (issueTypeStringLocal.equalsIgnoreCase("Paid")) {
                     newServiceMasterDetails.setmRate(rateLocal);
-                    Log.d("ANUSHA ","+++ paid condition "+newServiceMasterDetails.getmRate());
 
                 } else {
                     newServiceMasterDetails.setmRate(rateLocal);
                     newServiceMasterDetails.setFreeMrp(rateLocal);
 //                    FreeTotalTv.setText(rateLocal);
-                    Log.d("ANUSHA ","+++ free condition "+rateLocal);
-                    Log.d("ANUSHA ","+++"+FreeTotalTv.getText().toString());
 
 
                 }
                 newServiceMasterDetails.setmSubServiceName(subservicenameLocal);
             newServiceMasterDetails.setmIssueType(issueTypeStringLocal);
-            Log.d("ANUSHA ","+++"+newServiceMasterDetails.getmSubServiceName());
-            Log.d("ANUSHA ","+++"+newServiceMasterDetails.getmIssueType());
                 newServiceMasterDetails.setmSubServiceId(subserviceIdLocal);
-            Log.d("ANUSHA ","+++"+newServiceMasterDetails.getmSubServiceId());
 
                 //  newServiceMasterDetails.setmQty("1");
 
@@ -383,12 +364,10 @@ public class LatestNewServiceSelectedFragment extends Fragment {
 //                newServiceMasterDetails.setmQryMrp(String.valueOf(finalValue));
 //                 sparePartDetailsArrayList1.add(sparePartDetails);
                 newServiceMasterDetails.setmServiceId(serviceIdLocal);
-            Log.d("ANUSHA ","+++"+newServiceMasterDetails.getmServiceId());
 //                newServiceMasterDetails.setmSubServiceId(subServiceId);
 //                AddtemToGrid(newServiceMasterDetails,"");
 //                finalRowsNew=IdQtyEdt.getText().toString();
                 CalculationPart("");
-//                freemrpTv.setText("ANUSHA ");
 
         } catch (NullPointerException e) {
 
@@ -397,9 +376,6 @@ public class LatestNewServiceSelectedFragment extends Fragment {
     }
 
     private void CalculationPart(String check) {
-        Log.d("ANUSHA "," *** CHECK CALICULATION PART "+check);
-        Log.d("ANUSHA 3"," *** in caliculationpart "+ediServiceDetailsArrayList.size());
-        Log.d("ANUSHA 3"," *** in caliculationpart "+finalRowsNew);
         if (ediServiceDetailsArrayList == null) {
             return;
         }
@@ -420,17 +396,14 @@ public class LatestNewServiceSelectedFragment extends Fragment {
             finalrows++;
             TotalGrossAmt = ediServiceDetailsArrayList.get(i).getmRate();
             TotalQtyValue = ediServiceDetailsArrayList.get(i).getmQty();
-            Log.d("ANUSHA 3", " *** in caliculationpart P " + " type " + ediServiceDetailsArrayList.get(i).getmIssueType() + ediServiceDetailsArrayList.get(i).getmRate());
             //  Log.d("Freeeeamt", TotalFreeAmount + "," + TotalGrossAmt);
             if (ediServiceDetailsArrayList.get(i).getmIssueType().equalsIgnoreCase("Free"))
             {
                 totalFreeAmount += Float.parseFloat(TotalQtyValue) * Float.parseFloat(ediServiceDetailsArrayList.get(i).getmRate());
-                Log.d("ANUSHA ", " finalrows " + totalFreeAmount);
             }
             else
             {
                 TotalAmtValue = Float.parseFloat(TotalQtyValue) * Float.parseFloat(TotalGrossAmt);
-              // Log.d("ANUSHA 3", " *** in caliculationpart F " + ediServiceDetailsArrayList.get(i).getmRate() + " " + TotalAmtValue);
 
                 Log.e(TAG, "CalculationPart: " + TotalAmtValue );
 
@@ -451,13 +424,13 @@ public class LatestNewServiceSelectedFragment extends Fragment {
         if (ediServiceDetailsArrayList.size() > 0)
         {
             sessionManager.storeNoService("" + ediServiceDetailsArrayList.size());
-            sessionManager.storeSecondFragmentDetails(finalServiceDetailsDetailList, "" + totalAmount,"SR10060");
+            sessionManager.storeSecondFragmentDetails(finalServiceDetailsDetailList, "" + totalAmount,"SR10060",String.format("%.0f", totalQty));
             sessionManager.storeSecondFragmentFreeDetails(String.format("%.2f", totalFreeAmount));
         }
         if(ediServiceDetailsArrayList.size()==0)
         {
             sessionManager.storeNoService("" + 0);
-            sessionManager.storeSecondFragmentDetails(null, "" + 0,"SR10060");
+            sessionManager.storeSecondFragmentDetails(null, "" + 0,"SR10060",""+0);
             sessionManager.storeSecondFragmentFreeDetails("");
         }
 
@@ -468,6 +441,7 @@ public class LatestNewServiceSelectedFragment extends Fragment {
         FreeTotalTv.setText(String.format("%.2f", totalFreeAmount));
         sessionManager.storeSecondFragmentFreeDetails(String.format("%.2f", totalFreeAmount));
 
+
         if (newServiceMasterIssueAdapter != null) {
             newServiceMasterIssueAdapter.notifyDataSetChanged();
         }
@@ -475,7 +449,6 @@ public class LatestNewServiceSelectedFragment extends Fragment {
 
     private void AddtemToGrid(NewServiceMasterDetails sp,String check) {
         Log.e("AddtemToGrid called", "AddtemToGrid called");
-        Log.d("ANUSHA "," CHECK "+check);
 
         try {
             float mrp = 0.0f, Qty = 0.0f;
@@ -533,7 +506,6 @@ public class LatestNewServiceSelectedFragment extends Fragment {
         ServiceMasterRecyclerview.setItemAnimator(new DefaultItemAnimator());
         ServiceMasterRecyclerview.setHasFixedSize(true);
         ServiceMasterRecyclerview.setAdapter(newServiceMasterIssueAdapter);
-        Log.d("ANUSHA addlisttogrid"," "+ediServiceDetailsArrayList.size());
         PrepareItemDetailsList("COMING_FROM_ADDLISTTOGRID");
         newServiceMasterIssueAdapter.notifyDataSetChanged();
         /*newServiceMasterIssueAdapter.SetAfterTextChanged(new NewServiceMasterIssueAdapter.AfterTextChanged() {
@@ -541,7 +513,6 @@ public class LatestNewServiceSelectedFragment extends Fragment {
             public void afterTextChanged(String s, int position, String itemName) {
                 adapterPosition=position;
                 try {
-                    Log.d("ANUSHA ","POSITION "+adapterPosition);
                     if(NewServiceMasterIssueAdapter.clickQty)
                         EditData();
 //                            CustomDailog("Service Issue", "Do You Want to Edit Details?", 133, "Edit", position);
@@ -575,19 +546,10 @@ public class LatestNewServiceSelectedFragment extends Fragment {
                     case R.id.ServiceIssueTypeSpinner:
                         if(result) {
                             try {
-//                                Toast.makeText(getActivity(), "JESUS " + issueType, Toast.LENGTH_SHORT).show();
                                 NewServiceMasterDetails selectedListItemRowPojo2 = ediServiceDetailsArrayList.get(adapterPosition);
                                 selectedListItemRowPojo2.setmIssueType(issueType);
-                                Log.d("ANUSHA ", "+++" + selectedListItemRowPojo2.getmIssueType());
-                                Log.d("ANUSHA ", "+++" + selectedListItemRowPojo2.getRowNo());
-                                Log.d("ANUSHA ", "+++" + selectedListItemRowPojo2.getmRate());
-                                Log.d("ANUSHA ", "+++" + selectedListItemRowPojo2.getmQty());
-                                Log.d("ANUSHA ", "+++" + selectedListItemRowPojo2.getmSubServiceName());
-                                Log.d("ANUSHA ", "+++" + selectedListItemRowPojo2.getmSubServiceId());
-                                Log.d("ANUSHA ", "+++" + selectedListItemRowPojo2.getmServiceId());
                                 AddToGridView(String.valueOf(selectedListItemRowPojo2.getRowNo()), selectedListItemRowPojo2.getmSubServiceName(), selectedListItemRowPojo2.getmQty(), selectedListItemRowPojo2.getmRate(), issueType, selectedListItemRowPojo2.getmSubServiceId(), selectedListItemRowPojo2.getmServiceId());
                                 NewServiceMasterIssueAdapter.spinnerTouched=false;
-                                Log.d("ANUSHA ","+++ size "+ediServiceDetailsArrayList.size());
                                 PrepareItemDetailsList("COMING_FROM_JCSERVICE");
 //                                newServiceMasterIssueAdapter.notifyDataSetChanged();
                            /* finalServiceDetailsDetailList="";
@@ -688,16 +650,13 @@ public class LatestNewServiceSelectedFragment extends Fragment {
                         break;
 
                     case R.id.IdDeleteIconImg:
-                        Log.d("ANUSHA ","POSITION "+adapterPosition);
                         if(!ediServiceDetailsArrayList.get(position).getmQty().equals("0")) {
-                            Log.d("ANUSHA "," IF "+adapterPosition);
                             try {
                                 CustomDailog("Service Issue", "Do You Want to Delete Details?", 134, "Delete", position);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }else{
-                            Log.d("ANUSHA "," ELSE "+adapterPosition);
                             DeleteDetails();
 
                         }
@@ -743,7 +702,6 @@ public class LatestNewServiceSelectedFragment extends Fragment {
         String SparePart = IdServiceEdt.getText().toString().trim();
         String qtyValue = IdQtyEdt.getText().toString().trim();
         if (SparePart.length() == 0) {
-            Log.d("ANUSHA 4","____"+SparePart.length());
             IdServiceEdt.setError("Please Select Service");
             Toast.makeText(getActivity(), "Please Select Service", Toast.LENGTH_SHORT).show();
             valid = false;
@@ -800,7 +758,6 @@ public class LatestNewServiceSelectedFragment extends Fragment {
     }
 
     private void CustomDailog(String Title, String msg, int value, String btntxt, int position) {
-        Log.d("ANUSHA ","POSITION"+position);
         try {
             MyMessageObject.setMyTitle(Title);
             MyMessageObject.setMyMessage(msg);
@@ -827,7 +784,6 @@ public class LatestNewServiceSelectedFragment extends Fragment {
         } else if (requestCode == 133 && data != null && resultCode == RESULT_OK) {
 //            EditData();
         } else if (requestCode == 134 && data != null && resultCode == RESULT_OK) {
-            Log.d("ANUSHA "," "+adapterPosition);
             DeleteDetails();
         } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
@@ -852,22 +808,12 @@ public class LatestNewServiceSelectedFragment extends Fragment {
 
     }
     private void PrepareItemDetailsList(String check) {
-        Log.d("ANUSHA "," CHECK PrepareItemDetailsList "+check);
-        Log.d("ddddddd", " 1 PrepareItemDetails " + ediServiceDetailsArrayList.size());
-        Log.d("ddddddd", " 1 PrepareItemDetails " + finalServiceDetailsDetailList);
         try {
             finalServiceDetailsDetailList = "";
             if(!check.equalsIgnoreCase("COMING_FROM_JCSERVICE")) {
                 for (int j = 0; j < ediServiceDetailsArrayList.size(); j++) {
-                    Log.d("ANUSHA 5", "NOT Equals condition to 0.1 ELSE CONDITION " + ediServiceDetailsArrayList.get(j).getmSetSerStatus());
-                    Log.d("JESUS 5", ">>>> PrepareList" + ediServiceDetailsArrayList.get(j).getmSubServiceId() +ediServiceDetailsArrayList.get(j).getmRate());
-                    Log.d("ddddddd", "" + ediServiceDetailsArrayList.get(j).getRowNo());
-                    Log.d("JESUS 5", ">>>> " + ediServiceDetailsArrayList.get(j).getmSubServiceId());
-                    Log.d("JESUS 5", ">>>> " + ediServiceDetailsArrayList.get(j).getmQty());
-                    Log.d("ANUSHA 5", "" + ediServiceDetailsArrayList.get(j).getmQty());
 
                     if(!ediServiceDetailsArrayList.get(j).getmQty().equalsIgnoreCase("0")){
-                        Log.d("ANUSHA 5", "NOT Equals condition to 0" + ediServiceDetailsArrayList.get(j).getmQty());
                         if (ediServiceDetailsArrayList.get(j).getRowNo() >= 0) {
                             Log.d("execute", "" + ediServiceDetailsArrayList.get(j).getRowNo());
 
@@ -896,7 +842,6 @@ public class LatestNewServiceSelectedFragment extends Fragment {
                         }
 
                         if(ediServiceDetailsArrayList.get(j).getmSetSerStatus() != null) {
-                            Log.d("ANUSHA 5", "NOT Equals condition to 0.1 " + ediServiceDetailsArrayList.get(j).getmSetSerStatus());
                             finalServiceDetailsDetailList += ediServiceDetailsArrayList.get(j).getmSetSerStatus();//this field added as per status changing of job card
                         }
 
@@ -922,16 +867,13 @@ public class LatestNewServiceSelectedFragment extends Fragment {
                         if (ediServiceDetailsArrayList.size() == 0) {////added this condition after adding delete all items last item is not deleteing in shared preferences
                             finalServiceDetailsDetailList = "";
                             sessionManager.storeNoService("" + 0);
-                            sessionManager.storeSecondFragmentDetails(null, "" + 0, "SR10060");
-                        }else{
-                            Log.d("ANUSHA 5", "NOT Equals condition to 0 ELSE CONDITION " + ediServiceDetailsArrayList.get(j).getmQty());
+                            sessionManager.storeSecondFragmentDetails(null, "" + 0, "SR10060",""+0);
                         }
                     }//if qty check ending
                 }//for loop end
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Log.d("ANUSHA 5", "exception in preparedlist " +e.toString());
         }
 //        PrepareItemDetailsToDatabase();
     }
@@ -940,8 +882,6 @@ public class LatestNewServiceSelectedFragment extends Fragment {
 
         try {
             ediServiceDetailsArrayList.remove(adapterPosition);
-            Log.d("ddddddd", " 1 " + ediServiceDetailsArrayList.size());
-            Log.d("ANUSHA "," AFTER REMOVING "+ediServiceDetailsArrayList.size()+"Position "+adapterPosition);
             PrepareItemDetailsList("COMING_FROM_EDIT");
             newServiceMasterIssueAdapter.notifyDataSetChanged();
         } catch (Exception e) {
@@ -954,13 +894,9 @@ public class LatestNewServiceSelectedFragment extends Fragment {
         try {
             editClick=true;
             NewServiceMasterDetails SI = ediServiceDetailsArrayList.get(adapterPosition);
-            Log.d("ANUSHA "," "+adapterPosition+" EDIT "+SI.getmSubServiceName());
-            Log.d("JESUS 5"," "+adapterPosition+" EDIT "+"EDIT"+SI.getmSubServiceId());
             IdServiceEdt.setText(ediServiceDetailsArrayList.get(adapterPosition).getmSubServiceName());
 //            IdServiceEdt.setTag(SI.getmServiceId());
             IdServiceEdt.setTag(ediServiceDetailsArrayList.get(adapterPosition).getmSubServiceId());
-            Log.d("JESUS 5"," "+adapterPosition+" EDIT TAG"+SI.getmServiceId());
-            Log.d("JESUS 5"," "+adapterPosition+" EDIT "+IdServiceEdt.getTag().toString());
             IdQtyEdt.setText(SI.getmQty());
             IdQtyEdt.requestFocus();
             mrpTv.setText(SI.getmRate());
@@ -990,8 +926,7 @@ public class LatestNewServiceSelectedFragment extends Fragment {
                     if (Result.equalsIgnoreCase("No Records Found") ||
                             Result.equalsIgnoreCase("No Details Found")) {
                         Toast.makeText(getActivity(), Result, Toast.LENGTH_SHORT).show();
-                        Log.d("JESUS 5","#### handeEditServiceDetails inside no records found "+object.toString());
-//                        ((NewJobCardDetailsMain)getActivity()).serviceMasterArrayList.clear();
+ //                        ((NewJobCardDetailsMain)getActivity()).serviceMasterArrayList.clear();
                         ediServiceDetailsArrayList.clear();
                     } else{
                         NewServiceMasterDetails documentTypes = new NewServiceMasterDetails();
@@ -1007,12 +942,6 @@ public class LatestNewServiceSelectedFragment extends Fragment {
                         documentTypes.setmSubServiceName(object.getString("SubServiceName"));
                         documentTypes.setmSetSerStatus(object.getString("SerStatus"));
                         documentTypes.setTotalValue(object.getString("TotValue"));
-                        Log.d("JESUS 5","#### handeEditServiceDetails inside "+object.toString());
-                        Log.d("JESUS 5","#### handeEditServiceDetails inside "+documentTypes.getmSetSerStatus());
-                        Log.d("ANUSHA 5", "NOT Equals condition to 0.1 ELSE CONDITION " + object.getString("SerStatus"));
-                        Log.d("ANUSHA 5", "NOT Equals condition to 0.1 ELSE CONDITION " + documentTypes.getmSetSerStatus());
-                        Log.d(" ANUSHA ","____SerStatus "+object.toString());
-                        Log.d(" ANUSHA ","____SerStatus "+object.getString("SerStatus"));
                         ediServiceDetailsArrayList.add(documentTypes);//SerStatus
                     }
                 } catch (Exception e) {
@@ -1092,7 +1021,6 @@ public class LatestNewServiceSelectedFragment extends Fragment {
         if(modelClick) {
             getDetailsFromModelId();
         }
-        Log.d("ANUSHA "," servicesArrayList +++++"+servicesArrayList.size());
 
     }
     private void handeGetSparePartsDetails(JSONArray jsonArray) {
@@ -1109,7 +1037,6 @@ public class LatestNewServiceSelectedFragment extends Fragment {
                 try {
                     JSONObject object = jsonArray.getJSONObject(i);
                     String Result = object.getString("Result");
-                    Log.d("ANUSHA "," ++++++ "+object.toString());
                     if (Result.equalsIgnoreCase("No Records Found") ||
                             Result.equalsIgnoreCase("No Data Found")) {
                         Toast.makeText(getActivity(), Result, Toast.LENGTH_SHORT).show();
@@ -1133,8 +1060,6 @@ public class LatestNewServiceSelectedFragment extends Fragment {
                         newServiceMasterDetails.setmSubServiceId(object.getString("SubServiceId"));
 
                         newServiceMasterDetails.setmSetSerStatus("false");
-                        Log.d("JESUS 5",">>>> "+newServiceMasterDetails.getmSubServiceId());
-                        Log.d("JESUS 5","#### COMING_FROM_JCSERVICE"+newServiceMasterDetails.getmSetSerStatus());
                         AddtemToGrid(newServiceMasterDetails,"COMING_FROM_JCSERVICE");
 //                        dbManager.insert(object.getString("ServiceName"),object.getString("SubServiceName"),"0");
 //                        CalculationPart();
@@ -1161,9 +1086,7 @@ public class LatestNewServiceSelectedFragment extends Fragment {
         try {
             finalServiceDetailsDetailList = "";
             for (int j = 0; j < ediServiceDetailsArrayList.size(); j++) {
-                Log.d("JESUS 5",">>>> PrepareList"+ediServiceDetailsArrayList.get(j).getmSubServiceId());
                 Log.d("ddddddd", "" + ediServiceDetailsArrayList.get(j).getRowNo());
-                Log.d("JESUS 5",">>>> "+ediServiceDetailsArrayList.get(j).getmSubServiceId());
                 if (ediServiceDetailsArrayList.get(j).getmServiceId() != null) {
                     ServiceId=ediServiceDetailsArrayList.get(j).getmServiceId();
                     //    finalServiceDetailsDetailList += ediServiceDetailsArrayList.get(j).getmServiceId() + "!";//serviceId
@@ -1205,7 +1128,6 @@ public class LatestNewServiceSelectedFragment extends Fragment {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Log.d("ANUSHA 5", "exception in preparedlist " +e.toString());
         }
     }
 

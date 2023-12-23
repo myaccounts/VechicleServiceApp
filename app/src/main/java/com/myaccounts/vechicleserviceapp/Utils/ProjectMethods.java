@@ -95,6 +95,14 @@ public class ProjectMethods {
         Calendar cal = Calendar.getInstance();
         return dateFormat.format(cal.getTime());
     }
+
+    public static String GetCustomerCurrentTime() {
+
+//        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");//date format has changes
+        Calendar cal = Calendar.getInstance();
+        return dateFormat.format(cal.getTime());
+    }
     public static String BusinessDate= "";
     public static String UserId= "";
     public static String UserName= "";

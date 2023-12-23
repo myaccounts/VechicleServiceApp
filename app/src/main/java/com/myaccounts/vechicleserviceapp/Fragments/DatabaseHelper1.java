@@ -62,7 +62,6 @@ public class DatabaseHelper1 extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 //        String Qry = "select * from "+TABLE_NAME+" WHERE name = "+serviceId, null
 
-//        Log.e("Executing block", "JESUS I am here" + Qry);
 //            Cursor mCursor = db.rawQuery(Qry, null);'"+rid+"'"
 //        Cursor res = db.rawQuery( "SELECT * from "+TABLE_NAME+" where subject='"+serviceId+"'", null );
        Cursor res= db.rawQuery("SELECT description FROM  COUNTRIES   where subject=?" ,
@@ -82,13 +81,11 @@ public class DatabaseHelper1 extends SQLiteOpenHelper {
 
                     // your code like get columns
                     jValue = mCursor.getString(mCursor.getColumnIndex(DatabaseHelper1._ID));
-                    Log.d("JESUS ", " " + jValue);
 
                 }
                 while (mCursor.moveToNext());
             }
         }catch(Exception e){
-            Log.d("JESUS "," EXCEPTION "+e.toString());
         }
         /*try {
             SQLiteDatabase db = this.getReadableDatabase();
@@ -103,13 +100,11 @@ public class DatabaseHelper1 extends SQLiteOpenHelper {
 
                     // your code like get columns
                     jValue = cursorr.getString(cursorr.getColumnIndex(DatabaseHelper1.DESC));
-                    Log.d("JESUS ", " " + jValue);
 
                 }
                 while (cursorr.moveToNext());
             }
         }catch(Exception e){
-            Log.d("JESUS "," "+e.toString());
         }*/
         return jValue;
     }
@@ -125,13 +120,11 @@ public class DatabaseHelper1 extends SQLiteOpenHelper {
 
                     // your code like get columns
                     jValue = mCursor.getString(mCursor.getColumnIndex(DatabaseHelper1.DESC));
-                    Log.d("JESUS ", " " + jValue);
 
                 }
                 while (mCursor.moveToNext());
             }
         }catch(Exception e){
-            Log.d("JESUS "," EXCEPTION "+e.toString());
         }
         /*try {
             SQLiteDatabase db = this.getReadableDatabase();
@@ -146,13 +139,11 @@ public class DatabaseHelper1 extends SQLiteOpenHelper {
 
                     // your code like get columns
                     jValue = cursorr.getString(cursorr.getColumnIndex(DatabaseHelper1.DESC));
-                    Log.d("JESUS ", " " + jValue);
 
                 }
                 while (cursorr.moveToNext());
             }
         }catch(Exception e){
-            Log.d("JESUS "," "+e.toString());
         }*/
         return jValue;
     }
@@ -169,13 +160,11 @@ public class DatabaseHelper1 extends SQLiteOpenHelper {
 
                     // your code like get columns
                     jValue = mCursor.getString(mCursor.getColumnIndex(DatabaseHelper1.SUBJECT));
-                    Log.d("JESUS ", " " + jValue);
 
                 }
                 while (mCursor.moveToNext());
             }
         }catch(Exception e){
-            Log.d("JESUS "," EXCEPTION "+e.toString());
         }
         /*try {
             SQLiteDatabase db = this.getReadableDatabase();
@@ -190,13 +179,11 @@ public class DatabaseHelper1 extends SQLiteOpenHelper {
 
                     // your code like get columns
                     jValue = cursorr.getString(cursorr.getColumnIndex(DatabaseHelper1.DESC));
-                    Log.d("JESUS ", " " + jValue);
 
                 }
                 while (cursorr.moveToNext());
             }
         }catch(Exception e){
-            Log.d("JESUS "," "+e.toString());
         }*/
         return jValue;
     }

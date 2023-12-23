@@ -1,8 +1,14 @@
 package com.myaccounts.vechicleserviceapp.Utils;
 
 public class ProjectVariables {
-    public static final String BASE_URL = "http://Myaccountsonline.co.in/TestServices/WheelAlignment.svc/";
-//    public static final String URL = "http://Myaccountsonline.co.in/TestServices/WheelAlignment.svc/";
+    // public static final String BASE_URL = "http://Myaccountsonline.co.in/WheelAlignment.svc/";//live
+// public static final String BASE_URL ="http://myaccountsonline.co.in/wheeltest/";
+   // public static final String BASE_URL = "http://Myaccountsonline.co.in/wheeltest/WheelAlignment.svc/";
+    //public static final String BASE_URL = "http://myaccountsonline.co.in/GowheelStore1_Service/";
+    //public static final String BASE_URL = "http://myaccountsonline.co.in/GowheelStore2_Service/WheelAlignment.svc/";
+    public static final String BASE_URL = "http://myaccountsonline.co.in/GowheelStore1_Service/WheelAlignment.svc/";
+//public static final String BASE_URL = "http://myaccountsonline.co.in/wheelalignment/";
+//public static final String GetCustomerDetails = "FinancialAccounting/JobCardNew.aspx/GetCustomerDetails";
     public static final String GetUserData = "GetCustomerMaster";
     public static final String GeneralMasterData = "GeneralMasterData";
     public static final String GetDetailsByVehicleNo = "GetDetailsByVehicleNo";
@@ -64,4 +70,6 @@ public class ProjectVariables {
 
     public static String CancelJobCard="CancelJobCard";
     public static String GetCancelJobCardDetails="GetCancelJobCard";
+
+    public static String GetCompanyDetails = "GetCompanyDetails";
 }
