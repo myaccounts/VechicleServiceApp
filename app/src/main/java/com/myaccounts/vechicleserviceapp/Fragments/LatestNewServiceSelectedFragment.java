@@ -401,8 +401,8 @@ public class LatestNewServiceSelectedFragment extends Fragment {
             {
                 totalFreeAmount += Float.parseFloat(TotalQtyValue) * Float.parseFloat(ediServiceDetailsArrayList.get(i).getmRate());
             }
-            else
-            {
+            /*else
+            {*/
                 TotalAmtValue = Float.parseFloat(TotalQtyValue) * Float.parseFloat(TotalGrossAmt);
 
                 Log.e(TAG, "CalculationPart: " + TotalAmtValue );
@@ -418,7 +418,7 @@ public class LatestNewServiceSelectedFragment extends Fragment {
                     totalAmount += Float.valueOf(TotalAmtValue);
                     Log.e(TAG, "after: " + totalAmount );
                 }
-            }
+//            }
         }
 
         if (ediServiceDetailsArrayList.size() > 0)
